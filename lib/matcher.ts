@@ -53,8 +53,15 @@ export const PARAMETROS_MATCH = {
   deduccionMaxima: 0.20,
   /** Cuántas facturas puede saldar una misma transferencia. */
   maxFacturasPorMovimiento: 4,
-  /** Cuántos movimientos pueden cubrir una misma factura. */
-  maxMovimientosPorFactura: 4,
+  /**
+   * Cuántos movimientos sueltos pueden cubrir una misma factura.
+   * Se mantiene bajo a propósito: los planes de cuotas NO se resuelven por
+   * búsqueda de subconjuntos sino leyendo el marcador "CUOTA i/k" (ver
+   * `agruparCuotas`). Subir este número sólo agrega falsos positivos.
+   */
+  maxMovimientosPorFactura: 3,
+  /** Ventana para agrupar movimientos sueltos de una misma venta. */
+  ventanaPagoPartidoDias: 45,
 } as const;
 
 /**
@@ -280,6 +287,96 @@ export function scorear(
 }
 
 // ═════════════════════════════════════════════════════════════
+// Planes de cuotas
+// ═════════════════════════════════════════════════════════════
+
+type Mov = { id: string; fecha: string; descripcion: string; importe: number };
+
+/**
+ * Una venta financiada llega al extracto como N acreditaciones mensuales, y el
+ * banco escribe cuál es cuál: "LIQUID TARJETA CUOTA 3/6 FIGUEROA A".
+ *
+ * La primera versión buscaba estos casos enumerando subconjuntos de movimientos
+ * cercanos. Falló entero —0 de 168— por dos razones: el tope de combinaciones
+ * dejaba afuera los planes de 6 y 12 cuotas, y la ventana temporal no llegaba a
+ * cubrir un plan que dura un año.
+ *
+ * Pero el problema nunca fue de búsqueda: el dato está escrito. Acá se lee el
+ * marcador, se reconstruye el plan y se lo trata como UN movimiento virtual.
+ * Después el resto del matcher trabaja igual que con un pago simple.
+ */
+const RE_CUOTA = /\bC(?:UOTA)?\.?\s*(\d{1,2})\s*\/\s*(\d{1,2})\b/i;
+
+export interface PlanCuotas {
+  id: string;
+  fecha: string;              // la de la primera cuota: es la que compara con la factura
+  descripcion: string;
+  importe: number;            // la suma de las cuotas presentes
+  movimientos: string[];
+  cuotasTotales: number;
+  cuotasPresentes: number;
+  /** Un plan al que todavía le faltan cuotas por acreditar. */
+  incompleto: boolean;
+}
+
+export function agruparCuotas(movimientos: Mov[]): {
+  planes: PlanCuotas[];
+  sueltos: Mov[];
+} {
+  const porPlan = new Map<string, { m: Mov; i: number; k: number }[]>();
+  const sueltos: Mov[] = [];
+
+  for (const m of movimientos) {
+    const c = RE_CUOTA.exec(m.descripcion);
+    if (!c) { sueltos.push(m); continue; }
+
+    // La clave es contraparte + cantidad de cuotas. NO el importe: la primera
+    // cuota suele venir con la retención aplicada, así que su monto difiere del
+    // resto. Meter el importe en la clave partía el plan en dos y era la razón
+    // por la que los pagos mixtos no se resolvían.
+    const quien = normalizar(m.descripcion.replace(RE_CUOTA, '')).join('_') || 'anon';
+    const clave = `${quien}|${c[2]}`;
+    porPlan.set(clave, [...(porPlan.get(clave) ?? []), { m, i: Number(c[1]), k: Number(c[2]) }]);
+  }
+
+  const planes: PlanCuotas[] = [];
+
+  for (const [, items] of porPlan) {
+    items.sort((a, b) => (a.m.fecha < b.m.fecha ? -1 : a.m.fecha > b.m.fecha ? 1 : a.i - b.i));
+
+    // Un mismo cliente puede tener dos ventas en 6 cuotas. Se separan cuando
+    // reaparece un número de cuota ya visto: ahí empieza un plan nuevo.
+    const tandas: typeof items[] = [];
+    let actual: typeof items = [];
+    const vistos = new Set<number>();
+    for (const it of items) {
+      if (vistos.has(it.i)) { tandas.push(actual); actual = []; vistos.clear(); }
+      vistos.add(it.i);
+      actual.push(it);
+    }
+    if (actual.length) tandas.push(actual);
+
+    for (const tanda of tandas) {
+      const ms = tanda.map((t) => t.m);
+      // Una sola cuota presente no es un plan: vuelve a la bolsa común.
+      if (ms.length < 2) { sueltos.push(...ms); continue; }
+      const totales = tanda[0].k || ms.length;
+      planes.push({
+        id: ms.map((m) => m.id).join('+'),
+        fecha: ms[0].fecha,
+        descripcion: ms[0].descripcion.replace(RE_CUOTA, `CUOTAS ${ms.length}/${totales}`),
+        importe: Number(ms.reduce((a, m) => a + m.importe, 0).toFixed(2)),
+        movimientos: ms.map((m) => m.id),
+        cuotasTotales: totales,
+        cuotasPresentes: ms.length,
+        incompleto: ms.length < totales,
+      });
+    }
+  }
+  return { planes, sueltos };
+}
+
+// ═════════════════════════════════════════════════════════════
 // C · resolución 1:1, N:1 y 1:N
 // ═════════════════════════════════════════════════════════════
 
@@ -306,7 +403,7 @@ export interface KPI {
 
 export function conciliar(
   facturas: Fact[],
-  movimientos: { id: string; fecha: string; descripcion: string; importe: number }[],
+  movimientosCrudos: { id: string; fecha: string; descripcion: string; importe: number }[],
 ): ResultadoConciliacion {
   const historial = new Map<string, number>();
   const conciliados: Candidato[] = [];
@@ -314,12 +411,22 @@ export function conciliar(
   const facUsadas = new Set<string>();
   const movUsados = new Set<string>();
 
+  // Los planes de cuotas se colapsan en un movimiento virtual ANTES de buscar.
+  // Una venta en seis cuotas deja de ser un problema de búsqueda y pasa a ser un
+  // pago simple, que el resto del motor ya sabe resolver.
+  const { planes, sueltos } = agruparCuotas(movimientosCrudos);
+  const movimientos: Mov[] = [
+    ...sueltos,
+    ...planes.map((p) => ({ id: p.id, fecha: p.fecha, descripcion: p.descripcion, importe: p.importe })),
+  ];
+  const planPorId = new Map(planes.map((p) => [p.id, p]));
+
   const candidatos: Candidato[] = [];
 
   // ── 1:1 ──────────────────────────────────────────────────
   for (const m of movimientos) {
     for (const f of facturas) {
-      const c = scorear([f], m, historial, '1:1');
+      const c = scorear([f], m, historial, planPorId.has(m.id) ? '1:N' : '1:1');
       if (c.score >= PARAMETROS_MATCH.umbralPropuesta) candidatos.push(c);
     }
   }
@@ -337,22 +444,35 @@ export function conciliar(
     }
     for (const grupo of porCliente.values()) {
       if (grupo.length < 2) continue;
-      for (const sub of subconjuntos(grupo, 2, PARAMETROS_MATCH.maxFacturasPorMovimiento)) {
+      // Mismo criterio que en 1:N: priorizar por cercania de fecha antes de truncar.
+      const grupoOrd = [...grupo].sort((a, b) => Math.abs(dias(a.fecha, m.fecha)) - Math.abs(dias(b.fecha, m.fecha)));
+      for (const sub of subconjuntos(grupoOrd, 2, PARAMETROS_MATCH.maxFacturasPorMovimiento)) {
         const c = scorear(sub, m, historial, 'N:1');
         if (c.score >= PARAMETROS_MATCH.umbralPropuesta) candidatos.push(c);
       }
     }
   }
 
-  // ── 1:N · una factura cobrada en varios movimientos ──────
+  // ── 1:N · una venta pagada con varios medios ─────────────
+  // Después de colapsar las cuotas, un pago mixto son 2 o 3 piezas: el plan de
+  // tarjeta, una transferencia y un cobro por billetera. Eso sí es una búsqueda
+  // chica y acotada.
   for (const f of facturas) {
     const cerca = movimientos.filter((m) => {
       const d = dias(f.fecha, m.fecha);
-      return d >= -3 && d <= PARAMETROS_MATCH.lagEsperadoDias * 2 && Math.sign(m.importe) === Math.sign(f.total);
+      return d >= -3 && d <= PARAMETROS_MATCH.ventanaPagoPartidoDias &&
+             Math.sign(m.importe) === Math.sign(f.total) &&
+             // Una pieza de un pago partido nunca supera el total de la venta.
+             Math.abs(m.importe) <= Math.abs(f.total) * 1.02;
     });
-    for (const sub of subconjuntos(cerca, 2, PARAMETROS_MATCH.maxMovimientosPorFactura)) {
+    // `subconjuntos` sólo mira los primeros 12 elementos. Con un año de datos el
+    // pool cercano son cientos, así que tomar los primeros que aparecen deja la
+    // combinación correcta afuera casi siempre — era la razón real por la que
+    // los pagos mixtos no se resolvían. Hay que priorizar antes de truncar.
+    const pool = priorizar(cerca, f);
+    for (const sub of subconjuntos(pool, 2, PARAMETROS_MATCH.maxMovimientosPorFactura)) {
       const suma = Number(sub.reduce((a, m) => a + m.importe, 0).toFixed(2));
-      const virtual = { id: sub.map((m) => m.id).join('+'), fecha: sub[sub.length - 1].fecha,
+      const virtual = { id: sub.map((m) => m.id).join('+'), fecha: sub[0].fecha,
                         descripcion: sub.map((m) => m.descripcion).join(' | '), importe: suma };
       const c = scorear([f], virtual, historial, '1:N');
       if (c.score >= PARAMETROS_MATCH.umbralAuto) {   // 1:N sólo si es contundente
@@ -379,21 +499,34 @@ export function conciliar(
     }
   }
 
+  // Los ids virtuales —planes de cuotas y pagos partidos— se expanden a los
+  // movimientos reales del extracto. Hacia afuera nunca sale un id inventado.
+  const expandir = (c: Candidato): Candidato => ({
+    ...c,
+    movimientos: c.movimientos.flatMap((id) => id.split('+')),
+  });
+  const conciliadosFinal = conciliados.map(expandir);
+  const propuestosFinal = propuestos
+    .filter((c) => !c.documentos.some((d) => facUsadas.has(d)) && !c.movimientos.some((m) => movUsados.has(m)))
+    .map(expandir);
+
+  const movsReales = new Set(movimientosCrudos.map((m) => m.id));
+  const usadosReales = new Set(conciliadosFinal.flatMap((c) => c.movimientos));
+
   // ── D · KPIs ─────────────────────────────────────────────
   const totalFacturado = Number(facturas.reduce((a, f) => a + Math.abs(f.total), 0).toFixed(2));
-  const montoConciliado = Number(conciliados
+  const montoConciliado = Number(conciliadosFinal
     .flatMap((c) => c.documentos)
     .reduce((a, d) => a + Math.abs(facturas.find((f) => f.archivo === d)?.total ?? 0), 0).toFixed(2));
 
   const relaciones = { '1:1': 0, 'N:1': 0, '1:N': 0 } as Record<Candidato['relacion'], number>;
-  for (const c of conciliados) relaciones[c.relacion]++;
+  for (const c of conciliadosFinal) relaciones[c.relacion]++;
 
   return {
-    conciliados,
-    propuestos: propuestos.filter((c) =>
-      !c.documentos.some((d) => facUsadas.has(d)) && !c.movimientos.some((m) => movUsados.has(m))),
+    conciliados: conciliadosFinal,
+    propuestos: propuestosFinal,
     facturasSinCobrar: facturas.filter((f) => !facUsadas.has(f.archivo)).map((f) => f.archivo),
-    movimientosSinComprobante: movimientos.filter((m) => !movUsados.has(m.id)).map((m) => m.id),
+    movimientosSinComprobante: [...movsReales].filter((id) => !usadosReales.has(id)),
     kpi: {
       totalFacturado,
       montoConciliado,
@@ -401,13 +534,32 @@ export function conciliar(
       pctConciliadoAuto: Number(((montoConciliado / totalFacturado) * 100).toFixed(1)),
       pctExcepciones: Number(((propuestos.length / Math.max(1, facturas.length)) * 100).toFixed(1)),
       relaciones,
-      diferenciasExplicadas: conciliados.filter((c) => c.diferencia && c.diferencia.tipo !== 'sin_identificar').length,
-      diferenciasSinExplicar: conciliados.filter((c) => c.diferencia?.tipo === 'sin_identificar').length,
+      diferenciasExplicadas: conciliadosFinal.filter((c) => c.diferencia && c.diferencia.tipo !== 'sin_identificar').length,
+      diferenciasSinExplicar: conciliadosFinal.filter((c) => c.diferencia?.tipo === 'sin_identificar').length,
     },
   };
 }
 
-/** Subconjuntos de tamaño entre min y max. Acotado: el pool ya viene filtrado. */
+/**
+ * Ordena los candidatos de un pago partido por qué tan plausible es que sean
+ * piezas de ESTA venta, para que el corte de `subconjuntos` deje afuera lo
+ * irrelevante y no lo correcto.
+ *
+ * Primero el nombre: si la descripción trae al cliente, es casi seguro suyo.
+ * Después la proximidad de fecha. El monto no ordena — una pieza puede ser
+ * cualquier fracción del total.
+ */
+function priorizar(movs: Mov[], f: Fact): Mov[] {
+  return movs
+    .map((m) => ({
+      m,
+      peso: similitudEntidad(f.razon_cliente, m.descripcion) * 10 - Math.abs(dias(f.fecha, m.fecha)) / 100,
+    }))
+    .sort((a, b) => b.peso - a.peso)
+    .map((x) => x.m);
+}
+
+/** Subconjuntos de tamaño entre min y max. Acotado: el pool ya viene priorizado. */
 function* subconjuntos<T>(arr: T[], min: number, max: number): Generator<T[]> {
   const n = Math.min(arr.length, 12);            // corte duro: 2^12 es el techo
   for (let mask = 1; mask < (1 << n); mask++) {
