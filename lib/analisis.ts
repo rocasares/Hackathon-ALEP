@@ -1,5 +1,5 @@
 /**
- * PERITO — módulo 2 · análisis de pagos y transacciones.
+ * ATLAS NEX — módulo 2 · análisis de pagos y transacciones.
  *
  * EL PRINCIPIO QUE ORDENA TODO ESTE ARCHIVO
  * Acá se CALCULA. Todos los montos, variaciones y porcentajes salen de código

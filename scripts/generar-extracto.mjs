@@ -1,5 +1,5 @@
 /**
- * PERITO — generador de extracto bancario sintético.
+ * ATLAS NEX — generador de extracto bancario sintético.
  *
  * POR QUÉ EXISTE
  * Las 70 facturas del set son reales. El extracto bancario que las acompaña no

@@ -1,4 +1,4 @@
-# PERITO
+# ATLAS NEX
 
 Conciliación bancaria local para estudios contables. Toda la inferencia corre en
 la máquina del usuario a través de **QVAC by Tether** — ningún documento sale del

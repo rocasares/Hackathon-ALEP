@@ -1,5 +1,5 @@
 /**
- * PERITO — carga de datos para la interfaz.
+ * ATLAS NEX — carga de datos para la interfaz.
  *
  * Lee los CSV del set sintético de un año. Corre SOLO en el servidor: el
  * navegador nunca ve el filesystem, y en producción esto se reemplaza por la

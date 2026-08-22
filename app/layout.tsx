@@ -3,7 +3,7 @@ import Rail from '@/components/Rail';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'PERITO',
+  title: 'ATLAS NEX',
   description: 'Conciliación bancaria local para estudios contables',
 };
 

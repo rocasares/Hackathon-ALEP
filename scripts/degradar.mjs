@@ -1,5 +1,5 @@
 /**
- * PERITO — degradador de documentos.
+ * ATLAS NEX — degradador de documentos.
  *
  * POR QUÉ EXISTE
  * Las 70 facturas del set son PDFs nativos, limpios y perfectos. El track pide
@@ -65,6 +65,11 @@ const niveles = (args.includes('--niveles') ? args[args.indexOf('--niveles') + 1
  *   severo  · poca luz y ángulo           → se pierde el renglón de IVA, confusión 3↔5
  */
 const NIVELES = {
+  // Nivel para la pantalla de revisión: SIN rotación, para que los recuadros de
+  // campo derivados de las coordenadas del PDF caigan exactos sobre la imagen.
+  // Cuando el OCR real corra, los recuadros salen de él y la rotación deja de
+  // importar — este nivel existe sólo para tener procedencia visual hoy.
+  revision: { escala: 1.5, rot: 0, brillo: 0.86, contraste: 0.95, blur: 0.4, ruido: 8, jpeg: 62, sombra: 0.10, vineta: 0.12 },
   leve:   { escala: 2.0, rot: 1.5, brillo: 0.96, contraste: 1.00, blur: 0.0, ruido: 4,  jpeg: 82, sombra: 0.00, vineta: 0.06 },
   medio:  { escala: 1.5, rot: 3.0, brillo: 0.80, contraste: 0.93, blur: 0.6, ruido: 11, jpeg: 55, sombra: 0.18, vineta: 0.18 },
   severo: { escala: 1.1, rot: 6.0, brillo: 0.60, contraste: 0.83, blur: 1.1, ruido: 19, jpeg: 32, sombra: 0.34, vineta: 0.32 },

@@ -1,5 +1,5 @@
 /**
- * PERITO — capa determinística.
+ * ATLAS NEX — capa determinística.
  *
  * Diez verificaciones que NO usan inteligencia artificial.
  * Esta es la parte del sistema que no puede alucinar.

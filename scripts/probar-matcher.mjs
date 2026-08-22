@@ -1,5 +1,5 @@
 /**
- * PERITO — prueba del matcher contra la clave de respuesta.
+ * ATLAS NEX — prueba del matcher contra la clave de respuesta.
  *
  * Corre la conciliación sobre la verdad de campo (sin modelo de por medio) y la
  * compara con eval/clave_matching.json. Mide el techo del matcher: si acá no

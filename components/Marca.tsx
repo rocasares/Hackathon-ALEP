@@ -1,8 +1,9 @@
 /**
- * Marca PERITO — isotipo y lockup.
+ * Marca ATLAS NEX — isotipo y lockup.
  *
- * El isotipo es el cotejo: dos renglones entran —comprobante y extracto— y
- * resuelven en un solo nodo. Es el matcher dibujado.
+ * El isotipo es el nexo: dos renglones entran —comprobante y extracto— y
+ * resuelven en un solo nodo. Es el nombre dibujado; el punto lleno es el
+ * asiento conciliado.
  *
  * El trazo se engrosa cuando la pieza es chica: a 16 px un trazo de 2 desaparece.
  * Los tres tamaños son los únicos permitidos; no interpolar.
@@ -24,7 +25,7 @@ export function Isotipo({
   degrade?: boolean;
 }) {
   const { px, grosor, punto } = TRAZO[tamano];
-  const id = `perito-grad-${tamano}`;
+  const id = `nex-grad-${tamano}`;
   const tinta = degrade ? `url(#${id})` : 'var(--violet-2)';
 
   return (
@@ -62,8 +63,14 @@ export function Isotipo({
 }
 
 /**
- * Lockup horizontal. `version` muestra el v0.1 apoyado en la línea de base;
- * se apaga en portadas y en cualquier pieza que no sea la aplicación.
+ * Lockup horizontal.
+ *
+ * Dos pesos en un solo bloque óptico: ATLAS es la casa (500, --ink-2, tracking
+ * abierto) y NEX es el producto (800, --ink). Nunca al revés — pesa más lo que
+ * se compra.
+ *
+ * `version` muestra el v0.1 apoyado en la línea de base; se apaga en portadas y
+ * en cualquier pieza que no sea la aplicación.
  */
 export default function Marca({
   tamano = 'medio',
@@ -79,7 +86,9 @@ export default function Marca({
   return (
     <span className="marca">
       <Isotipo tamano={tamano} degrade={degrade} />
-      <b style={{ fontSize: palabra }}>PERITO</b>
+      <b style={{ fontSize: palabra }}>
+        <i>ATLAS</i>NEX
+      </b>
       {version && <span>{version}</span>}
 
       <style jsx>{`
@@ -89,6 +98,14 @@ export default function Marca({
           letter-spacing: 0.02em;
           line-height: 1;
           color: var(--ink);
+          white-space: nowrap;
+        }
+        i {
+          font-style: normal;
+          font-weight: 500;
+          letter-spacing: 0.08em;
+          color: var(--ink-2);
+          margin-right: 0.34em;
         }
         span {
           font-family: var(--mono);

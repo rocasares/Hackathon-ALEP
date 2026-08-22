@@ -1,5 +1,5 @@
 /**
- * PERITO — contratos compartidos.
+ * ATLAS NEX — contratos compartidos.
  *
  * Este archivo es la frontera entre el pipeline (A) y la interfaz (B).
  * Si algo cruza de un lado al otro, su tipo vive acá.

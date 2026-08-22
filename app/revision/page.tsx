@@ -1,21 +1,37 @@
-export default function Pagina() {
-  return (
-    <>
-      <div className="head">
-        <div>
-          <h1>Cola de revisión</h1>
-          <p>Un comprobante a la vez. Tocá un campo y se ilumina en el papel.</p>
-        </div>
-      </div>
+import Revisor from '@/components/Revisor';
+import { documentosDeRevision } from '@/lib/revision';
 
-      <div className="card">
-        <div className="card-h"><h2>Pendiente</h2><span className="hint">pantalla 02</span></div>
-        <div style={{ padding: '16px' }}>
-          <p style={{ margin: 0, color: 'var(--ink-2)' }}>
-            Ver el mockup de referencia. Los datos salen de <code>data/anio/</code>.
-          </p>
+export const dynamic = 'force-dynamic';
+
+export default function Revision() {
+  const docs = documentosDeRevision();
+
+  if (!docs.length) {
+    return (
+      <>
+        <div className="head">
+          <div>
+            <h1>Cola de revisión</h1>
+            <p>Todavía no hay documentos preparados.</p>
+          </div>
         </div>
-      </div>
-    </>
-  );
+        <div className="card">
+          <div className="card-h"><h2>Faltan datos</h2></div>
+          <div style={{ padding: 18 }}>
+            <p style={{ margin: '0 0 12px', color: 'var(--ink-2)' }}>
+              Generá las imágenes y los recuadros de campo:
+            </p>
+            <pre className="mono" style={{
+              margin: 0, padding: '12px 14px', background: 'var(--surface-2)',
+              border: '1px solid var(--line)', borderRadius: 'var(--r-sm)', fontSize: 12.5,
+              whiteSpace: 'pre-wrap',
+            }}>{`node scripts/degradar.mjs "./data/FC PDF" ./data/degradadas --niveles revision
+node scripts/campos-revision.mjs`}</pre>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  return <Revisor documentos={docs} />;
 }

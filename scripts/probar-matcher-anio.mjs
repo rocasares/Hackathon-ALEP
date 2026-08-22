@@ -1,5 +1,5 @@
 /**
- * PERITO — prueba del matcher contra el año completo.
+ * ATLAS NEX — prueba del matcher contra el año completo.
  *
  * El set de seis meses no tiene ventas financiadas, así que la rama 1:N nunca
  * se ejercita. El año sintético sí: 150 ventas en cuotas y 28 pagadas con tres

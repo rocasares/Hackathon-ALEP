@@ -1,5 +1,5 @@
 /**
- * PERITO — generador de un año de operación.
+ * ATLAS NEX — generador de un año de operación.
  *
  * QUÉ ES Y QUÉ NO ES
  * Esto es un set SINTÉTICO de registros: facturas sin imagen y su extracto

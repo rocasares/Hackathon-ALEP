@@ -1,5 +1,5 @@
 /**
- * PERITO — banco de pruebas de la capa determinística.
+ * ATLAS NEX — banco de pruebas de la capa determinística.
  *
  * QUÉ HACE
  * Toma las 70 facturas reales, les inyecta errores CONOCIDOS y etiquetados,

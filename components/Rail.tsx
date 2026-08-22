@@ -3,6 +3,7 @@
 import { Fragment } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Marca from '@/components/Marca';
 
 /**
  * Riel de navegación.
@@ -25,8 +26,7 @@ export default function Rail() {
   return (
     <aside className="rail">
       <div className="brand">
-        <b>PERITO</b>
-        <span>v0.1</span>
+        <Marca tamano="medio" version="v0.1" />
       </div>
 
       <nav>

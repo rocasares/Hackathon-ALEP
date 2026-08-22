@@ -1,5 +1,5 @@
 /**
- * PERITO — parche de arranque del worker de QVAC.
+ * ATLAS NEX — parche de arranque del worker de QVAC.
  *
  * EL PROBLEMA
  * El SDK espera 30 segundos a que el worker de Bare levante y aborta con

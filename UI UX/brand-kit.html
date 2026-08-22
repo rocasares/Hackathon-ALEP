@@ -171,7 +171,7 @@ section{ padding:64px 0 0; }
 .marca.apilada{ flex-direction:column; gap:14px; }
 .marca.apilada .palabra{ font-size:21px; }
 
-/* diagrama de aire: la caja de reserva mide una P */
+/* diagrama de aire: la caja de reserva mide una N de NEX */
 .aire{ position:relative; padding:30px; }
 .aire .reserva{
   position:absolute; inset:0;
@@ -386,6 +386,32 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
 .relato .texto b{ color:var(--ink); font-weight:600; }
 .relato.corto .texto{ font-size:19px; font-weight:700; letter-spacing:-.025em; color:var(--ink); line-height:1.35; }
 
+/* convivencia de marcas hermanas */
+.convive{ margin-top:26px; overflow:hidden; }
+.convive .cuerpo-conv{ padding:18px 20px 20px; display:flex; flex-direction:column; gap:13px; }
+.convive p{ margin:0; font-size:13.5px; color:var(--ink-2); line-height:1.6; }
+.convive p b{ color:var(--ink); font-weight:600; }
+.convive ol{
+  margin:0; padding:0; list-style:none; counter-reset:regla;
+  display:flex; flex-direction:column; gap:10px;
+}
+.convive ol li{
+  counter-increment:regla; position:relative; padding-left:30px;
+  font-size:13.5px; color:var(--ink-2); line-height:1.55;
+}
+.convive ol li::before{
+  content:counter(regla); position:absolute; left:0; top:1px;
+  width:20px; height:20px; border-radius:50%;
+  background:var(--violet-soft); border:1px solid var(--violet-line);
+  color:var(--violet-2); font-family:var(--mono); font-size:10.5px; font-weight:600;
+  display:flex; align-items:center; justify-content:center;
+}
+.convive ol li b{ color:var(--ink); font-weight:600; }
+.convive .corte{
+  padding-top:12px; border-top:1px solid var(--line-soft);
+  font-size:12.8px; color:var(--ink-3);
+}
+
 /* ── cierre ────────────────────────────────────── */
 .cierre{
   margin-top:72px; padding-top:26px; border-top:1px solid var(--line);
@@ -518,6 +544,26 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
           cola manual, marcado.
         </div>
       </article>
+    </div>
+
+    <div class="caja convive">
+      <div class="caja-h">Convivencia con ATLAS Nexus <span class="hint">regla de desambiguación</span></div>
+      <div class="cuerpo-conv">
+        <p>
+          La casa ya tiene un producto llamado <b>ATLAS Nexus</b> — pagos para comercios — y
+          las dos marcas juegan en finanzas. Habladas, <i>Nex</i> y <i>Nexus</i> son la misma
+          palabra. Tres reglas resuelven el choque sin renombrar nada:
+        </p>
+        <ol>
+          <li><b>NEX siempre en versales, siempre de tres letras.</b> Escrito nunca se confunde: <span class="mono">ATLAS NEX</span> contra <span class="mono">Atlas Nexus</span>.</li>
+          <li><b>Nunca aparecen en la misma pieza</b> sin su bajada. Si comparten slide, cada una lleva su renglón: «NEX, conciliación» / «Nexus, cobros».</li>
+          <li><b>Hablado se dice el oficio, no la marca.</b> Ante jurado o cliente: «el conciliador» y «el de cobros». La marca se lee en pantalla, no se deletrea.</li>
+        </ol>
+        <p class="corte">
+          Si en algún momento las dos salen a vender juntas al mismo comprador, esto deja de
+          alcanzar y hay que renombrar una. Queda anotado, no resuelto.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -694,8 +740,8 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
         <div class="lock">
           <div class="aire">
             <div class="reserva"></div>
-            <span class="cota arriba">1 P</span>
-            <span class="cota izq">1 P</span>
+            <span class="cota arriba">1 N</span>
+            <span class="cota izq">1 N</span>
             <div class="marca">
               <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M3 7.5H10C13.2 7.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"></path>
@@ -728,7 +774,7 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
       <div class="caja regla si">
         <h4>Así sí</h4>
         <ul>
-          <li>Aire de reserva: <b>una altura de P</b> en los cuatro lados, siempre.</li>
+          <li>Aire de reserva: <b>una altura de N</b> —la de NEX— en los cuatro lados, siempre.</li>
           <li>Isotipo solo desde <b>16 px</b>; lockup completo desde <b>96 px</b> de ancho.</li>
           <li>Sobre <span class="mono">--void</span> o <span class="mono">--surface</span>. El fondo oscuro es parte de la marca.</li>
           <li>En una sola tinta, <span class="mono">--violet-2</span> plano: el degradé es opcional, no obligatorio.</li>
@@ -737,6 +783,8 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
       <div class="caja regla no">
         <h4>Así no</h4>
         <ul>
+          <li>No invertir los pesos: <b>NEX nunca pesa menos que ATLAS</b>.</li>
+          <li>No partir el bloque: ATLAS y NEX no van en dos renglones ni separados por un ícono.</li>
           <li>Nada de <b>sombra, contorno ni bisel</b> sobre el isotipo.</li>
           <li>No reemplazar el punto por un tilde, un candado ni un ícono de banco.</li>
           <li>No estirar el tracking de la palabra para llenar un ancho.</li>
@@ -967,7 +1015,7 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
               <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2.4" stroke-linecap="round"></path>
               <circle cx="19" cy="12" r="2.8" fill="#a78bfa"></circle>
             </svg>
-            PERITO
+            <span class="palabra" style="font-size:12.5px"><em>ATLAS</em>NEX</span>
           </div>
         </div>
         <div class="nota"><b>Favicon.</b> Isotipo solo, trazo engrosado a 2,4 y punto a 2,8: a 16 px el trazo fino desaparece.</div>

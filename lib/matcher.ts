@@ -1,5 +1,5 @@
 /**
- * PERITO — motor de conciliación.
+ * ATLAS NEX — motor de conciliación.
  *
  * Un matcher ingenuo compara importes y fechas. Falla en los tres casos que
  * más aparecen en la práctica, y que el documento funcional marca como pains:

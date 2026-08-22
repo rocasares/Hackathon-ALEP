@@ -1,5 +1,5 @@
 /**
- * PERITO — medición de arranque.
+ * ATLAS NEX — medición de arranque.
  *
  * ESTE ES EL NÚMERO QUE DECIDE EL PLAN.
  *
@@ -27,7 +27,7 @@ const DIR = arg('--dir', './data/degradadas');
 
 const t = (ms) => (ms / 1000).toFixed(2) + ' s';
 
-console.log('\nPERITO · medición de arranque\n' + '─'.repeat(60));
+console.log('\nATLAS NEX · medición de arranque\n' + '─'.repeat(60));
 
 // ── 1 · el SDK responde ──────────────────────────────────────
 let sdk;
@@ -100,12 +100,12 @@ for (const img of imagenes) {
 const medOcr = tiemposOcr.length ? tiemposOcr.reduce((a, b) => a + b, 0) / tiemposOcr.length : 0;
 
 // ── 4 · extracción ───────────────────────────────────────────
-const SRC_TEXTO = process.env.PERITO_MODELO_TEXTO;
+const SRC_TEXTO = process.env.ATLAS_MODELO_TEXTO;
 let medGen = null;
 
 if (!SRC_TEXTO) {
   console.log('\nEXTRACCIÓN · omitida');
-  console.log('  Definí PERITO_MODELO_TEXTO con el src del modelo de texto.');
+  console.log('  Definí ATLAS_MODELO_TEXTO con el src del modelo de texto.');
   console.log('  Candidatos del registro del SDK:');
   const cands = Object.keys(sdk).filter((k) => /^(QWEN3|GEMMA4|LLAMA_3)/.test(k) && /Q4|Q8/.test(k)).slice(0, 8);
   for (const c of cands) console.log('    ' + c);

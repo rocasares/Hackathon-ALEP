@@ -1,5 +1,5 @@
 /**
- * PERITO — extractor de verdad de campo.
+ * ATLAS NEX — extractor de verdad de campo.
  *
  * Las facturas del set son PDFs NATIVOS: el texto está adentro, exacto.
  * Eso nos deja derivar la verdad de campo de forma programática y sin errores
