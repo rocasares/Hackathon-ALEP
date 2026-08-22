@@ -30,3 +30,6 @@ docs/
 data/anio/
 
 qvac/
+
+.next/
+next-env.d.ts

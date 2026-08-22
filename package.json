@@ -2,7 +2,6 @@
   "name": "perito",
   "version": "0.1.0",
   "private": true,
-  "type": "module",
   "license": "MIT",
   "scripts": {
     "gt": "node scripts/ground-truth.mjs \"./data/FC PDF\" > eval/ground_truth.csv",
@@ -13,15 +12,24 @@
     "qvac:setup": "npx qvac bundle sdk && node scripts/parche-qvac.mjs",
     "medir": "node scripts/medir-modelo.mjs",
     "anio": "node scripts/generar-anio.mjs",
-    "matcher": "npx esbuild lib/matcher.ts --bundle --format=esm --platform=node --outfile=.tmp/matcher.mjs && node scripts/probar-matcher.mjs"
+    "matcher": "npx esbuild lib/matcher.ts --bundle --format=esm --platform=node --outfile=.tmp/matcher.mjs && node scripts/probar-matcher.mjs",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
   },
   "dependencies": {
     "@napi-rs/canvas": "^1.0.7",
     "@qvac/sdk": "^0.17.1",
+    "next": "^16.3.2",
     "pdfjs-dist": "^4.10.38",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "sharp": "^0.35.3"
   },
   "devDependencies": {
-    "@qvac/cli": "^0.11.0"
+    "@qvac/cli": "^0.11.0",
+    "@types/node": "^26.2.0",
+    "@types/react": "^19.2.18",
+    "typescript": "^7.0.2"
   }
 }
