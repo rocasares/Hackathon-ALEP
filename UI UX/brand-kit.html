@@ -1,0 +1,1071 @@
+<title>Marca ATLAS NEX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap">
+
+<style>
+/* ─────────────────────────────────────────────────────────────
+   MARCA ATLAS NEX — hoja de especificación.
+   Tema único oscuro, a propósito: el producto es una herramienta
+   oscura y la marca vive ahí. Todo color se pinta explícito.
+   Los tokens son los mismos de app/globals.css, sin excepción.
+   ───────────────────────────────────────────────────────────── */
+:root{
+  --void:#08070d;
+  --paper:#0b0a12;
+  --surface:#131120;
+  --surface-2:#1a1729;
+  --line:#262138;
+  --line-soft:#1e1a2e;
+
+  --ink:#f0eefb;
+  --ink-2:#a49dc4;
+  --ink-3:#6e6790;
+
+  --violet:#8b5cf6;
+  --violet-2:#a78bfa;
+  --violet-deep:#6d28d9;
+  --violet-soft:#1e1836;
+  --violet-line:#3a2f63;
+  --grad:linear-gradient(135deg,#7c3aed 0%,#a855f7 48%,#c084fc 100%);
+  --glow:0 0 44px -8px rgba(139,92,246,.55);
+
+  --ok:#34d399;   --ok-bg:#0d2b22;   --ok-line:#1d4d3c;
+  --warn:#fbbf24; --warn-bg:#2e2410; --warn-line:#54401a;
+  --bad:#fb7185;  --bad-bg:#31141e;  --bad-line:#5c2233;
+  --unk:#c4b5fd;  --unk-bg:#1d1833;  --unk-line:#372c58;
+
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 16px 40px -20px rgba(0,0,0,.9);
+  --r:10px;
+  --r-sm:6px;
+
+  --sans:"Manrope", system-ui, -apple-system, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "Cascadia Mono", monospace;
+}
+
+*{ box-sizing:border-box; }
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:var(--sans); font-size:14.5px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  margin:0;
+}
+:focus-visible{ outline:2px solid var(--violet); outline-offset:3px; border-radius:3px; }
+@media (prefers-reduced-motion:reduce){ *{ transition:none !important; animation:none !important; } }
+
+.mono{ font-family:var(--mono); font-variant-numeric:tabular-nums; }
+
+/* ── envoltura ─────────────────────────────────── */
+.hoja{ max-width:1080px; margin:0 auto; padding:0 32px 120px; position:relative; }
+.hoja::before{
+  content:""; position:fixed; top:-380px; right:-200px;
+  width:900px; height:680px; pointer-events:none; z-index:0;
+  background:radial-gradient(closest-side, rgba(139,92,246,.18), rgba(139,92,246,0) 72%);
+  filter:blur(14px);
+}
+.hoja > *{ position:relative; z-index:1; }
+
+/* ── cabecera ──────────────────────────────────── */
+.tapa{
+  padding:72px 0 44px;
+  border-bottom:1px solid var(--line);
+  display:grid; grid-template-columns:auto 1fr; gap:34px; align-items:start;
+}
+.tapa .firma{ display:flex; flex-direction:column; gap:14px; }
+.tapa h1{
+  font-size:15px; font-weight:700; margin:0; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--violet-2);
+}
+.tapa .tesis{
+  font-size:26px; font-weight:700; letter-spacing:-.03em; line-height:1.24;
+  margin:14px 0 14px; text-wrap:balance; max-width:22ch;
+}
+.tapa .bajada{ color:var(--ink-2); margin:0; max-width:56ch; }
+.tapa .meta{
+  margin-top:20px; display:flex; gap:8px; flex-wrap:wrap;
+  font-family:var(--mono); font-size:11.5px; color:var(--ink-3);
+}
+.tapa .meta span{
+  border:1px solid var(--line); background:var(--surface);
+  border-radius:20px; padding:3px 11px;
+}
+
+/* ── secciones ─────────────────────────────────── */
+section{ padding:64px 0 0; }
+.rotulo{
+  display:flex; align-items:baseline; gap:14px; margin-bottom:8px;
+}
+.rotulo .cifra{
+  font-family:var(--mono); font-size:11px; color:var(--violet-2);
+  letter-spacing:.1em; font-weight:600;
+}
+.rotulo h2{
+  font-size:22px; font-weight:700; letter-spacing:-.025em; margin:0;
+}
+.entrada{ color:var(--ink-2); max-width:64ch; margin:0 0 30px; }
+.entrada b{ color:var(--ink); font-weight:600; }
+
+/* ── tarjetas base ─────────────────────────────── */
+.caja{
+  background:var(--surface); border:1px solid var(--line);
+  border-radius:var(--r); box-shadow:var(--shadow);
+}
+.caja-h{
+  padding:14px 18px; border-bottom:1px solid var(--line);
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  background:linear-gradient(180deg, rgba(139,92,246,.055), transparent);
+  font-size:13.5px; font-weight:600;
+}
+.caja-h .hint{ font-family:var(--mono); font-size:11.5px; color:var(--ink-3); font-weight:400; }
+
+/* ── isotipos ──────────────────────────────────── */
+.opciones{ display:grid; grid-template-columns:repeat(auto-fit,minmax(292px,1fr)); gap:18px; }
+.opcion{ display:flex; flex-direction:column; overflow:hidden; }
+.opcion.elegida{ border-color:var(--violet-line); box-shadow:var(--glow); }
+.lienzo{
+  padding:38px 22px 30px; display:flex; align-items:center; justify-content:center;
+  background:
+    radial-gradient(420px 200px at 50% 0%, rgba(139,92,246,.13), rgba(139,92,246,0) 70%),
+    var(--void);
+  border-bottom:1px solid var(--line);
+}
+.opcion .cuerpo{ padding:16px 18px 20px; display:flex; flex-direction:column; gap:11px; flex:1; }
+.opcion h3{ font-size:14.5px; font-weight:700; margin:0; letter-spacing:-.01em; }
+.opcion p{ margin:0; font-size:13px; color:var(--ink-2); line-height:1.55; }
+.opcion .veredicto{
+  margin-top:auto; padding-top:12px; border-top:1px solid var(--line-soft);
+  font-family:var(--mono); font-size:11px; color:var(--ink-3);
+}
+.opcion.elegida .veredicto{ color:var(--violet-2); }
+
+/* escalas de prueba: el mismo trazo a 16 px decide */
+.escala{
+  display:flex; align-items:flex-end; gap:18px;
+  padding:14px 18px; border-top:1px solid var(--line-soft);
+  background:var(--surface-2);
+}
+.escala figure{ margin:0; display:flex; flex-direction:column; align-items:center; gap:6px; }
+.escala figcaption{ font-family:var(--mono); font-size:10px; color:var(--ink-3); }
+
+/* ── lockup y aire ─────────────────────────────── */
+.lockups{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.lock{
+  padding:34px 26px; display:flex; align-items:center; justify-content:center; min-height:172px;
+  background:var(--void);
+}
+.marca{ display:flex; align-items:center; gap:12px; }
+/* Wordmark de dos pesos: ATLAS es la casa, NEX es el producto.
+   La jerarquía se lee sin leer — pesa más lo que se compra. */
+.marca .palabra{
+  font-size:27px; font-weight:800; letter-spacing:.02em; line-height:1;
+  color:var(--ink); white-space:nowrap;
+}
+.marca .palabra em{
+  font-style:normal; font-weight:500; letter-spacing:.08em;
+  color:var(--ink-2); margin-right:.34em;
+}
+.marca .version{
+  font-family:var(--mono); font-size:11px; color:var(--ink-3);
+  align-self:flex-end; padding-bottom:2px;
+}
+.marca.apilada{ flex-direction:column; gap:14px; }
+.marca.apilada .palabra{ font-size:21px; }
+
+/* diagrama de aire: la caja de reserva mide una N de NEX */
+.aire{ position:relative; padding:30px; }
+.aire .reserva{
+  position:absolute; inset:0;
+  border:1px dashed var(--violet-line);
+  border-radius:4px;
+}
+.aire .cota{
+  position:absolute; font-family:var(--mono); font-size:10px; color:var(--violet-2);
+  background:var(--void); padding:0 5px;
+}
+.aire .cota.arriba{ top:-8px; left:50%; transform:translateX(-50%); }
+.aire .cota.izq{ left:-10px; top:50%; transform:translateY(-50%) rotate(-90deg); }
+
+.reglas{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:18px; }
+.regla{ padding:18px 20px; }
+.regla h4{
+  margin:0 0 12px; font-size:11px; letter-spacing:.11em; text-transform:uppercase;
+  font-weight:700; color:var(--ink-3);
+}
+.regla ul{ margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px; }
+.regla li{ font-size:13px; color:var(--ink-2); display:flex; gap:9px; align-items:flex-start; }
+.regla li::before{
+  content:""; width:5px; height:5px; border-radius:50%; flex:none; margin-top:8px;
+}
+.regla.si li::before{ background:var(--ok); }
+.regla.no li::before{ background:var(--bad); }
+.regla li b{ color:var(--ink); font-weight:600; }
+
+/* ── color ─────────────────────────────────────── */
+.paletas{ display:flex; flex-direction:column; gap:26px; }
+.familia > h3{
+  margin:0 0 4px; font-size:12px; letter-spacing:.11em; text-transform:uppercase;
+  font-weight:700; color:var(--ink-3);
+}
+.familia > p{ margin:0 0 14px; font-size:13px; color:var(--ink-2); max-width:70ch; }
+.muestras{ display:grid; grid-template-columns:repeat(auto-fill,minmax(158px,1fr)); gap:10px; }
+.muestra{
+  border:1px solid var(--line); border-radius:var(--r-sm); overflow:hidden;
+  background:var(--surface);
+}
+.muestra .pano{ height:58px; border-bottom:1px solid var(--line); }
+.muestra .pie{ padding:8px 10px 10px; display:flex; flex-direction:column; gap:2px; }
+.muestra .tok{ font-family:var(--mono); font-size:11.5px; color:var(--ink); }
+.muestra .hex{ font-family:var(--mono); font-size:11px; color:var(--ink-3); text-transform:uppercase; }
+.muestra .rol{ font-size:11px; color:var(--ink-2); margin-top:3px; line-height:1.4; }
+
+.ley{
+  margin-top:18px; padding:15px 17px; border:1px solid var(--violet-line);
+  background:linear-gradient(135deg, rgba(139,92,246,.10), rgba(139,92,246,.02));
+  border-radius:var(--r); font-size:13.5px; color:var(--ink-2); line-height:1.6;
+}
+.ley b{ color:var(--violet-2); font-weight:700; }
+
+/* ── tipografía ────────────────────────────────── */
+.tipos{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:20px; }
+.tipo{ padding:22px 24px; }
+.tipo .nombre{ font-size:19px; font-weight:700; letter-spacing:-.02em; }
+.tipo .uso{ font-size:12.5px; color:var(--ink-2); margin:6px 0 16px; }
+.tipo .muestrario{ font-size:30px; line-height:1.2; letter-spacing:-.02em; color:var(--ink); }
+.tipo .pesos{ margin-top:14px; font-size:11.5px; color:var(--ink-3); font-family:var(--mono); }
+.tipo.m .muestrario{ font-family:var(--mono); font-size:23px; letter-spacing:0; }
+
+.escala-tipo{ width:100%; }
+.tabla{ overflow-x:auto; }
+table{ width:100%; border-collapse:collapse; font-size:13px; }
+th{
+  text-align:left; font-size:10.5px; text-transform:uppercase; letter-spacing:.11em;
+  color:var(--ink-3); font-weight:700; padding:11px 16px;
+  border-bottom:1px solid var(--line); white-space:nowrap; background:var(--surface-2);
+}
+td{ padding:12px 16px; border-bottom:1px solid var(--line-soft); vertical-align:middle; }
+tbody tr:last-child td{ border-bottom:none; }
+tbody tr:hover{ background:var(--surface-2); }
+td.t{ font-family:var(--mono); font-variant-numeric:tabular-nums; color:var(--ink-2); white-space:nowrap; }
+td .ej{ color:var(--ink); }
+
+/* ── estados ───────────────────────────────────── */
+.pill{
+  display:inline-flex; align-items:center; gap:6px; white-space:nowrap;
+  font-size:11.5px; font-weight:700; padding:3px 9px; border-radius:20px;
+  border:1px solid transparent;
+}
+.pill::before{ content:""; width:5px; height:5px; border-radius:50%; background:currentColor; }
+.s-conciliado{ background:var(--ok-bg);   color:var(--ok);   border-color:var(--ok-line); }
+.s-revisar   { background:var(--warn-bg); color:var(--warn); border-color:var(--warn-line); }
+.s-observado { background:var(--bad-bg);  color:var(--bad);  border-color:var(--bad-line); }
+.s-nose      { background:var(--unk-bg);  color:var(--unk);  border-color:var(--unk-line); }
+td .que{ font-size:12.5px; color:var(--ink-2); }
+td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
+
+/* ── voz ───────────────────────────────────────── */
+.principios{ display:grid; grid-template-columns:repeat(auto-fit,minmax(238px,1fr)); gap:14px; margin-bottom:22px; }
+.principio{ padding:18px 20px; display:flex; flex-direction:column; gap:7px; }
+.principio h4{ margin:0; font-size:14px; font-weight:700; letter-spacing:-.01em; }
+.principio p{ margin:0; font-size:12.8px; color:var(--ink-2); line-height:1.55; }
+
+.cotejo{ display:grid; grid-template-columns:1fr 1fr; gap:0; overflow:hidden; }
+.cotejo > div{ padding:18px 20px; display:flex; flex-direction:column; gap:14px; }
+.cotejo .der{ border-left:1px solid var(--line); }
+.cotejo h4{
+  margin:0; font-size:11px; letter-spacing:.11em; text-transform:uppercase; font-weight:700;
+  display:flex; align-items:center; gap:7px;
+}
+.cotejo .izq h4{ color:var(--ok); }
+.cotejo .der h4{ color:var(--bad); }
+.cotejo q{ display:block; font-size:13.2px; line-height:1.5; quotes:none; }
+.cotejo .izq q{ color:var(--ink); }
+.cotejo .der q{ color:var(--ink-3); text-decoration:line-through; text-decoration-color:var(--bad-line); }
+
+/* ── aplicaciones ──────────────────────────────── */
+.aplic{ display:grid; grid-template-columns:repeat(auto-fit,minmax(268px,1fr)); gap:18px; }
+.aplic .caja{ display:flex; flex-direction:column; overflow:hidden; }
+.aplic .demo{ padding:24px 20px; background:var(--void); flex:1; display:flex; align-items:center; justify-content:center; }
+.aplic .nota{ padding:13px 18px; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink-2); }
+.aplic .nota b{ color:var(--ink); font-weight:600; }
+
+/* pestaña de navegador */
+.pestana{
+  display:flex; align-items:center; gap:9px; width:100%; max-width:240px;
+  background:var(--surface); border:1px solid var(--line);
+  border-radius:9px 9px 0 0; padding:9px 12px; font-size:12.5px; color:var(--ink-2);
+}
+/* sello local */
+.local{
+  display:flex; gap:9px; align-items:flex-start;
+  background:var(--ok-bg); border:1px solid var(--ok-line);
+  border-radius:var(--r); padding:10px 12px; max-width:212px;
+}
+.local .dot{ width:7px; height:7px; border-radius:50%; background:var(--ok); margin-top:5px; flex:none; }
+.local div{ font-size:11.5px; line-height:1.35; color:var(--ok); font-weight:700; }
+.local em{ display:block; font-style:normal; font-weight:400; opacity:.78; margin-top:2px; }
+/* kpi */
+.kpi{
+  position:relative; overflow:hidden; width:100%; max-width:230px;
+  background:linear-gradient(160deg, rgba(139,92,246,.14), var(--surface) 62%);
+  border:1px solid var(--violet-line); box-shadow:var(--glow);
+  border-radius:var(--r); padding:16px 18px;
+}
+.kpi::after{
+  content:""; position:absolute; inset:0 0 auto 0; height:1px;
+  background:linear-gradient(90deg, transparent, rgba(167,139,250,.55), transparent);
+}
+.kpi .k{ font-size:10.5px; text-transform:uppercase; letter-spacing:.11em; color:var(--ink-3); font-weight:700; }
+.kpi .v{ font-family:var(--mono); font-size:25px; font-weight:500; letter-spacing:-.03em; margin-top:7px; font-variant-numeric:tabular-nums; color:var(--violet-2); }
+.kpi .sub{ font-size:11.5px; color:var(--ink-3); margin-top:3px; }
+/* portada de pitch */
+.portada{
+  width:100%; aspect-ratio:16/9; border-radius:var(--r-sm);
+  background:
+    radial-gradient(420px 240px at 82% -10%, rgba(139,92,246,.34), rgba(139,92,246,0) 68%),
+    var(--void);
+  border:1px solid var(--line);
+  padding:20px; display:flex; flex-direction:column; justify-content:space-between;
+}
+.portada .alto{ font-size:17px; font-weight:800; letter-spacing:-.03em; line-height:1.24; text-wrap:balance; }
+.portada .pie-p{ font-family:var(--mono); font-size:9.5px; color:var(--ink-3); letter-spacing:.06em; }
+
+/* ── nombre y relato ───────────────────────────── */
+.origen{ display:grid; grid-template-columns:1.15fr .85fr; gap:18px; align-items:stretch; }
+.origen .prosa{ padding:24px 26px; display:flex; flex-direction:column; gap:14px; }
+.origen .prosa p{ margin:0; color:var(--ink-2); font-size:14px; line-height:1.62; }
+.origen .prosa p b{ color:var(--ink); font-weight:600; }
+.origen .prosa .casa{
+  font-size:12px; letter-spacing:.11em; text-transform:uppercase; font-weight:700;
+  color:var(--ink-3); margin-bottom:-4px;
+}
+
+/* cadena etimológica: cada eslabón es una derivación real, no un adorno */
+.cadena{
+  display:flex; flex-wrap:wrap; align-items:stretch; gap:0;
+  border:1px solid var(--line); border-radius:var(--r-sm); overflow:hidden;
+  background:var(--void);
+}
+.cadena .eslabon{
+  flex:1 1 108px; padding:12px 13px; min-width:108px;
+  border-right:1px solid var(--line);
+  display:flex; flex-direction:column; gap:3px;
+}
+.cadena .eslabon:last-child{ border-right:none; background:linear-gradient(160deg, rgba(139,92,246,.16), transparent 70%); }
+.cadena .voz{ font-family:var(--mono); font-size:13px; color:var(--ink); font-style:italic; }
+.cadena .eslabon:last-child .voz{ font-style:normal; font-weight:600; color:var(--violet-2); letter-spacing:.04em; }
+.cadena .gloss{ font-size:11px; color:var(--ink-3); line-height:1.4; }
+
+.remate{
+  padding:26px; display:flex; flex-direction:column; justify-content:center; gap:14px;
+  background:
+    radial-gradient(360px 220px at 78% 0%, rgba(139,92,246,.20), rgba(139,92,246,0) 70%),
+    var(--void);
+}
+.remate .frase{
+  font-size:23px; font-weight:700; letter-spacing:-.03em; line-height:1.28;
+  text-wrap:balance; margin:0; color:var(--ink);
+}
+.remate .frase em{ font-style:normal; color:var(--violet-2); }
+.remate .uso{ font-family:var(--mono); font-size:11px; color:var(--ink-3); line-height:1.5; }
+
+.obliga{ margin-top:18px; display:grid; grid-template-columns:repeat(auto-fit,minmax(238px,1fr)); gap:14px; }
+.obliga .caja{ padding:16px 18px; display:flex; flex-direction:column; gap:7px; }
+.obliga h4{ margin:0; font-size:13.5px; font-weight:700; letter-spacing:-.01em; }
+.obliga p{ margin:0; font-size:12.8px; color:var(--ink-2); line-height:1.55; }
+
+.relatos{ margin-top:26px; display:flex; flex-direction:column; gap:14px; }
+.relato{ overflow:hidden; }
+.relato .cab{
+  padding:11px 18px; border-bottom:1px solid var(--line);
+  display:flex; align-items:baseline; justify-content:space-between; gap:14px;
+  background:var(--surface-2);
+}
+.relato .cab b{ font-size:12.5px; font-weight:700; }
+.relato .cab span{ font-family:var(--mono); font-size:11px; color:var(--ink-3); }
+.relato .texto{ padding:17px 19px; font-size:14px; line-height:1.62; color:var(--ink-2); }
+.relato .texto b{ color:var(--ink); font-weight:600; }
+.relato.corto .texto{ font-size:19px; font-weight:700; letter-spacing:-.025em; color:var(--ink); line-height:1.35; }
+
+/* convivencia de marcas hermanas */
+.convive{ margin-top:26px; overflow:hidden; }
+.convive .cuerpo-conv{ padding:18px 20px 20px; display:flex; flex-direction:column; gap:13px; }
+.convive p{ margin:0; font-size:13.5px; color:var(--ink-2); line-height:1.6; }
+.convive p b{ color:var(--ink); font-weight:600; }
+.convive ol{
+  margin:0; padding:0; list-style:none; counter-reset:regla;
+  display:flex; flex-direction:column; gap:10px;
+}
+.convive ol li{
+  counter-increment:regla; position:relative; padding-left:30px;
+  font-size:13.5px; color:var(--ink-2); line-height:1.55;
+}
+.convive ol li::before{
+  content:counter(regla); position:absolute; left:0; top:1px;
+  width:20px; height:20px; border-radius:50%;
+  background:var(--violet-soft); border:1px solid var(--violet-line);
+  color:var(--violet-2); font-family:var(--mono); font-size:10.5px; font-weight:600;
+  display:flex; align-items:center; justify-content:center;
+}
+.convive ol li b{ color:var(--ink); font-weight:600; }
+.convive .corte{
+  padding-top:12px; border-top:1px solid var(--line-soft);
+  font-size:12.8px; color:var(--ink-3);
+}
+
+/* ── cierre ────────────────────────────────────── */
+.cierre{
+  margin-top:72px; padding-top:26px; border-top:1px solid var(--line);
+  display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap;
+  font-family:var(--mono); font-size:11.5px; color:var(--ink-3);
+}
+
+@media (max-width:860px){
+  .hoja{ padding:0 18px 80px; }
+  .tapa{ grid-template-columns:1fr; gap:24px; padding-top:48px; }
+  .lockups, .reglas, .tipos, .cotejo{ grid-template-columns:1fr; }
+  .cotejo .der{ border-left:none; border-top:1px solid var(--line); }
+  .hoja::before{ display:none; }
+}
+</style>
+
+<div class="hoja">
+
+  <!-- ══ TAPA ══ -->
+  <header class="tapa">
+    <div class="firma">
+      <svg width="72" height="72" viewBox="0 0 24 24" fill="none" role="img" aria-label="Isotipo ATLAS NEX">
+        <defs>
+          <linearGradient id="g-tapa" x1="2" y1="6" x2="22" y2="18" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#7c3aed"></stop><stop offset="1" stop-color="#c084fc"></stop>
+          </linearGradient>
+        </defs>
+        <path d="M3 7.5H10C13.2 7.5 13.4 12 17 12" stroke="url(#g-tapa)" stroke-width="2" stroke-linecap="round"></path>
+        <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="url(#g-tapa)" stroke-width="2" stroke-linecap="round"></path>
+        <circle cx="19" cy="12" r="2.6" fill="#a78bfa"></circle>
+      </svg>
+    </div>
+    <div>
+      <h1>Marca ATLAS NEX</h1>
+      <p class="tesis">Conciliar es atar. Acá se ve el nudo.</p>
+      <p class="bajada">
+        Conciliación bancaria local para estudios contables. Toda la inferencia corre
+        en la máquina del contador; ningún documento sale del equipo. Esta hoja fija
+        el nombre, el isotipo, el color, la tipografía, el lenguaje de estado y la voz
+        — y las reglas que evitan que se desarmen a las tres pantallas.
+      </p>
+      <div class="meta">
+        <span>Aleph Hackathon 2026</span>
+        <span>Track QVAC</span>
+        <span>v0.1</span>
+        <span>tokens = app/globals.css</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══ NOMBRE ══ -->
+  <section>
+    <div class="rotulo"><span class="cifra">01</span><h2>Nombre y relato</h2></div>
+    <p class="entrada">
+      El nombre no es una etiqueta puesta encima del producto: es lo que el producto
+      hace, dicho en tres letras. <b>ATLAS es la casa. NEX es el trabajo.</b>
+    </p>
+
+    <div class="origen">
+      <div class="caja prosa">
+        <span class="casa">De dónde viene</span>
+        <p>
+          <b>NEX</b> sale de <i>nectere</i> — atar, anudar. De ahí <i>nexus</i>, el acto
+          de atar dos cosas, y <i>nexum</i>, el contrato con que Roma registraba una
+          obligación entre dos partes: la forma más vieja de asiento contable que se
+          conserva. Dos personas, un número, y un documento que prueba que están atadas.
+        </p>
+
+        <div class="cadena">
+          <div class="eslabon"><span class="voz">nectere</span><span class="gloss">atar, anudar</span></div>
+          <div class="eslabon"><span class="voz">nexus</span><span class="gloss">el acto de atar dos cosas</span></div>
+          <div class="eslabon"><span class="voz">nexum</span><span class="gloss">el contrato que registra la obligación</span></div>
+          <div class="eslabon"><span class="voz">NEX</span><span class="gloss">el producto</span></div>
+        </div>
+
+        <p>
+          <b>ATLAS</b> aporta la otra mitad. Mercator bautizó así su colección de mapas
+          en 1595, y desde entonces un atlas es la obra de referencia contra la que se
+          verifica lo demás. Es exactamente el papel de la casa: carga el peso y guarda
+          la referencia. El producto es NEX; <b>ATLAS nunca va solo</b>.
+        </p>
+      </div>
+
+      <div class="caja remate">
+        <p class="frase">Un comprobante y un movimiento son dos hechos sueltos hasta que alguien demuestra que son <em>el mismo hecho</em>.</p>
+        <span class="uso">Tesis de marca · abre el pitch<br>y el README. No se reescribe.</span>
+      </div>
+    </div>
+
+    <div class="obliga">
+      <div class="caja">
+        <h4>Si no puede atar, no ata</h4>
+        <p>El nombre promete un vínculo demostrado. Sin candidato con confianza suficiente, el asiento va a la cola manual: el sistema no adivina.</p>
+      </div>
+      <div class="caja">
+        <h4>El nudo se muestra</h4>
+        <p>Toda conciliación viene con su explicación: de dónde salió cada número, cuánta confianza tiene y qué se verificó para aprobarlo.</p>
+      </div>
+      <div class="caja">
+        <h4>El nudo no sale de la máquina</h4>
+        <p>Atar dos documentos exige leerlos enteros. Por eso la inferencia corre local: el vínculo se construye adentro del equipo del contador.</p>
+      </div>
+    </div>
+
+    <div class="relatos">
+      <article class="caja relato corto">
+        <div class="cab"><b>Una línea</b><span>bio del repo · firma de mail · slide 1</span></div>
+        <div class="texto">Conciliación bancaria que ata cada comprobante con su movimiento, y corre entera en tu máquina.</div>
+      </article>
+
+      <article class="caja relato">
+        <div class="cab"><b>Un párrafo</b><span>README · descripción del repositorio</span></div>
+        <div class="texto">
+          Un comprobante y un movimiento bancario son dos hechos sueltos. Alguien tiene que
+          demostrar que son el mismo, y hoy ese alguien se pasa el cierre cruzando PDFs
+          contra un CSV renglón por renglón. <b>ATLAS NEX ata los dos y deja escrito por qué</b>:
+          de dónde salió cada número, cuánta confianza tiene y qué se verificó para aprobarlo.
+          Toda la inferencia corre en la máquina del contador. Ningún documento sale del equipo.
+        </div>
+      </article>
+
+      <article class="caja relato">
+        <div class="cab"><b>Treinta segundos</b><span>pitch oral · demo ante jurado</span></div>
+        <div class="texto">
+          Conciliar es atar dos hechos sueltos: un comprobante y un movimiento. Hoy el contador
+          lo hace a mano, renglón por renglón, contra un extracto en CSV. <b>ATLAS NEX lo hace
+          local</b> — la inferencia corre en su máquina, ningún documento sale del equipo — y
+          cierra el <b>93,2 %</b> con precisión del <b>100 %</b>. De lo que no cierra, explica
+          seis de cada siete diferencias. Y lo que no puede demostrar, no lo afirma: va a la
+          cola manual, marcado.
+        </div>
+      </article>
+    </div>
+
+    <div class="caja convive">
+      <div class="caja-h">Convivencia con ATLAS Nexus <span class="hint">regla de desambiguación</span></div>
+      <div class="cuerpo-conv">
+        <p>
+          La casa ya tiene un producto llamado <b>ATLAS Nexus</b> — pagos para comercios — y
+          las dos marcas juegan en finanzas. Habladas, <i>Nex</i> y <i>Nexus</i> son la misma
+          palabra. Tres reglas resuelven el choque sin renombrar nada:
+        </p>
+        <ol>
+          <li><b>NEX siempre en versales, siempre de tres letras.</b> Escrito nunca se confunde: <span class="mono">ATLAS NEX</span> contra <span class="mono">Atlas Nexus</span>.</li>
+          <li><b>Nunca aparecen en la misma pieza</b> sin su bajada. Si comparten slide, cada una lleva su renglón: «NEX, conciliación» / «Nexus, cobros».</li>
+          <li><b>Hablado se dice el oficio, no la marca.</b> Ante jurado o cliente: «el conciliador» y «el de cobros». La marca se lee en pantalla, no se deletrea.</li>
+        </ol>
+        <p class="corte">
+          Si en algún momento las dos salen a vender juntas al mismo comprador, esto deja de
+          alcanzar y hay que renombrar una. Queda anotado, no resuelto.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ ISOTIPO ══ -->
+  <section>
+    <div class="rotulo"><span class="cifra">02</span><h2>Isotipo</h2></div>
+    <p class="entrada">
+      Tres direcciones, dibujadas sobre la misma grilla de 24 y con el mismo trazo de 2 px.
+      El criterio de corte es duro: <b>si no se lee a 16 px no sirve</b>, porque el primer
+      lugar donde aparece la marca es la pestaña del navegador de un contador que tiene
+      catorce abiertas. El segundo criterio lo puso el nombre:
+      <b>el isotipo tiene que dibujar un nexo</b>.
+    </p>
+
+    <div class="opciones">
+
+      <!-- A · Cotejo -->
+      <article class="caja opcion elegida">
+        <div class="lienzo">
+          <svg width="88" height="88" viewBox="0 0 24 24" fill="none" role="img" aria-label="Concepto Cotejo">
+            <defs>
+              <linearGradient id="gA" x1="2" y1="6" x2="22" y2="18" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#7c3aed"></stop><stop offset="1" stop-color="#c084fc"></stop>
+              </linearGradient>
+            </defs>
+            <path d="M3 7.5H10C13.2 7.5 13.4 12 17 12" stroke="url(#gA)" stroke-width="2" stroke-linecap="round"></path>
+            <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="url(#gA)" stroke-width="2" stroke-linecap="round"></path>
+            <circle cx="19" cy="12" r="2.6" fill="#a78bfa"></circle>
+          </svg>
+        </div>
+        <div class="cuerpo">
+          <h3>A · Cotejo</h3>
+          <p>
+            Dos renglones entran —el comprobante y el extracto— y resuelven en un solo
+            nodo. Es el gesto exacto del producto y también el nombre dibujado: el punto
+            lleno <b>es</b> el nexo, el asiento conciliado. Cierra 1:1, N:1 y 1:N sin
+            cambiar de forma.
+          </p>
+          <p class="veredicto">Recomendado · el nombre hecho dibujo · limpio a 16 px</p>
+        </div>
+        <div class="escala">
+          <figure>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M3 7.5H10C13.2 7.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"></path>
+              <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"></path>
+              <circle cx="19" cy="12" r="2.6" fill="#a78bfa"></circle>
+            </svg><figcaption>32</figcaption>
+          </figure>
+          <figure>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M3 7.5H10C13.2 7.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round"></path>
+              <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round"></path>
+              <circle cx="19" cy="12" r="2.7" fill="#a78bfa"></circle>
+            </svg><figcaption>20</figcaption>
+          </figure>
+          <figure>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M3 7.5H10C13.2 7.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2.4" stroke-linecap="round"></path>
+              <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2.4" stroke-linecap="round"></path>
+              <circle cx="19" cy="12" r="2.8" fill="#a78bfa"></circle>
+            </svg><figcaption>16</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <!-- B · Folio sellado -->
+      <article class="caja opcion">
+        <div class="lienzo">
+          <svg width="88" height="88" viewBox="0 0 24 24" fill="none" role="img" aria-label="Concepto Folio sellado">
+            <defs>
+              <linearGradient id="gB" x1="4" y1="3" x2="20" y2="21" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#7c3aed"></stop><stop offset="1" stop-color="#c084fc"></stop>
+              </linearGradient>
+            </defs>
+            <path d="M5 4.6C5 3.7 5.7 3 6.6 3H14L20 9V19.4C20 20.3 19.3 21 18.4 21H6.6C5.7 21 5 20.3 5 19.4V4.6Z"
+                  stroke="url(#gB)" stroke-width="1.9" stroke-linejoin="round"></path>
+            <path d="M13.6 3.2V8.2C13.6 8.8 14 9.2 14.6 9.2H19.6" stroke="url(#gB)" stroke-width="1.6" stroke-linejoin="round"></path>
+            <path d="M8.6 14.6L11 17L16 11.6" stroke="#a78bfa" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+        <div class="cuerpo">
+          <h3>B · Folio sellado</h3>
+          <p>
+            El comprobante con la marca del perito encima. Es literal y se entiende
+            sin explicación, que en un pitch de tres minutos vale. El costo: el
+            documento-con-tilde es la forma más usada del rubro y no distingue.
+          </p>
+          <p class="veredicto">Suplente · legible pero genérico · se satura a 16 px</p>
+        </div>
+        <div class="escala">
+          <figure>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 4.6C5 3.7 5.7 3 6.6 3H14L20 9V19.4C20 20.3 19.3 21 18.4 21H6.6C5.7 21 5 20.3 5 19.4V4.6Z" stroke="#a78bfa" stroke-width="1.9" stroke-linejoin="round"></path>
+              <path d="M8.6 14.6L11 17L16 11.6" stroke="#a78bfa" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg><figcaption>32</figcaption>
+          </figure>
+          <figure>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 4.6C5 3.7 5.7 3 6.6 3H14L20 9V19.4C20 20.3 19.3 21 18.4 21H6.6C5.7 21 5 20.3 5 19.4V4.6Z" stroke="#a78bfa" stroke-width="2" stroke-linejoin="round"></path>
+              <path d="M8.6 14.6L11 17L16 11.6" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg><figcaption>20</figcaption>
+          </figure>
+          <figure>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 4.6C5 3.7 5.7 3 6.6 3H14L20 9V19.4C20 20.3 19.3 21 18.4 21H6.6C5.7 21 5 20.3 5 19.4V4.6Z" stroke="#a78bfa" stroke-width="2.1" stroke-linejoin="round"></path>
+              <path d="M8.6 14.6L11 17L16 11.6" stroke="#a78bfa" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg><figcaption>16</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <!-- C · Apertura -->
+      <article class="caja opcion">
+        <div class="lienzo">
+          <svg width="88" height="88" viewBox="0 0 24 24" fill="none" role="img" aria-label="Concepto Monograma N">
+            <defs>
+              <linearGradient id="gC" x1="5" y1="4" x2="20" y2="20" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#7c3aed"></stop><stop offset="1" stop-color="#c084fc"></stop>
+              </linearGradient>
+            </defs>
+            <path d="M7 20V4L17 20V7.8"
+                  stroke="url(#gC)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path>
+            <circle cx="17" cy="4.8" r="2.5" fill="#a78bfa"></circle>
+          </svg>
+        </div>
+        <div class="cuerpo">
+          <h3>C · Monograma N</h3>
+          <p>
+            La N de NEX rematada en el mismo nodo que el isotipo A: el asta sube y
+            termina en el ojo del examinador. Guiña a los logos-orbe de las
+            referencias fintech y es la que mejor funciona sola, sin palabra al lado.
+          </p>
+          <p class="veredicto">Suplente · fuerte como avatar · dice el nombre, no el oficio</p>
+        </div>
+        <div class="escala">
+          <figure>
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M7 20V4L17 20V7.8" stroke="#a78bfa" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path>
+              <circle cx="17" cy="4.8" r="2.5" fill="#a78bfa"></circle>
+            </svg><figcaption>32</figcaption>
+          </figure>
+          <figure>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M7 20V4L17 20V7.8" stroke="#a78bfa" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"></path>
+              <circle cx="17" cy="4.8" r="2.6" fill="#a78bfa"></circle>
+            </svg><figcaption>20</figcaption>
+          </figure>
+          <figure>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M7 20V4L17 20V7.8" stroke="#a78bfa" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              <circle cx="17" cy="4.8" r="2.7" fill="#a78bfa"></circle>
+            </svg><figcaption>16</figcaption>
+          </figure>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ══ LOCKUP ══ -->
+  <section>
+    <div class="rotulo"><span class="cifra">03</span><h2>Lockup</h2></div>
+    <p class="entrada">
+      Dos palabras, dos pesos, un solo bloque óptico. <b>ATLAS</b> va en Manrope 500 sobre
+      <span class="mono">--ink-2</span> con el tracking abierto a <span class="mono">.08em</span>;
+      <b>NEX</b> en Manrope 800 sobre <span class="mono">--ink</span> a <span class="mono">.02em</span>.
+      La jerarquía se lee sin leerse: pesa más lo que se compra. El
+      <span class="mono">v0.1</span> se apoya en la línea de base y nunca crece con la marca.
+    </p>
+
+    <div class="lockups">
+      <div class="caja">
+        <div class="caja-h">Horizontal <span class="hint">uso primario · riel, encabezados</span></div>
+        <div class="lock">
+          <div class="aire">
+            <div class="reserva"></div>
+            <span class="cota arriba">1 N</span>
+            <span class="cota izq">1 N</span>
+            <div class="marca">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M3 7.5H10C13.2 7.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"></path>
+                <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"></path>
+                <circle cx="19" cy="12" r="2.6" fill="#a78bfa"></circle>
+              </svg>
+              <span class="palabra"><em>ATLAS</em>NEX</span>
+              <span class="version">v0.1</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="caja">
+        <div class="caja-h">Apilada <span class="hint">portadas, sello, avatar</span></div>
+        <div class="lock">
+          <div class="marca apilada">
+            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M3 7.5H10C13.2 7.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"></path>
+              <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"></path>
+              <circle cx="19" cy="12" r="2.6" fill="#a78bfa"></circle>
+            </svg>
+            <span class="palabra"><em>ATLAS</em>NEX</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reglas">
+      <div class="caja regla si">
+        <h4>Así sí</h4>
+        <ul>
+          <li>Aire de reserva: <b>una altura de N</b> —la de NEX— en los cuatro lados, siempre.</li>
+          <li>Isotipo solo desde <b>16 px</b>; lockup completo desde <b>96 px</b> de ancho.</li>
+          <li>Sobre <span class="mono">--void</span> o <span class="mono">--surface</span>. El fondo oscuro es parte de la marca.</li>
+          <li>En una sola tinta, <span class="mono">--violet-2</span> plano: el degradé es opcional, no obligatorio.</li>
+        </ul>
+      </div>
+      <div class="caja regla no">
+        <h4>Así no</h4>
+        <ul>
+          <li>No invertir los pesos: <b>NEX nunca pesa menos que ATLAS</b>.</li>
+          <li>No partir el bloque: ATLAS y NEX no van en dos renglones ni separados por un ícono.</li>
+          <li>Nada de <b>sombra, contorno ni bisel</b> sobre el isotipo.</li>
+          <li>No reemplazar el punto por un tilde, un candado ni un ícono de banco.</li>
+          <li>No estirar el tracking de la palabra para llenar un ancho.</li>
+          <li>No pintar la marca con un color de estado: <b>el verde es un resultado, no la identidad</b>.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ COLOR ══ -->
+  <section>
+    <div class="rotulo"><span class="cifra">04</span><h2>Color</h2></div>
+    <p class="entrada">
+      Los negros tienen sesgo violeta, nunca gris neutro: la superficie se lee tibia
+      contra el acento en vez de pelearlo. Los colores viven en
+      <span class="mono">app/globals.css</span> y en ningún otro lado —
+      <b>ningún componente escribe un hex</b>.
+    </p>
+
+    <div class="paletas">
+
+      <div class="familia">
+        <h3>Fondos y tinta</h3>
+        <p>Cuatro planos de profundidad y tres de tinta. Todo lo demás se resuelve con borde, no con un quinto gris.</p>
+        <div class="muestras">
+          <div class="muestra"><div class="pano" style="background:#08070d"></div><div class="pie"><span class="tok">--void</span><span class="hex">#08070d</span><span class="rol">Lienzo de marca, portadas</span></div></div>
+          <div class="muestra"><div class="pano" style="background:#0b0a12"></div><div class="pie"><span class="tok">--paper</span><span class="hex">#0b0a12</span><span class="rol">Fondo de la aplicación</span></div></div>
+          <div class="muestra"><div class="pano" style="background:#131120"></div><div class="pie"><span class="tok">--surface</span><span class="hex">#131120</span><span class="rol">Tarjetas, riel</span></div></div>
+          <div class="muestra"><div class="pano" style="background:#1a1729"></div><div class="pie"><span class="tok">--surface-2</span><span class="hex">#1a1729</span><span class="rol">Encabezado de tabla, hover</span></div></div>
+          <div class="muestra"><div class="pano" style="background:#262138"></div><div class="pie"><span class="tok">--line</span><span class="hex">#262138</span><span class="rol">Borde estructural</span></div></div>
+          <div class="muestra"><div class="pano" style="background:#f0eefb"></div><div class="pie"><span class="tok">--ink</span><span class="hex">#f0eefb</span><span class="rol">Cifras y títulos</span></div></div>
+          <div class="muestra"><div class="pano" style="background:#a49dc4"></div><div class="pie"><span class="tok">--ink-2</span><span class="hex">#a49dc4</span><span class="rol">Texto secundario, porqués</span></div></div>
+          <div class="muestra"><div class="pano" style="background:#6e6790"></div><div class="pie"><span class="tok">--ink-3</span><span class="hex">#6e6790</span><span class="rol">Rótulos, metadatos</span></div></div>
+        </div>
+      </div>
+
+      <div class="familia">
+        <h3>Acento</h3>
+        <p>El violeta marca dónde está el producto: riel, KPI, foco, resplandor. Nunca califica un dato del cliente.</p>
+        <div class="muestras">
+          <div class="muestra"><div class="pano" style="background:#8b5cf6"></div><div class="pie"><span class="tok">--violet</span><span class="hex">#8b5cf6</span><span class="rol">Foco, resplandor</span></div></div>
+          <div class="muestra"><div class="pano" style="background:#a78bfa"></div><div class="pie"><span class="tok">--violet-2</span><span class="hex">#a78bfa</span><span class="rol">Isotipo, enlaces, cifra destacada</span></div></div>
+          <div class="muestra"><div class="pano" style="background:#6d28d9"></div><div class="pie"><span class="tok">--violet-deep</span><span class="hex">#6d28d9</span><span class="rol">Fondo de botón primario</span></div></div>
+          <div class="muestra"><div class="pano" style="background:#1e1836"></div><div class="pie"><span class="tok">--violet-soft</span><span class="hex">#1e1836</span><span class="rol">Ítem activo, eyebrow</span></div></div>
+          <div class="muestra"><div class="pano" style="background:#3a2f63"></div><div class="pie"><span class="tok">--violet-line</span><span class="hex">#3a2f63</span><span class="rol">Borde de acento</span></div></div>
+          <div class="muestra"><div class="pano" style="background:linear-gradient(135deg,#7c3aed 0%,#a855f7 48%,#c084fc 100%)"></div><div class="pie"><span class="tok">--grad</span><span class="hex">7c3aed → c084fc</span><span class="rol">Isotipo grande y portada. Nunca detrás de texto largo</span></div></div>
+        </div>
+      </div>
+
+      <div class="familia">
+        <h3>Estado</h3>
+        <p>Familia aparte del acento, a propósito: si el violeta también significara «bien» o «mal», el contador no podría leer una tabla de un vistazo.</p>
+        <div class="muestras">
+          <div class="muestra"><div class="pano" style="background:#34d399"></div><div class="pie"><span class="tok">--ok</span><span class="hex">#34d399</span><span class="rol">Conciliado</span></div></div>
+          <div class="muestra"><div class="pano" style="background:#fbbf24"></div><div class="pie"><span class="tok">--warn</span><span class="hex">#fbbf24</span><span class="rol">A revisar</span></div></div>
+          <div class="muestra"><div class="pano" style="background:#fb7185"></div><div class="pie"><span class="tok">--bad</span><span class="hex">#fb7185</span><span class="rol">Observado</span></div></div>
+          <div class="muestra"><div class="pano" style="background:#c4b5fd"></div><div class="pie"><span class="tok">--unk</span><span class="hex">#c4b5fd</span><span class="rol">Sin resolver</span></div></div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="ley">
+      <b>La regla que no se negocia.</b> El resplandor, el vidrio y el degradé van en el
+      shell, los KPI y los momentos de impacto. Las superficies de datos — tablas,
+      importes, CUIT — quedan de alto contraste y quietas. Alguien lee esos números
+      durante horas: ahí manda la legibilidad, no el efecto.
+    </p>
+  </section>
+
+  <!-- ══ TIPOGRAFÍA ══ -->
+  <section>
+    <div class="rotulo"><span class="cifra">05</span><h2>Tipografía</h2></div>
+    <p class="entrada">
+      Dos familias y ninguna más. La divisoria es funcional, no estética:
+      <b>si el dato se compara en columna, va en mono</b>.
+    </p>
+
+    <div class="tipos">
+      <div class="caja tipo">
+        <div class="nombre">Manrope</div>
+        <div class="uso">Interfaz, títulos, prosa. Semigrotesca de terminaciones planas: no tiene la neutralidad genérica de las UI y aguanta bien en 800 para la palabra-marca.</div>
+        <div class="muestrario">Conciliación<br>bancaria local</div>
+        <div class="pesos">400 · 500 · 600 · 700 · 800</div>
+      </div>
+      <div class="caja tipo m">
+        <div class="nombre" style="font-family:var(--mono)">IBM Plex Mono</div>
+        <div class="uso">Importes, CUIT, comprobantes, versiones, rótulos técnicos. Cifras de ancho fijo: las columnas alinean sin trucos.</div>
+        <div class="muestrario">$17.003.371,07<br>30-71234567-4</div>
+        <div class="pesos">400 · 500 · 600 · tabular-nums</div>
+      </div>
+    </div>
+
+    <div class="caja escala-tipo">
+      <div class="caja-h">Escala <span class="hint">px / peso / tracking</span></div>
+      <div class="tabla">
+        <table>
+          <thead>
+            <tr><th>Rol</th><th>Familia</th><th>Especificación</th><th>Ejemplo</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Título de pantalla</td><td class="t">Manrope</td><td class="t">26 / 700 / −.03em</td><td><span class="ej" style="font-size:19px;font-weight:700;letter-spacing:-.03em">Conciliación</span></td></tr>
+            <tr><td>Cifra de KPI</td><td class="t">Plex Mono</td><td class="t">25 / 500 / −.03em</td><td><span class="ej mono" style="font-size:19px">93,2 %</span></td></tr>
+            <tr><td>Título de tarjeta</td><td class="t">Manrope</td><td class="t">14 / 600 / −.01em</td><td><span class="ej" style="font-weight:600">Diferencias explicadas</span></td></tr>
+            <tr><td>Cuerpo</td><td class="t">Manrope</td><td class="t">14 / 400 / 1.55</td><td><span class="ej">El documento está bien, lo leímos mal.</span></td></tr>
+            <tr><td>Dato en tabla</td><td class="t">Plex Mono</td><td class="t">13 / 400 / tabular</td><td><span class="ej mono">$2.500.211,10</span></td></tr>
+            <tr><td>Rótulo de columna</td><td class="t">Manrope</td><td class="t">10,5 / 700 / .11em ↑</td><td><span class="ej" style="font-size:10.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-3)">Comprobante</span></td></tr>
+            <tr><td>Eyebrow</td><td class="t">Manrope</td><td class="t">11 / 700 / .09em ↑</td><td><span class="ej" style="font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--violet-2)">Módulo 2</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ ESTADO ══ -->
+  <section>
+    <div class="rotulo"><span class="cifra">06</span><h2>Lenguaje de estado</h2></div>
+    <p class="entrada">
+      Cuatro estados y ninguno más. Cada uno lleva color <b>y</b> forma — el punto
+      delante de la píldora — para que no dependa de distinguir verde de ámbar.
+      El nombre dice el resultado; abajo, la acción que le toca al contador.
+    </p>
+
+    <div class="caja">
+      <div class="tabla">
+        <table>
+          <thead>
+            <tr><th>Estado</th><th>Qué afirma</th><th>Familia</th><th>Token</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="pill s-conciliado">Conciliado</span></td>
+              <td><span class="que">El comprobante y el movimiento cierran dentro de tolerancia.</span><div class="accion">No requiere acción.</div></td>
+              <td class="t">—</td><td class="t">--ok</td>
+            </tr>
+            <tr>
+              <td><span class="pill s-revisar">A revisar</span></td>
+              <td><span class="que">Hay diferencia y está explicada: retención, redondeo, cobranza agrupada.</span><div class="accion">El contador confirma la explicación.</div></td>
+              <td class="t">lectura</td><td class="t">--warn</td>
+            </tr>
+            <tr>
+              <td><span class="pill s-observado">Observado</span></td>
+              <td><span class="que">El comprobante está mal emitido: falla un validador determinístico.</span><div class="accion">Se pide corrección al emisor.</div></td>
+              <td class="t">documento</td><td class="t">--bad</td>
+            </tr>
+            <tr>
+              <td><span class="pill s-nose">Sin resolver</span></td>
+              <td><span class="que">No hay candidato con confianza suficiente. El sistema no adivina.</span><div class="accion">Entra a la cola manual.</div></td>
+              <td class="t">—</td><td class="t">--unk</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <p class="ley">
+      <b>Lectura y documento son dos acciones distintas.</b> «El documento está bien, lo
+      leímos mal» manda a revisar el OCR. «Está mal emitido» manda a hablar con el
+      proveedor. Confundirlas en la interfaz le cuesta al contador una llamada
+      equivocada, así que la familia siempre se declara.
+    </p>
+  </section>
+
+  <!-- ══ VOZ ══ -->
+  <section>
+    <div class="rotulo"><span class="cifra">07</span><h2>Voz</h2></div>
+    <p class="entrada">
+      Le habla un perito a un contador: castellano rioplatense, del rubro, sin una sola
+      palabra de venta. La marca no promete precisión — <b>la muestra medida</b>.
+    </p>
+
+    <div class="principios">
+      <div class="caja principio">
+        <h4>El número primero</h4>
+        <p>Toda afirmación viene con su cifra. Si no hay cifra medida, no se hace la afirmación.</p>
+      </div>
+      <div class="caja principio">
+        <h4>Decir de dónde salió</h4>
+        <p>Ninguna salida sin procedencia, confianza y qué se verificó para aprobarla.</p>
+      </div>
+      <div class="caja principio">
+        <h4>Los límites se declaran</h4>
+        <p>Lo que queda afuera se escribe y se nombra: está identificado, no olvidado.</p>
+      </div>
+      <div class="caja principio">
+        <h4>Lo local es un hecho</h4>
+        <p>«Sin red» se verifica, no se promete. Se enuncia plano, sin adjetivos.</p>
+      </div>
+    </div>
+
+    <div class="caja cotejo">
+      <div class="izq">
+        <h4>Así escribe ATLAS NEX</h4>
+        <q>Ningún documento sale de esta máquina.</q>
+        <q>41 conciliados · 41 correctos · 0 incorrectos.</q>
+        <q>No conciliado: $2.500.211,10 sobre $17.003.371,07.</q>
+        <q>El documento está bien, lo leímos mal.</q>
+        <q>Diferencias explicadas: 6 de 7.</q>
+        <q>Modelo sin cargar · 8 GB · 4 núcleos.</q>
+      </div>
+      <div class="der">
+        <h4>Así no</h4>
+        <q>Privacidad de nivel empresarial.</q>
+        <q>Resultados de conciliación excelentes.</q>
+        <q>Optimizá tu flujo financiero con IA.</q>
+        <q>Se produjo un error de procesamiento.</q>
+        <q>Precisión líder en la industria.</q>
+        <q>Inicializando motor inteligente…</q>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ APLICACIONES ══ -->
+  <section>
+    <div class="rotulo"><span class="cifra">08</span><h2>Aplicaciones</h2></div>
+    <p class="entrada">
+      Los cuatro lugares donde la marca aparece de verdad durante el hackathon:
+      la pestaña, el riel, la captura de pantalla y la portada del pitch.
+    </p>
+
+    <div class="aplic">
+
+      <div class="caja">
+        <div class="demo">
+          <div class="pestana">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="flex:none">
+              <path d="M3 7.5H10C13.2 7.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2.4" stroke-linecap="round"></path>
+              <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2.4" stroke-linecap="round"></path>
+              <circle cx="19" cy="12" r="2.8" fill="#a78bfa"></circle>
+            </svg>
+            <span class="palabra" style="font-size:12.5px"><em>ATLAS</em>NEX</span>
+          </div>
+        </div>
+        <div class="nota"><b>Favicon.</b> Isotipo solo, trazo engrosado a 2,4 y punto a 2,8: a 16 px el trazo fino desaparece.</div>
+      </div>
+
+      <div class="caja">
+        <div class="demo">
+          <div class="local">
+            <span class="dot"></span>
+            <div>Local · sin red<em>Ningún documento sale de esta máquina</em></div>
+          </div>
+        </div>
+        <div class="nota"><b>Sello de privacidad.</b> Fijo en las cuatro pantallas: es el argumento del proyecto convertido en elemento de interfaz, y lo primero que se ve en cualquier captura.</div>
+      </div>
+
+      <div class="caja">
+        <div class="demo">
+          <div class="kpi">
+            <div class="k">Recall del matcher</div>
+            <div class="v">93,2 %</div>
+            <div class="sub">41 de 44 · precisión 100,0 %</div>
+          </div>
+        </div>
+        <div class="nota"><b>KPI destacado.</b> Único lugar donde el violeta pinta una cifra — porque mide al producto, no al comprobante del cliente.</div>
+      </div>
+
+      <div class="caja">
+        <div class="demo">
+          <div class="portada">
+            <div class="marca" style="gap:9px">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M3 7.5H10C13.2 7.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round"></path>
+                <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round"></path>
+                <circle cx="19" cy="12" r="2.7" fill="#a78bfa"></circle>
+              </svg>
+              <span class="palabra" style="font-size:16px"><em>ATLAS</em>NEX</span>
+            </div>
+            <div class="alto">Cada número dice de dónde salió.</div>
+            <div class="pie-p">ALEPH HACKATHON 2026 · TRACK QVAC</div>
+          </div>
+        </div>
+        <div class="nota"><b>Portada de pitch.</b> Una sola fuente de luz arriba a la derecha, igual que el shell de la app. La tesis va sola, sin subtítulo.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="cierre">
+    <span>ATLAS NEX · marca v0.1 · 22-08-2026</span>
+    <span>tokens: app/globals.css · isotipo: app/icon.svg · lockup: components/Marca.tsx</span>
+  </footer>
+
+</div>
