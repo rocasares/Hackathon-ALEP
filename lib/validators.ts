@@ -158,6 +158,19 @@ export function validarAritmetica(c: Comprobante): ResultadoValidacion {
   if (total === 0) {
     return fail(cod, 'El comprobante declara un total de cero.', { campos: ['total'] });
   }
+  // El signo antes que el tipo. Una factura con total negativo es invalida sea
+  // A, B o C — y sin este chequeo una B pasaba limpia, porque la rama de "B no
+  // discrimina IVA" nunca llegaba a mirar el signo.
+  if (c.clase !== 'NC' && total < 0) {
+    return fail(cod,
+      `El comprobante declara un total negativo (${money(total)}). Sólo una nota de crédito puede ser negativa.`,
+      { campos: ['total'] });
+  }
+  if (c.clase === 'NC' && total > 0) {
+    return fail(cod,
+      `La nota de crédito declara un total positivo (${money(total)}). Una NC resta.`,
+      { campos: ['total'] });
+  }
 
   // ── comprobantes B y C: IVA no discriminado ────────────────
   if (tipo === 'B' || tipo === 'C') {
@@ -412,14 +425,25 @@ export function validarNotaCredito(
   if (nc.clase !== 'NC') return ok(cod, 'No es nota de crédito.');
 
   const monto = Math.abs(nc.total ?? 0);
+
+  // Sin identificador de cliente no se puede verificar el respaldo, y no poder
+  // verificar NO es lo mismo que no haberlo. Muchos consumidores finales se
+  // identifican con DNI, no con CUIT: marcarlos como NC sin respaldo era un
+  // falso positivo caro — el contador persigue algo que está bien.
+  if (!nc.cuit_cliente || !soloDigitos(nc.cuit_cliente)) {
+    return ok(cod, 'Nota de crédito sin identificador de cliente: no se puede verificar el respaldo.');
+  }
+
   const candidatas = facturas.filter((f) =>
-    f.cuit_cliente && nc.cuit_cliente &&
-    soloDigitos(f.cuit_cliente) === soloDigitos(nc.cuit_cliente));
+    f.cuit_cliente && soloDigitos(f.cuit_cliente) === soloDigitos(nc.cuit_cliente));
 
   if (!candidatas.length) {
-    return fail(cod,
-      `Nota de crédito por ${money(monto)} sin ninguna factura del mismo cliente en el período.`,
-      { campos: ['cuit_cliente' as NombreCampo, 'total'] });
+    // Si el período de referencia no tiene ninguna factura de ESE cliente, puede
+    // ser que la factura original sea de otro período. Se avisa, no se rechaza.
+    return { codigo: cod, ok: true,
+      motivo: `Nota de crédito por ${money(monto)} sin factura del mismo cliente en este período. La original puede ser de un período anterior.`,
+      campos: ['total'],
+      detalle: { familia: 'documento', revisar: true } };
   }
 
   const maxFactura = Math.max(...candidatas.map((f) => Math.abs(f.total)));

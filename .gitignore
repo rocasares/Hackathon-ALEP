@@ -38,3 +38,5 @@ next-env.d.ts
 # es publico. Quedan locales; la especificacion de marca propia si se versiona.
 UI UX/*.jpg
 UI UX/*.png
+
+eval/deteccion.json
