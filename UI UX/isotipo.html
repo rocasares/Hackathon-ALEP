@@ -1,0 +1,361 @@
+<title>Isotipo ATLAS NEX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap">
+
+<style>
+:root{
+  --void:#08070d; --paper:#0b0a12; --surface:#131120; --surface-2:#1a1729;
+  --line:#262138; --line-soft:#1e1a2e;
+  --ink:#f0eefb; --ink-2:#a49dc4; --ink-3:#6e6790;
+  --violet:#8b5cf6; --violet-2:#a78bfa; --violet-soft:#1e1836; --violet-line:#3a2f63;
+  --ok:#34d399; --bad:#fb7185;
+  --shadow:0 1px 2px rgba(0,0,0,.5), 0 16px 40px -20px rgba(0,0,0,.9);
+  --glow:0 0 44px -8px rgba(139,92,246,.55);
+  --r:10px; --r-sm:6px;
+  --sans:"Manrope", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, monospace;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+     font-size:14.5px;line-height:1.6;margin:0;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:2px solid var(--violet);outline-offset:3px}
+.mono{font-family:var(--mono)}
+
+.hoja{max-width:1060px;margin:0 auto;padding:0 32px 100px;position:relative}
+.hoja::before{content:"";position:fixed;top:-380px;right:-200px;width:900px;height:680px;
+  pointer-events:none;z-index:0;filter:blur(14px);
+  background:radial-gradient(closest-side,rgba(139,92,246,.18),rgba(139,92,246,0) 72%)}
+.hoja>*{position:relative;z-index:1}
+
+header{padding:66px 0 38px;border-bottom:1px solid var(--line)}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;margin-bottom:14px;
+  font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--violet-2);background:var(--violet-soft);
+  border:1px solid var(--violet-line);border-radius:20px;padding:4px 11px}
+h1{font-size:29px;font-weight:800;letter-spacing:-.035em;margin:0 0 12px;text-wrap:balance}
+header p{color:var(--ink-2);margin:0;max-width:62ch}
+
+section{padding:56px 0 0}
+.rot{display:flex;align-items:baseline;gap:14px;margin-bottom:8px}
+.rot .n{font-family:var(--mono);font-size:11px;color:var(--violet-2);letter-spacing:.1em;font-weight:600}
+.rot h2{font-size:21px;font-weight:700;letter-spacing:-.025em;margin:0}
+.entrada{color:var(--ink-2);max-width:64ch;margin:0 0 26px}
+.entrada b{color:var(--ink);font-weight:600}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);overflow:hidden}
+
+/* origen */
+.origen{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:stretch}
+.origen .ref{padding:0;background:var(--void);display:flex;align-items:center;justify-content:center}
+.origen .ref img{display:block;width:250px;height:auto;border-radius:var(--r) 0 0 var(--r)}
+.origen .txt{padding:24px 26px;display:flex;flex-direction:column;gap:12px;justify-content:center}
+.origen p{margin:0;color:var(--ink-2);font-size:13.5px;line-height:1.62}
+.origen p b{color:var(--ink);font-weight:600}
+.rasgos{display:flex;flex-wrap:wrap;gap:7px;margin-top:4px}
+.rasgos span{font-family:var(--mono);font-size:11px;color:var(--violet-2);
+  background:var(--violet-soft);border:1px solid var(--violet-line);
+  border-radius:20px;padding:3px 10px}
+
+/* variantes */
+.vars{display:grid;grid-template-columns:repeat(auto-fit,minmax(292px,1fr));gap:18px}
+.v{display:flex;flex-direction:column}
+.v.rec{border-color:var(--violet-line);box-shadow:var(--glow)}
+.lien{padding:34px;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(420px 200px at 50% 0%,rgba(139,92,246,.13),rgba(139,92,246,0) 70%),var(--void);
+  border-bottom:1px solid var(--line)}
+.v .cu{padding:17px 19px 20px;display:flex;flex-direction:column;gap:10px;flex:1}
+.v h3{margin:0;font-size:14.5px;font-weight:700;letter-spacing:-.01em}
+.v p{margin:0;font-size:13px;color:var(--ink-2);line-height:1.55}
+.v .ver{margin-top:auto;padding-top:12px;border-top:1px solid var(--line-soft);
+  font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+.v.rec .ver{color:var(--violet-2)}
+
+/* lockups */
+.lk{display:flex;align-items:center;gap:12px}
+.pal{font-size:25px;font-weight:800;letter-spacing:.02em;color:var(--ink);white-space:nowrap;line-height:1}
+.pal i{font-style:normal;font-weight:500;letter-spacing:.08em;color:var(--ink-2);margin-right:.34em}
+.locks{display:grid;grid-template-columns:repeat(auto-fit,minmax(292px,1fr));gap:18px}
+.locks .lien{padding:30px 22px}
+.locks .pie{padding:12px 18px;font-size:12.5px;color:var(--ink-2);border-top:1px solid var(--line)}
+
+/* chicos */
+.chicos{display:grid;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:18px}
+.chicos .lien{gap:20px;align-items:flex-end;padding:26px 22px}
+.chicos figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:7px}
+.chicos figcaption{font-family:var(--mono);font-size:10px;color:var(--ink-3)}
+
+.ley{margin-top:22px;padding:16px 18px;border:1px solid var(--violet-line);border-radius:var(--r);
+  background:linear-gradient(135deg,rgba(139,92,246,.10),rgba(139,92,246,.02));
+  font-size:13.5px;color:var(--ink-2);line-height:1.62}
+.ley b{color:var(--violet-2);font-weight:700}
+
+.tabla{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:10.5px;text-transform:uppercase;letter-spacing:.11em;
+  color:var(--ink-3);font-weight:700;padding:11px 16px;border-bottom:1px solid var(--line);
+  background:var(--surface-2);white-space:nowrap}
+td{padding:12px 16px;border-bottom:1px solid var(--line-soft);vertical-align:middle}
+tbody tr:last-child td{border-bottom:none}
+td .si{color:var(--ok);font-weight:700}
+td .no{color:var(--bad);font-weight:700}
+
+footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
+
+@media (max-width:820px){
+  .hoja{padding:0 18px 70px}
+  .origen{grid-template-columns:1fr}
+  .origen .ref img{width:100%;border-radius:var(--r) var(--r) 0 0}
+  .hoja::before{display:none}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute">
+  <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+    <feGaussianBlur stdDeviation="3.5" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+</svg>
+
+<div class="hoja">
+
+<header>
+  <span class="eyebrow">Decisión de isotipo</span>
+  <h1>El triángulo de la casa, ahora para NEX</h1>
+  <p>
+    Tres maneras de que ATLAS NEX use el iso de ATLAS. Cambia una sola cosa entre
+    ellas: cuánto se diferencia el producto de la casa. Todo lo demás — geometría,
+    grosor, color, radios — es idéntico.
+  </p>
+</header>
+
+<section>
+  <div class="rot"><span class="n">01</span><h2>De dónde sale</h2></div>
+  <p class="entrada">
+    Reconstruí el iso en vector limpio a partir de tu logo. No es un trazado
+    automático: es geometría paramétrica — triángulo equilátero, tres cápsulas de
+    semiancho fijo, orden de dibujo que produce el entrelazado.
+  </p>
+  <div class="card origen">
+    <div class="ref"><img src="data:image/jpeg;base64,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" alt="Isotipo original de ATLAS"></div>
+    <div class="txt">
+      <p><b>Lo que conserva.</b> Triángulo equilátero apuntando arriba, tres barras
+      de extremos redondeados, contorno neón sobre relleno oscuro, y el entrelazado
+      de esquinas que le da el aire de triángulo imposible.</p>
+      <p><b>Lo que corrige.</b> El original es un render: bordes con ruido y grosores
+      que no cierran. Acá el trazo es constante, las esquinas resuelven exacto y
+      escala a cualquier tamaño sin pérdida.</p>
+      <div class="rasgos">
+        <span>equilátero · R 45</span><span>semiancho 8,5</span>
+        <span>contorno 2,4</span><span>relleno --paper</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="rot"><span class="n">02</span><h2>Las tres variantes</h2></div>
+  <p class="entrada">
+    La pregunta real no es cuál es más lindo: es <b>si NEX necesita distinguirse de
+    los otros productos ATLAS en un ícono de 16 px</b>.
+  </p>
+  <div class="vars">
+
+    <article class="card v">
+      <div class="lien"><svg width="112" height="112" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="g1" x1="20" y1="14" x2="100" y2="86" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7c3aed"/><stop offset="1" stop-color="#c084fc"/>
+    </linearGradient>
+  </defs>
+  <g filter="url(#glow)">
+    <path d="M29.89 84.15 L65.86 21.85 A8.5 8.5 0 0 0 51.14 13.35 L15.17 75.65 A8.5 8.5 0 0 0 29.89 84.15 Z" fill="#0b0a12" stroke="url(#g1)" stroke-width="2.4"/>
+    <path d="M95.97 74 L24.03 74 A8.5 8.5 0 0 0 24.03 91 L95.97 91 A8.5 8.5 0 0 0 95.97 74 Z" fill="#0b0a12" stroke="url(#g1)" stroke-width="2.4"/>
+    <path d="M54.14 21.85 L90.11 84.15 A8.5 8.5 0 0 0 104.83 75.65 L68.86 13.35 A8.5 8.5 0 0 0 54.14 21.85 Z" fill="#0b0a12" stroke="url(#g1)" stroke-width="2.4"/>
+  </g>
+</svg></div>
+      <div class="cu">
+        <h3>N1 · Casa pura</h3>
+        <p>El iso de ATLAS sin tocar. La diferenciación vive entera en la palabra:
+        el ícono dice la casa, el wordmark dice el producto.</p>
+        <p class="ver">Máxima unidad de familia · ver la advertencia de abajo</p>
+      </div>
+    </article>
+
+    <article class="card v">
+      <div class="lien"><svg width="112" height="112" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="h2" x1="20" y1="14" x2="100" y2="86" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7c3aed"/><stop offset="1" stop-color="#c084fc"/>
+    </linearGradient>
+  </defs>
+  <path d="M29.89 84.15 L65.86 21.85 A8.5 8.5 0 0 0 51.14 13.35 L15.17 75.65 A8.5 8.5 0 0 0 29.89 84.15 Z" fill="#0b0a12" stroke="url(#h2)" stroke-width="2.4"/>
+  <path d="M95.97 74 L24.03 74 A8.5 8.5 0 0 0 24.03 91 L95.97 91 A8.5 8.5 0 0 0 95.97 74 Z" fill="#0b0a12" stroke="url(#h2)" stroke-width="2.4"/>
+  <path d="M54.14 21.85 L90.11 84.15 A8.5 8.5 0 0 0 104.83 75.65 L68.86 13.35 A8.5 8.5 0 0 0 54.14 21.85 Z" fill="#0b0a12" stroke="url(#h2)" stroke-width="2.4"/>
+  <path d="M60.0 33.0 L83.4 73.5 L36.6 73.5 Z" fill="#a78bfa" stroke="#a78bfa" stroke-width="7" stroke-linejoin="round"/>
+</svg></div>
+      <div class="cu">
+        <h3>N2 · Hueco lleno</h3>
+        <p>El contrapunzón macizo. Dice «cerrado» —que es lo que hace el producto—
+        y es la que más aguanta en chico. Costo: pierde el aire de triángulo
+        imposible, que es lo más distintivo de la casa.</p>
+        <p class="ver">La más legible · la que más se aleja del original</p>
+      </div>
+    </article>
+
+    <article class="card v rec">
+      <div class="lien"><svg width="112" height="112" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="v3" x1="20" y1="14" x2="100" y2="86" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7c3aed"/><stop offset="1" stop-color="#c084fc"/>
+    </linearGradient>
+  </defs>
+  <path d="M29.89 84.15 L65.86 21.85 A8.5 8.5 0 0 0 51.14 13.35 L15.17 75.65 A8.5 8.5 0 0 0 29.89 84.15 Z" fill="#0b0a12" stroke="url(#v3)" stroke-width="2.4"/>
+  <path d="M95.97 74 L24.03 74 A8.5 8.5 0 0 0 24.03 91 L95.97 91 A8.5 8.5 0 0 0 95.97 74 Z" fill="#0b0a12" stroke="url(#v3)" stroke-width="2.4"/>
+  <path d="M54.14 21.85 L90.11 84.15 A8.5 8.5 0 0 0 104.83 75.65 L68.86 13.35 A8.5 8.5 0 0 0 54.14 21.85 Z" fill="#0b0a12" stroke="url(#v3)" stroke-width="2.4"/>
+  <circle cx="60.0" cy="15.0" r="7" fill="#e9d5ff"/>
+</svg></div>
+      <div class="cu">
+        <h3>N3 · Vértice sellado</h3>
+        <p>El triángulo de la casa intacto, con un nodo lleno en el vértice de
+        arriba. Es el mismo nodo del isotipo anterior: el punto donde el cotejo
+        cierra. La casa entera, más una marca de producto de un solo elemento.</p>
+        <p class="ver">Recomendada · conserva la casa y distingue el producto</p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section>
+  <div class="rot"><span class="n">03</span><h2>En el lockup</h2></div>
+  <p class="entrada">
+    Que es donde la marca vive de verdad: el riel de la app, el encabezado, la
+    portada del pitch.
+  </p>
+  <div class="locks">
+    <div class="card"><div class="lien"><div class="lk"><svg width="40" height="40" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="g21" x1="20" y1="14" x2="100" y2="86" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7c3aed"/><stop offset="1" stop-color="#c084fc"/>
+    </linearGradient>
+  </defs>
+  <g filter="url(#glow)">
+    <path d="M29.89 84.15 L65.86 21.85 A8.5 8.5 0 0 0 51.14 13.35 L15.17 75.65 A8.5 8.5 0 0 0 29.89 84.15 Z" fill="#0b0a12" stroke="url(#g21)" stroke-width="2.4"/>
+    <path d="M95.97 74 L24.03 74 A8.5 8.5 0 0 0 24.03 91 L95.97 91 A8.5 8.5 0 0 0 95.97 74 Z" fill="#0b0a12" stroke="url(#g21)" stroke-width="2.4"/>
+    <path d="M54.14 21.85 L90.11 84.15 A8.5 8.5 0 0 0 104.83 75.65 L68.86 13.35 A8.5 8.5 0 0 0 54.14 21.85 Z" fill="#0b0a12" stroke="url(#g21)" stroke-width="2.4"/>
+  </g>
+</svg><span class="pal"><i>ATLAS</i>NEX</span></div></div><div class="pie">N1 · Casa pura</div></div>
+    <div class="card"><div class="lien"><div class="lk"><svg width="40" height="40" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="h22" x1="20" y1="14" x2="100" y2="86" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7c3aed"/><stop offset="1" stop-color="#c084fc"/>
+    </linearGradient>
+  </defs>
+  <path d="M29.89 84.15 L65.86 21.85 A8.5 8.5 0 0 0 51.14 13.35 L15.17 75.65 A8.5 8.5 0 0 0 29.89 84.15 Z" fill="#0b0a12" stroke="url(#h22)" stroke-width="2.4"/>
+  <path d="M95.97 74 L24.03 74 A8.5 8.5 0 0 0 24.03 91 L95.97 91 A8.5 8.5 0 0 0 95.97 74 Z" fill="#0b0a12" stroke="url(#h22)" stroke-width="2.4"/>
+  <path d="M54.14 21.85 L90.11 84.15 A8.5 8.5 0 0 0 104.83 75.65 L68.86 13.35 A8.5 8.5 0 0 0 54.14 21.85 Z" fill="#0b0a12" stroke="url(#h22)" stroke-width="2.4"/>
+  <path d="M60.0 33.0 L83.4 73.5 L36.6 73.5 Z" fill="#a78bfa" stroke="#a78bfa" stroke-width="7" stroke-linejoin="round"/>
+</svg><span class="pal"><i>ATLAS</i>NEX</span></div></div><div class="pie">N2 · Hueco lleno</div></div>
+    <div class="card"><div class="lien"><div class="lk"><svg width="40" height="40" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="v23" x1="20" y1="14" x2="100" y2="86" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7c3aed"/><stop offset="1" stop-color="#c084fc"/>
+    </linearGradient>
+  </defs>
+  <path d="M29.89 84.15 L65.86 21.85 A8.5 8.5 0 0 0 51.14 13.35 L15.17 75.65 A8.5 8.5 0 0 0 29.89 84.15 Z" fill="#0b0a12" stroke="url(#v23)" stroke-width="2.4"/>
+  <path d="M95.97 74 L24.03 74 A8.5 8.5 0 0 0 24.03 91 L95.97 91 A8.5 8.5 0 0 0 95.97 74 Z" fill="#0b0a12" stroke="url(#v23)" stroke-width="2.4"/>
+  <path d="M54.14 21.85 L90.11 84.15 A8.5 8.5 0 0 0 104.83 75.65 L68.86 13.35 A8.5 8.5 0 0 0 54.14 21.85 Z" fill="#0b0a12" stroke="url(#v23)" stroke-width="2.4"/>
+  <circle cx="60.0" cy="15.0" r="7" fill="#e9d5ff"/>
+</svg><span class="pal"><i>ATLAS</i>NEX</span></div></div><div class="pie">N3 · Vértice sellado</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="rot"><span class="n">04</span><h2>La prueba de 16 px</h2></div>
+  <p class="entrada">
+    El contorno fino desaparece en la pestaña del navegador, así que abajo de 28 px
+    la marca cambia a <b>versión maciza</b>: mismas proporciones, cápsulas rellenas,
+    sin contorno. Es una variante del sistema, no un dibujo distinto.
+  </p>
+  <div class="chicos">
+    <div class="card">
+      <div class="lien">
+        <figure><svg width="44" height="44" viewBox="0 0 120 120" fill="none">
+  <path d="M29.46 83.9 L65.43 21.6 A8 8 0 0 0 51.57 13.6 L15.6 75.9 A8 8 0 0 0 29.46 83.9 Z" fill="#a78bfa"/>
+  <path d="M95.97 74.5 L24.03 74.5 A8 8 0 0 0 24.03 90.5 L95.97 90.5 A8 8 0 0 0 95.97 74.5 Z" fill="#a78bfa"/>
+  <path d="M54.57 21.6 L90.54 83.9 A8 8 0 0 0 104.4 75.9 L68.43 13.6 A8 8 0 0 0 54.57 21.6 Z" fill="#a78bfa"/>
+  
+</svg><figcaption>44</figcaption></figure>
+        <figure><svg width="24" height="24" viewBox="0 0 120 120" fill="none">
+  <path d="M29.46 83.9 L65.43 21.6 A8 8 0 0 0 51.57 13.6 L15.6 75.9 A8 8 0 0 0 29.46 83.9 Z" fill="#a78bfa"/>
+  <path d="M95.97 74.5 L24.03 74.5 A8 8 0 0 0 24.03 90.5 L95.97 90.5 A8 8 0 0 0 95.97 74.5 Z" fill="#a78bfa"/>
+  <path d="M54.57 21.6 L90.54 83.9 A8 8 0 0 0 104.4 75.9 L68.43 13.6 A8 8 0 0 0 54.57 21.6 Z" fill="#a78bfa"/>
+  
+</svg><figcaption>24</figcaption></figure>
+        <figure><svg width="16" height="16" viewBox="0 0 120 120" fill="none">
+  <path d="M29.46 83.9 L65.43 21.6 A8 8 0 0 0 51.57 13.6 L15.6 75.9 A8 8 0 0 0 29.46 83.9 Z" fill="#a78bfa"/>
+  <path d="M95.97 74.5 L24.03 74.5 A8 8 0 0 0 24.03 90.5 L95.97 90.5 A8 8 0 0 0 95.97 74.5 Z" fill="#a78bfa"/>
+  <path d="M54.57 21.6 L90.54 83.9 A8 8 0 0 0 104.4 75.9 L68.43 13.6 A8 8 0 0 0 54.57 21.6 Z" fill="#a78bfa"/>
+  
+</svg><figcaption>16</figcaption></figure>
+      </div>
+      <div class="pie" style="padding:12px 18px;font-size:12.5px;color:var(--ink-2);border-top:1px solid var(--line)">Maciza sin nodo — para N1</div>
+    </div>
+    <div class="card">
+      <div class="lien">
+        <figure><svg width="44" height="44" viewBox="0 0 120 120" fill="none">
+  <path d="M29.46 83.9 L65.43 21.6 A8 8 0 0 0 51.57 13.6 L15.6 75.9 A8 8 0 0 0 29.46 83.9 Z" fill="#a78bfa"/>
+  <path d="M95.97 74.5 L24.03 74.5 A8 8 0 0 0 24.03 90.5 L95.97 90.5 A8 8 0 0 0 95.97 74.5 Z" fill="#a78bfa"/>
+  <path d="M54.57 21.6 L90.54 83.9 A8 8 0 0 0 104.4 75.9 L68.43 13.6 A8 8 0 0 0 54.57 21.6 Z" fill="#a78bfa"/>
+  <circle cx="60.0" cy="15.0" r="8" fill="#e9d5ff"/>
+</svg><figcaption>44</figcaption></figure>
+        <figure><svg width="24" height="24" viewBox="0 0 120 120" fill="none">
+  <path d="M29.46 83.9 L65.43 21.6 A8 8 0 0 0 51.57 13.6 L15.6 75.9 A8 8 0 0 0 29.46 83.9 Z" fill="#a78bfa"/>
+  <path d="M95.97 74.5 L24.03 74.5 A8 8 0 0 0 24.03 90.5 L95.97 90.5 A8 8 0 0 0 95.97 74.5 Z" fill="#a78bfa"/>
+  <path d="M54.57 21.6 L90.54 83.9 A8 8 0 0 0 104.4 75.9 L68.43 13.6 A8 8 0 0 0 54.57 21.6 Z" fill="#a78bfa"/>
+  <circle cx="60.0" cy="15.0" r="8" fill="#e9d5ff"/>
+</svg><figcaption>24</figcaption></figure>
+        <figure><svg width="16" height="16" viewBox="0 0 120 120" fill="none">
+  <path d="M29.46 83.9 L65.43 21.6 A8 8 0 0 0 51.57 13.6 L15.6 75.9 A8 8 0 0 0 29.46 83.9 Z" fill="#a78bfa"/>
+  <path d="M95.97 74.5 L24.03 74.5 A8 8 0 0 0 24.03 90.5 L95.97 90.5 A8 8 0 0 0 95.97 74.5 Z" fill="#a78bfa"/>
+  <path d="M54.57 21.6 L90.54 83.9 A8 8 0 0 0 104.4 75.9 L68.43 13.6 A8 8 0 0 0 54.57 21.6 Z" fill="#a78bfa"/>
+  <circle cx="60.0" cy="15.0" r="8" fill="#e9d5ff"/>
+</svg><figcaption>16</figcaption></figure>
+      </div>
+      <div class="pie" style="padding:12px 18px;font-size:12.5px;color:var(--ink-2);border-top:1px solid var(--line)">Maciza con nodo — para N3</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="rot"><span class="n">05</span><h2>Cómo decidir</h2></div>
+  <div class="card tabla">
+    <table>
+      <thead>
+        <tr><th>Criterio</th><th>N1 Casa</th><th>N2 Hueco</th><th>N3 Vértice</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Se reconoce como ATLAS</td><td><span class="si">sí</span></td><td>parcial</td><td><span class="si">sí</span></td></tr>
+        <tr><td>Distingue NEX de los otros ATLAS</td><td><span class="no">no</span></td><td><span class="si">sí</span></td><td><span class="si">sí</span></td></tr>
+        <tr><td>Legible a 16 px</td><td><span class="si">sí</span></td><td><span class="si">sí</span></td><td>sí, con el nodo apenas</td></tr>
+        <tr><td>Conserva el triángulo imposible</td><td><span class="si">sí</span></td><td><span class="no">no</span></td><td><span class="si">sí</span></td></tr>
+        <tr><td>Carga el significado del producto</td><td><span class="no">no</span></td><td>«cerrado»</td><td>el nodo del cotejo</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="ley">
+    <b>La advertencia sobre N1.</b> Ya tenés seis proyectos ATLAS. Si todos usan el
+    mismo iso, en la barra de tareas, en los favoritos y en la pestaña son
+    indistinguibles: el ícono te dice la casa pero nunca cuál producto estás
+    mirando. Por eso recomiendo N3 — cambia un solo elemento sobre la casa, y ese
+    elemento ya significaba algo en esta marca.
+  </p>
+</section>
+
+<footer>ATLAS NEX · decisión de isotipo · geometría paramétrica, no trazado automático</footer>
+
+</div>
