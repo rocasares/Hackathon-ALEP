@@ -5,7 +5,7 @@
 
 <style>
 /* ─────────────────────────────────────────────────────────────
-   MARCA PERITO — hoja de especificación.
+   MARCA ATLAS NEX — hoja de especificación.
    Tema único oscuro, a propósito: el producto es una herramienta
    oscura y la marca vive ahí. Todo color se pinta explícito.
    Los tokens son los mismos de app/globals.css, sin excepción.
@@ -154,16 +154,22 @@ section{ padding:64px 0 0; }
   background:var(--void);
 }
 .marca{ display:flex; align-items:center; gap:12px; }
+/* Wordmark de dos pesos: ATLAS es la casa, NEX es el producto.
+   La jerarquía se lee sin leer — pesa más lo que se compra. */
 .marca .palabra{
   font-size:27px; font-weight:800; letter-spacing:.02em; line-height:1;
-  color:var(--ink);
+  color:var(--ink); white-space:nowrap;
+}
+.marca .palabra em{
+  font-style:normal; font-weight:500; letter-spacing:.08em;
+  color:var(--ink-2); margin-right:.34em;
 }
 .marca .version{
   font-family:var(--mono); font-size:11px; color:var(--ink-3);
   align-self:flex-end; padding-bottom:2px;
 }
 .marca.apilada{ flex-direction:column; gap:14px; }
-.marca.apilada .palabra{ letter-spacing:.18em; font-size:21px; }
+.marca.apilada .palabra{ font-size:21px; }
 
 /* diagrama de aire: la caja de reserva mide una P */
 .aire{ position:relative; padding:30px; }
@@ -401,7 +407,7 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
   <!-- ══ TAPA ══ -->
   <header class="tapa">
     <div class="firma">
-      <svg width="72" height="72" viewBox="0 0 24 24" fill="none" role="img" aria-label="Isotipo PERITO">
+      <svg width="72" height="72" viewBox="0 0 24 24" fill="none" role="img" aria-label="Isotipo ATLAS NEX">
         <defs>
           <linearGradient id="g-tapa" x1="2" y1="6" x2="22" y2="18" gradientUnits="userSpaceOnUse">
             <stop stop-color="#7c3aed"></stop><stop offset="1" stop-color="#c084fc"></stop>
@@ -413,13 +419,13 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
       </svg>
     </div>
     <div>
-      <h1>Marca PERITO</h1>
-      <p class="tesis">Cada número dice de dónde salió.</p>
+      <h1>Marca ATLAS NEX</h1>
+      <p class="tesis">Conciliar es atar. Acá se ve el nudo.</p>
       <p class="bajada">
         Conciliación bancaria local para estudios contables. Toda la inferencia corre
         en la máquina del contador; ningún documento sale del equipo. Esta hoja fija
-        el isotipo, el color, la tipografía, el lenguaje de estado y la voz — y las
-        reglas que evitan que se desarmen a las tres pantallas.
+        el nombre, el isotipo, el color, la tipografía, el lenguaje de estado y la voz
+        — y las reglas que evitan que se desarmen a las tres pantallas.
       </p>
       <div class="meta">
         <span>Aleph Hackathon 2026</span>
@@ -430,6 +436,91 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
     </div>
   </header>
 
+  <!-- ══ NOMBRE ══ -->
+  <section>
+    <div class="rotulo"><span class="cifra">01</span><h2>Nombre y relato</h2></div>
+    <p class="entrada">
+      El nombre no es una etiqueta puesta encima del producto: es lo que el producto
+      hace, dicho en tres letras. <b>ATLAS es la casa. NEX es el trabajo.</b>
+    </p>
+
+    <div class="origen">
+      <div class="caja prosa">
+        <span class="casa">De dónde viene</span>
+        <p>
+          <b>NEX</b> sale de <i>nectere</i> — atar, anudar. De ahí <i>nexus</i>, el acto
+          de atar dos cosas, y <i>nexum</i>, el contrato con que Roma registraba una
+          obligación entre dos partes: la forma más vieja de asiento contable que se
+          conserva. Dos personas, un número, y un documento que prueba que están atadas.
+        </p>
+
+        <div class="cadena">
+          <div class="eslabon"><span class="voz">nectere</span><span class="gloss">atar, anudar</span></div>
+          <div class="eslabon"><span class="voz">nexus</span><span class="gloss">el acto de atar dos cosas</span></div>
+          <div class="eslabon"><span class="voz">nexum</span><span class="gloss">el contrato que registra la obligación</span></div>
+          <div class="eslabon"><span class="voz">NEX</span><span class="gloss">el producto</span></div>
+        </div>
+
+        <p>
+          <b>ATLAS</b> aporta la otra mitad. Mercator bautizó así su colección de mapas
+          en 1595, y desde entonces un atlas es la obra de referencia contra la que se
+          verifica lo demás. Es exactamente el papel de la casa: carga el peso y guarda
+          la referencia. El producto es NEX; <b>ATLAS nunca va solo</b>.
+        </p>
+      </div>
+
+      <div class="caja remate">
+        <p class="frase">Un comprobante y un movimiento son dos hechos sueltos hasta que alguien demuestra que son <em>el mismo hecho</em>.</p>
+        <span class="uso">Tesis de marca · abre el pitch<br>y el README. No se reescribe.</span>
+      </div>
+    </div>
+
+    <div class="obliga">
+      <div class="caja">
+        <h4>Si no puede atar, no ata</h4>
+        <p>El nombre promete un vínculo demostrado. Sin candidato con confianza suficiente, el asiento va a la cola manual: el sistema no adivina.</p>
+      </div>
+      <div class="caja">
+        <h4>El nudo se muestra</h4>
+        <p>Toda conciliación viene con su explicación: de dónde salió cada número, cuánta confianza tiene y qué se verificó para aprobarlo.</p>
+      </div>
+      <div class="caja">
+        <h4>El nudo no sale de la máquina</h4>
+        <p>Atar dos documentos exige leerlos enteros. Por eso la inferencia corre local: el vínculo se construye adentro del equipo del contador.</p>
+      </div>
+    </div>
+
+    <div class="relatos">
+      <article class="caja relato corto">
+        <div class="cab"><b>Una línea</b><span>bio del repo · firma de mail · slide 1</span></div>
+        <div class="texto">Conciliación bancaria que ata cada comprobante con su movimiento, y corre entera en tu máquina.</div>
+      </article>
+
+      <article class="caja relato">
+        <div class="cab"><b>Un párrafo</b><span>README · descripción del repositorio</span></div>
+        <div class="texto">
+          Un comprobante y un movimiento bancario son dos hechos sueltos. Alguien tiene que
+          demostrar que son el mismo, y hoy ese alguien se pasa el cierre cruzando PDFs
+          contra un CSV renglón por renglón. <b>ATLAS NEX ata los dos y deja escrito por qué</b>:
+          de dónde salió cada número, cuánta confianza tiene y qué se verificó para aprobarlo.
+          Toda la inferencia corre en la máquina del contador. Ningún documento sale del equipo.
+        </div>
+      </article>
+
+      <article class="caja relato">
+        <div class="cab"><b>Treinta segundos</b><span>pitch oral · demo ante jurado</span></div>
+        <div class="texto">
+          Conciliar es atar dos hechos sueltos: un comprobante y un movimiento. Hoy el contador
+          lo hace a mano, renglón por renglón, contra un extracto en CSV. <b>ATLAS NEX lo hace
+          local</b> — la inferencia corre en su máquina, ningún documento sale del equipo — y
+          cierra el <b>93,2 %</b> con precisión del <b>100 %</b>. De lo que no cierra, explica
+          seis de cada siete diferencias. Y lo que no puede demostrar, no lo afirma: va a la
+          cola manual, marcado.
+        </div>
+      </article>
+    </div>
+  </section>
+
   <!-- ══ ISOTIPO ══ -->
   <section>
     <div class="rotulo"><span class="cifra">02</span><h2>Isotipo</h2></div>
@@ -437,7 +528,8 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
       Tres direcciones, dibujadas sobre la misma grilla de 24 y con el mismo trazo de 2 px.
       El criterio de corte es duro: <b>si no se lee a 16 px no sirve</b>, porque el primer
       lugar donde aparece la marca es la pestaña del navegador de un contador que tiene
-      catorce abiertas.
+      catorce abiertas. El segundo criterio lo puso el nombre:
+      <b>el isotipo tiene que dibujar un nexo</b>.
     </p>
 
     <div class="opciones">
@@ -460,10 +552,11 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
           <h3>A · Cotejo</h3>
           <p>
             Dos renglones entran —el comprobante y el extracto— y resuelven en un solo
-            nodo. Es el gesto exacto del producto: el matcher que cierra 1:1, N:1 y 1:N.
-            El punto lleno es el asiento conciliado.
+            nodo. Es el gesto exacto del producto y también el nombre dibujado: el punto
+            lleno <b>es</b> el nexo, el asiento conciliado. Cierra 1:1, N:1 y 1:N sin
+            cambiar de forma.
           </p>
-          <p class="veredicto">Recomendado · limpio a 16 px · sin metáfora prestada</p>
+          <p class="veredicto">Recomendado · el nombre hecho dibujo · limpio a 16 px</p>
         </div>
         <div class="escala">
           <figure>
@@ -588,10 +681,11 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
   <section>
     <div class="rotulo"><span class="cifra">03</span><h2>Lockup</h2></div>
     <p class="entrada">
-      La palabra va en <b>Manrope 800</b>, en versales, con el tracking abierto a
-      <span class="mono">.02em</span> — las versales cerradas se empastan y PERITO tiene
-      dos verticales seguidas en RI. El <span class="mono">v0.1</span> se apoya en la línea
-      de base y nunca crece con la marca.
+      Dos palabras, dos pesos, un solo bloque óptico. <b>ATLAS</b> va en Manrope 500 sobre
+      <span class="mono">--ink-2</span> con el tracking abierto a <span class="mono">.08em</span>;
+      <b>NEX</b> en Manrope 800 sobre <span class="mono">--ink</span> a <span class="mono">.02em</span>.
+      La jerarquía se lee sin leerse: pesa más lo que se compra. El
+      <span class="mono">v0.1</span> se apoya en la línea de base y nunca crece con la marca.
     </p>
 
     <div class="lockups">
@@ -608,7 +702,7 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
                 <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"></path>
                 <circle cx="19" cy="12" r="2.6" fill="#a78bfa"></circle>
               </svg>
-              <span class="palabra">PERITO</span>
+              <span class="palabra"><em>ATLAS</em>NEX</span>
               <span class="version">v0.1</span>
             </div>
           </div>
@@ -624,7 +718,7 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
               <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"></path>
               <circle cx="19" cy="12" r="2.6" fill="#a78bfa"></circle>
             </svg>
-            <span class="palabra">PERITO</span>
+            <span class="palabra"><em>ATLAS</em>NEX</span>
           </div>
         </div>
       </div>
@@ -835,7 +929,7 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
 
     <div class="caja cotejo">
       <div class="izq">
-        <h4>Así escribe PERITO</h4>
+        <h4>Así escribe ATLAS NEX</h4>
         <q>Ningún documento sale de esta máquina.</q>
         <q>41 conciliados · 41 correctos · 0 incorrectos.</q>
         <q>No conciliado: $2.500.211,10 sobre $17.003.371,07.</q>
@@ -909,7 +1003,7 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
                 <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round"></path>
                 <circle cx="19" cy="12" r="2.7" fill="#a78bfa"></circle>
               </svg>
-              <span class="palabra" style="font-size:16px">PERITO</span>
+              <span class="palabra" style="font-size:16px"><em>ATLAS</em>NEX</span>
             </div>
             <div class="alto">Cada número dice de dónde salió.</div>
             <div class="pie-p">ALEPH HACKATHON 2026 · TRACK QVAC</div>
@@ -922,7 +1016,7 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
   </section>
 
   <footer class="cierre">
-    <span>PERITO · marca v0.1 · 22-08-2026</span>
+    <span>ATLAS NEX · marca v0.1 · 22-08-2026</span>
     <span>tokens: app/globals.css · isotipo: app/icon.svg · lockup: components/Marca.tsx</span>
   </footer>
 

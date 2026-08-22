@@ -33,3 +33,8 @@ qvac/
 
 .next/
 next-env.d.ts
+
+# Referencias de diseno de terceros: son trabajo de otros disenadores y el repo
+# es publico. Quedan locales; la especificacion de marca propia si se versiona.
+UI UX/*.jpg
+UI UX/*.png
