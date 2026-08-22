@@ -25,3 +25,6 @@ eval/manifiesto_degradacion.json
 # No corresponde que este en el repo que ese mismo jurado revisa.
 docs/
 *.docx
+
+# Un anio sintetico: derivado y reproducible con semilla fija.
+data/anio/
