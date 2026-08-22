@@ -70,6 +70,7 @@ node scripts/probar-matcher.mjs
 | `scripts/degradar.mjs` | Facsímil + degradación en 3 niveles |
 | `lib/qvac/` | **Pendiente** — cliente del servidor local, OCR, extracción |
 | `app/` | **Pendiente** — las 3 pantallas |
+| `app/marca/` | Hoja de marca viva — `npm run dev` → `/marca` |
 
 ### Última medición del matcher
 
@@ -105,6 +106,31 @@ facturas sin cobrar y movimientos del banco sin comprobante.
 canvas nativo en Node, así que `degradar.mjs` lee las coordenadas del PDF y
 redibuja el documento. Conserva posiciones, tamaños y texto; no los filetes de las
 tablas ni el logo.
+
+---
+
+## Identidad
+
+La marca vive en el repo, no en un PDF suelto.
+
+```bash
+npm run dev        # → http://localhost:3000/marca
+```
+
+Esa página es la hoja de marca: nombre y relato, isotipo, lockup, color,
+tipografía, lenguaje de estado, voz y aplicaciones. **Lee el sistema en vivo** —
+las muestras de color resuelven el valor computado de cada variable y el isotipo
+es el mismo componente que usa el riel, así que no puede quedar desactualizada.
+
+| Dónde | Qué manda |
+|---|---|
+| `app/globals.css` | Todos los colores. Ningún componente escribe un hex |
+| `components/Marca.tsx` | Isotipo y lockup en sus tres tamaños |
+| `app/icon.svg` | Favicon |
+| `app/marca/` | La hoja que documenta las tres cosas de arriba |
+
+`UI UX/brand-kit.html` es una **instantánea** para compartir con quien no corre el
+proyecto. Ante cualquier diferencia, manda `/marca`.
 
 ---
 

@@ -89,7 +89,7 @@ export default function Marca({
       <b style={{ fontSize: palabra }}>
         <i>ATLAS</i>NEX
       </b>
-      {version && <span>{version}</span>}
+      {version && <span className="version">{version}</span>}
 
       <style jsx>{`
         .marca { display: inline-flex; align-items: center; gap: 9px; }
@@ -107,7 +107,10 @@ export default function Marca({
           color: var(--ink-2);
           margin-right: 0.34em;
         }
-        span {
+        /* Con clase propia, no con el selector 'span': styled-jsx le pone la
+           clase de scope tambien al <span> raiz, asi que un 'span' pelado le
+           aplicaria align-self:flex-end al lockup entero. */
+        .version {
           font-family: var(--mono);
           font-size: 10px;
           color: var(--ink-3);
