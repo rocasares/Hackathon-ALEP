@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+qvac-venv/
+
+# Real invoice PDFs the user provided for local testing -- contain real
+# third-party names/CUITs/amounts, never commit these to a public repo.
+data/real_invoices/
+
+# Generated page-image intermediates and run outputs (reproducible via
+# scripts/generate_sample_data.py and scripts/eval.py, not source).
+data/_pages/
+data/_pages_real/
+data/last_run_report*.json

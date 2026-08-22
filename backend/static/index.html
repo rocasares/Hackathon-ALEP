@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Conciliador local (QVAC)</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 780px; margin: 40px auto; padding: 0 16px; color: #1a1a1a; }
+  h1 { font-size: 1.4rem; }
+  form { display: flex; flex-direction: column; gap: 12px; margin: 20px 0; }
+  label { font-weight: 600; font-size: 0.9rem; }
+  input[type=file] { border: 1px solid #ccc; border-radius: 6px; padding: 8px; }
+  button { background: #111; color: #fff; border: none; border-radius: 6px; padding: 10px 16px; cursor: pointer; width: fit-content; }
+  button:disabled { opacity: 0.5; }
+  #status { font-size: 0.9rem; color: #555; }
+  table { border-collapse: collapse; width: 100%; margin-top: 8px; font-size: 0.85rem; }
+  th, td { border: 1px solid #ddd; padding: 6px 8px; text-align: left; }
+  th { background: #f5f5f5; }
+  .section { margin-top: 28px; }
+  pre { background: #f5f5f5; padding: 12px; border-radius: 6px; overflow-x: auto; }
+</style>
+</head>
+<body>
+  <h1>Conciliador de facturas y extractos (100% local, QVAC)</h1>
+  <p>Subí las facturas en PDF y el extracto bancario en CSV (columnas: fecha,descripcion,importe,saldo).</p>
+  <form id="f">
+    <div>
+      <label>Facturas (PDF, podés elegir varias)</label><br/>
+      <input type="file" name="invoices" accept="application/pdf" multiple required />
+    </div>
+    <div>
+      <label>Extracto bancario (CSV)</label><br/>
+      <input type="file" name="bank_statement" accept=".csv" required />
+    </div>
+    <button type="submit">Conciliar</button>
+  </form>
+  <div id="status"></div>
+  <div id="result"></div>
+
+<script>
+const form = document.getElementById('f');
+const statusEl = document.getElementById('status');
+const resultEl = document.getElementById('result');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const fd = new FormData();
+  const invoiceFiles = form.querySelector('input[name=invoices]').files;
+  for (const f of invoiceFiles) fd.append('invoices', f);
+  fd.append('bank_statement', form.querySelector('input[name=bank_statement]').files[0]);
+
+  statusEl.textContent = 'Procesando (extracción + conciliación local, puede tardar)...';
+  resultEl.innerHTML = '';
+  form.querySelector('button').disabled = true;
+
+  try {
+    const res = await fetch('/reconcile', { method: 'POST', body: fd });
+    if (!res.ok) throw new Error(await res.text());
+    const data = await res.json();
+    statusEl.textContent = 'Listo.';
+    render(data);
+  } catch (err) {
+    statusEl.textContent = 'Error: ' + err.message;
+  } finally {
+    form.querySelector('button').disabled = false;
+  }
+});
+
+function row(c) {
+  return `<tr>
+    <td>${c.kind}</td>
+    <td>${c.invoice_ids.join(', ')}</td>
+    <td>${c.movement_ids.join(', ')}</td>
+    <td>${(c.score*100).toFixed(1)}%</td>
+    <td>${c.explanation}</td>
+  </tr>`;
+}
+
+function render(data) {
+  let html = '<div class="section"><h2>Resumen</h2><pre>' + JSON.stringify(data.stats, null, 2) + '</pre></div>';
+
+  html += '<div class="section"><h2>Conciliados (' + data.conciliados.length + ')</h2><table><tr><th>Tipo</th><th>Facturas</th><th>Movimientos</th><th>Score</th><th>Explicación</th></tr>';
+  html += data.conciliados.map(row).join('') + '</table></div>';
+
+  html += '<div class="section"><h2>En revisión (' + data.en_revision.length + ')</h2><table><tr><th>Tipo</th><th>Facturas</th><th>Movimientos</th><th>Score</th><th>Explicación</th></tr>';
+  html += data.en_revision.map(row).join('') + '</table></div>';
+
+  html += '<div class="section"><h2>Red flags (' + data.red_flags.length + ')</h2><ul>' +
+    data.red_flags.map(f => `<li><b>${f.type}</b> ${f.invoice_ids.join(', ')}: ${f.reason}</li>`).join('') + '</ul></div>';
+
+  html += '<div class="section"><h2>Facturas sin movimiento</h2><p>' + (data.facturas_sin_movimiento.join(', ') || '—') + '</p></div>';
+  html += '<div class="section"><h2>Movimientos sin comprobante</h2><p>' + (data.movimientos_sin_comprobante.join(', ') || '—') + '</p></div>';
+
+  resultEl.innerHTML = html;
+}
+</script>
+</body>
+</html>

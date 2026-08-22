@@ -1,0 +1,92 @@
+[
+  {
+    "id": "F000",
+    "emisor": "Mi Empresa SA",
+    "cliente": "FIGUEROA ANDREA MARTA",
+    "fecha": "2026-01-05",
+    "total": 100000.0,
+    "tipo": "factura",
+    "numero": "A-0001-00001234"
+  },
+  {
+    "id": "F001",
+    "emisor": "Mi Empresa SA",
+    "cliente": "ALDO BENEGAS",
+    "fecha": "2026-01-06",
+    "total": 494999.11,
+    "tipo": "factura",
+    "numero": "A-0001-00001235"
+  },
+  {
+    "id": "F002",
+    "emisor": "Mi Empresa SA",
+    "cliente": "COMERCIAL DEL SUR SA",
+    "fecha": "2026-01-10",
+    "total": 50000.0,
+    "tipo": "factura",
+    "numero": "A-0001-00001300"
+  },
+  {
+    "id": "F003",
+    "emisor": "Mi Empresa SA",
+    "cliente": "COMERCIAL DEL SUR SA",
+    "fecha": "2026-01-12",
+    "total": 30000.0,
+    "tipo": "factura",
+    "numero": "A-0001-00001301"
+  },
+  {
+    "id": "F004",
+    "emisor": "Mi Empresa SA",
+    "cliente": "COMERCIAL DEL SUR SA",
+    "fecha": "2026-01-14",
+    "total": 20000.0,
+    "tipo": "factura",
+    "numero": "A-0001-00001302"
+  },
+  {
+    "id": "F005",
+    "emisor": "Mi Empresa SA",
+    "cliente": "LOPEZ GUSTAVO",
+    "fecha": "2026-01-08",
+    "total": 90000.0,
+    "tipo": "factura",
+    "numero": "A-0001-00001400"
+  },
+  {
+    "id": "F006",
+    "emisor": "Mi Empresa SA",
+    "cliente": "MARTINEZ CARLOS",
+    "fecha": "2026-01-02",
+    "total": 15000.0,
+    "tipo": "factura",
+    "numero": "A-0001-00001500"
+  },
+  {
+    "id": "F007",
+    "emisor": "Mi Empresa SA",
+    "cliente": "FIGUEROA ANDREA MARTA",
+    "fecha": "2026-01-05",
+    "total": 100000.0,
+    "tipo": "factura",
+    "numero": "A-0001-00001236"
+  },
+  {
+    "id": "F008",
+    "emisor": "Mi Empresa SA",
+    "cliente": "COMERCIAL DEL SUR SA",
+    "fecha": "2026-01-16",
+    "total": 5000.0,
+    "tipo": "nota_credito",
+    "numero": "NC-0001-00000010"
+  },
+  {
+    "id": "F009",
+    "emisor": "Mi Empresa SA",
+    "cliente": "RODRIGUEZ SILVIA",
+    "fecha": "2026-01-25",
+    "total": 22000.0,
+    "tipo": "factura",
+    "numero": "A-0001-00001600"
+  }
+]

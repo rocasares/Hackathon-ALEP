@@ -1,0 +1,74 @@
+{
+  "conciliado": [
+    {
+      "invoice_ids": [
+        "F000"
+      ],
+      "movement_ids": [
+        "M000"
+      ]
+    },
+    {
+      "invoice_ids": [
+        "F001"
+      ],
+      "movement_ids": [
+        "M001"
+      ]
+    },
+    {
+      "invoice_ids": [
+        "F002",
+        "F003",
+        "F004"
+      ],
+      "movement_ids": [
+        "M002"
+      ]
+    },
+    {
+      "invoice_ids": [
+        "F005"
+      ],
+      "movement_ids": [
+        "M003",
+        "M004"
+      ]
+    },
+    {
+      "invoice_ids": [
+        "F008"
+      ],
+      "movement_ids": [
+        "M005"
+      ]
+    }
+  ],
+  "revision_expected": [
+    {
+      "invoice_ids": [
+        "F006"
+      ],
+      "movement_ids": [
+        "M008"
+      ]
+    }
+  ],
+  "facturas_sin_movimiento": [
+    "F007",
+    "F009"
+  ],
+  "movimientos_sin_comprobante": [
+    "M006",
+    "M007"
+  ],
+  "red_flags_expected": [
+    {
+      "type": "duplicate",
+      "invoice_ids": [
+        "F000",
+        "F007"
+      ]
+    }
+  ]
+}
