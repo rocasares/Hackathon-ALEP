@@ -1,0 +1,18 @@
+{
+  "name": "perito",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "gt": "node scripts/ground-truth.mjs \"./data/FC PDF\" > eval/ground_truth.csv",
+    "extracto": "node scripts/generar-extracto.mjs eval/ground_truth.csv > data/extracto.csv",
+    "errores": "node scripts/inyectar-errores.mjs eval/ground_truth.csv",
+    "degradar": "node scripts/degradar.mjs \"./data/FC PDF\" ./data/degradadas"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^1.0.7",
+    "pdfjs-dist": "^4.10.38",
+    "sharp": "^0.35.3"
+  }
+}

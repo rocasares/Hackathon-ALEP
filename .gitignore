@@ -1,0 +1,27 @@
+node_modules/
+.next/
+.tmp/
+out/
+*.db
+
+# ── DATOS PERSONALES REALES — NO SUBIR ──────────────────────
+# Las 70 facturas contienen nombre, CUIT, domicilio y telefono de 54 personas
+# reales. El repo es publico y git conserva el historial para siempre.
+# Se comparten por fuera del repo, o anonimizadas (ver scripts/anonimizar.mjs).
+data/FC PDF/
+*.zip
+
+# ── DERIVADOS REPRODUCIBLES ─────────────────────────────────
+# Se regeneran con semilla fija: cualquiera obtiene los mismos.
+data/degradadas/
+data/extracto.csv
+eval/ground_truth.csv
+eval/clave_matching.json
+eval/casos_error.json
+eval/manifiesto_degradacion.json
+
+# ── INTERNO DEL EQUIPO ──────────────────────────────────────
+# El plan describe como se optimiza para el criterio del jurado.
+# No corresponde que este en el repo que ese mismo jurado revisa.
+docs/
+*.docx
