@@ -8,11 +8,20 @@
     "gt": "node scripts/ground-truth.mjs \"./data/FC PDF\" > eval/ground_truth.csv",
     "extracto": "node scripts/generar-extracto.mjs eval/ground_truth.csv > data/extracto.csv",
     "errores": "node scripts/inyectar-errores.mjs eval/ground_truth.csv",
-    "degradar": "node scripts/degradar.mjs \"./data/FC PDF\" ./data/degradadas"
+    "degradar": "node scripts/degradar.mjs \"./data/FC PDF\" ./data/degradadas",
+    "postinstall": "node scripts/parche-qvac.mjs",
+    "qvac:setup": "npx qvac bundle sdk && node scripts/parche-qvac.mjs",
+    "medir": "node scripts/medir-modelo.mjs",
+    "anio": "node scripts/generar-anio.mjs",
+    "matcher": "npx esbuild lib/matcher.ts --bundle --format=esm --platform=node --outfile=.tmp/matcher.mjs && node scripts/probar-matcher.mjs"
   },
   "dependencies": {
     "@napi-rs/canvas": "^1.0.7",
+    "@qvac/sdk": "^0.17.1",
     "pdfjs-dist": "^4.10.38",
     "sharp": "^0.35.3"
+  },
+  "devDependencies": {
+    "@qvac/cli": "^0.11.0"
   }
 }
