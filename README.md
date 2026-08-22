@@ -23,11 +23,11 @@ Direct links to the lines where inference happens:
 
 | What | Where |
 |---|---|
-| **OCR with bounding boxes and confidence** | [`lib/qvac/ocr.ts#L102-L154`](../../blob/f6967dd/lib/qvac/ocr.ts#L102-L154) |
-| **K=3 self-consistency, forced JSON schema, fixed seeds** | [`lib/qvac/extract.ts#L256-L311`](../../blob/f6967dd/lib/qvac/extract.ts#L256-L311) |
-| **Tool-calling repair loop** | [`lib/qvac/repair.ts#L234-L282`](../../blob/f6967dd/lib/qvac/repair.ts#L234-L282) |
-| **The Track-2 metric: did the model use the tool result?** | [`lib/qvac/repair.ts#L353-L380`](../../blob/f6967dd/lib/qvac/repair.ts#L353-L380) |
-| Single access layer to the SDK | [`lib/qvac/client.ts`](../../blob/f6967dd/lib/qvac/client.ts) |
+| **OCR with bounding boxes and confidence** | [`lib/qvac/ocr.ts#L102-L154`](../../blob/281f021/lib/qvac/ocr.ts#L102-L154) |
+| **K=3 self-consistency, forced JSON schema, fixed seeds** | [`lib/qvac/extract.ts#L256-L311`](../../blob/281f021/lib/qvac/extract.ts#L256-L311) |
+| **Tool-calling repair loop** | [`lib/qvac/repair.ts#L234-L282`](../../blob/281f021/lib/qvac/repair.ts#L234-L282) |
+| **The Track-2 metric: did the model use the tool result?** | [`lib/qvac/repair.ts#L353-L380`](../../blob/281f021/lib/qvac/repair.ts#L353-L380) |
+| Single access layer to the SDK | [`lib/qvac/client.ts`](../../blob/281f021/lib/qvac/client.ts) |
 
 **QVAC capabilities used:** `ocr()` (CRAFT detector + ONNX recognizer, returns
 `bbox` and `confidence` per block) and `completion()` with `generationParams`
@@ -118,7 +118,7 @@ reconciled $119.2M of $165.1M invoiced
 ```
 
 Instalment plans are not resolved by searching subsets — the bank writes
-`CUOTA 3/6` in the description. [`agruparCuotas`](../../blob/f6967dd/lib/matcher.ts#L322)
+`CUOTA 3/6` in the description. [`agruparCuotas`](../../blob/281f021/lib/matcher.ts#L322)
 reads that marker, rebuilds the plan and collapses it into one virtual movement.
 That single change took 1:N from 0% to 76.4%.
 
@@ -163,7 +163,7 @@ variable.** On a Ryzen 3 with 3.4 GB the worker takes **44 s warm** and over
 5 minutes cold — so the SDK is simply unusable on that hardware. Worse, the error
 reads *"the worker process may have failed to start"*, which sends you looking in
 entirely the wrong direction. We lost 45 minutes here.
-[`scripts/parche-qvac.mjs`](../../blob/f6967dd/scripts/parche-qvac.mjs) raises it
+[`scripts/parche-qvac.mjs`](../../blob/281f021/scripts/parche-qvac.mjs) raises it
 to 300 s and runs on `postinstall`.
 
 **Sampling parameters are not on the capability pages.** `temp`, `seed`, `top_p`
@@ -174,7 +174,7 @@ before discovering it existed.
 
 **The OCR detector cannot allocate on large images.** `ggml_gallocr_alloc_graph
 failed` at 1024 px and 768 px wide on a 3.4 GB machine; 640 px works. The limit
-depends on available RAM, so [`lib/qvac/ocr.ts#L102`](../../blob/f6967dd/lib/qvac/ocr.ts#L102)
+depends on available RAM, so [`lib/qvac/ocr.ts#L102`](../../blob/281f021/lib/qvac/ocr.ts#L102)
 walks a descending ladder of widths instead of hardcoding one. Recognizer
 confidence stays at 0.80–0.99 at 640 px, so this costs nothing in quality.
 
