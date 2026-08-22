@@ -402,18 +402,36 @@ for (let m = 0; m < MESES; m++) {
   }
 }
 
-// ── anomalías reales, no inyectadas ──────────────────────────
-// Con doce meses de historia, un salto de Edesur es un hallazgo CALCULADO contra
-// la mediana del propio comercio, no un valor puesto a mano.
-const edesur = movimientos.filter((m) => m.descripcion.includes('EDESUR')).sort((a, b) => a.fecha < b.fecha ? -1 : 1);
-if (edesur.length > 3) {
-  const objetivo = edesur[edesur.length - 2];
-  objetivo.importe = Number((objetivo.importe * 3.6).toFixed(2));
+// ── casos que el modulo 2 tiene que encontrar ────────────────
+// Se ubican por FECHA, en el ultimo mes de operacion. Ubicarlos por posicion en
+// la lista los mandaba a los meses de cola —los que solo tienen cuotas sueltas
+// de ventas viejas— y el panel de hallazgos quedaba vacio justo en el mes que
+// se muestra.
+const mesFinal = (() => {
+  const c = new Date(inicio); c.setUTCMonth(c.getUTCMonth() + MESES - 1);
+  return iso(c).slice(0, 7);
+})();
+
+const enMesFinal = (m) => m.fecha.startsWith(mesFinal);
+
+// Anomalia: un cargo de Edesur muy por encima de su mediana historica.
+const edesur = movimientos.filter((m) => m.descripcion.includes('EDESUR'));
+const objetivo = edesur.filter(enMesFinal)[0] ?? edesur[edesur.length - 1];
+if (objetivo) {
+  const otros = edesur.filter((m) => m !== objetivo).map((m) => Math.abs(m.importe)).sort((a, b) => a - b);
+  const med = otros.length ? otros[Math.floor(otros.length / 2)] : Math.abs(objetivo.importe);
+  objetivo.importe = -Number((med * 4.2).toFixed(2));
   objetivo._anomalia = 'monto_atipico';
 }
-// Dos cargos duplicados exactos.
-const dupBase = movimientos.filter((m) => m.descripcion.startsWith('COMISION')).slice(0, 2);
-for (const d of dupBase) movimientos.push({ ...d, id: nuevoMov(), _dup: true });
+
+// Dos cargos duplicados exactos, el mismo dia.
+let nDup = 0;
+for (const patron of ['COMISION', 'PERCEP IIBB']) {
+  const orig = movimientos.filter((m) => m.descripcion.startsWith(patron) && enMesFinal(m))[0];
+  if (!orig) continue;
+  movimientos.push({ ...orig, id: nuevoMov(), _dup: true });
+  nDup++;
+}
 
 // ═════════════════════════════════════════════════════════════
 // salida
