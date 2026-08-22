@@ -15,7 +15,8 @@
     "matcher": "npx esbuild lib/matcher.ts --bundle --format=esm --platform=node --outfile=.tmp/matcher.mjs && node scripts/probar-matcher.mjs",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "test:uso": "npx esbuild lib/qvac/repair.ts --bundle --format=esm --platform=node --outfile=.tmp/repair.mjs --external:@qvac/sdk --external:sharp --log-level=error && node test/uso-resultado.mjs"
   },
   "dependencies": {
     "@napi-rs/canvas": "^1.0.7",
