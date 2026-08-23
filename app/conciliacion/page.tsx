@@ -23,6 +23,11 @@ export default function Conciliacion() {
   const cobranzas = ms.filter((m) => m.importe > 0);
   const acreditado = cobranzas.reduce((a, m) => a + m.importe, 0);
 
+  // Las diferencias van desagregadas, no neteadas: cobrar de menos y cobrar de
+  // más son dos problemas distintos con dos acciones distintas.
+  const cobroDeMenos = Math.max(0, facturado - acreditado);
+  const cobroDeMas = Math.max(0, acreditado - facturado);
+
   // Mientras el matcher no esté conectado a la UI, la composición sale de la
   // última corrida medida contra la clave de respuesta.
   const medicion = { conciliadas: 353, revisar: 98, observadas: 34, nose: 22 };
@@ -56,15 +61,26 @@ export default function Conciliacion() {
           <div className="sub">{cobranzas.length} cobranzas</div>
         </div>
         <div className="kpi bad">
-          <div className="k">Sin conciliar</div>
-          <div className="v">{pesosCorto(facturado - acreditado)}</div>
-          <div className="sub">exposición del período</div>
+          <div className="k">Cobrado de menos</div>
+          <div className="v">{pesosCorto(cobroDeMenos)}</div>
+          <div className="sub">plata que falta</div>
+        </div>
+        <div className="kpi">
+          <div className="k">Cobrado de más</div>
+          <div className="v">{pesosCorto(cobroDeMas)}</div>
+          <div className="sub">a reclamar</div>
         </div>
         <div className="kpi acc">
           <div className="k">Precisión</div>
           <div className="v">90,3 %</div>
           <div className="sub">recall 72,8 %</div>
         </div>
+      </div>
+
+      <div className="note" style={{ marginTop: 0, marginBottom: 22 }}>
+        <b>Las dos diferencias van separadas a propósito.</b> Netearlas daría un solo número
+        y escondería el problema: que te cobren de menos es plata que falta, que te cobren de
+        más es plata que hay que reclamar. Son dos acciones distintas para el contador.
       </div>
 
       <div className="card" style={{ marginBottom: 22 }}>

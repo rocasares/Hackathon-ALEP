@@ -118,34 +118,29 @@ section{ padding:64px 0 0; }
 }
 .caja-h .hint{ font-family:var(--mono); font-size:11.5px; color:var(--ink-3); font-weight:400; }
 
-/* ── isotipos ──────────────────────────────────── */
-.opciones{ display:grid; grid-template-columns:repeat(auto-fit,minmax(292px,1fr)); gap:18px; }
-.opcion{ display:flex; flex-direction:column; overflow:hidden; }
-.opcion.elegida{ border-color:var(--violet-line); box-shadow:var(--glow); }
-.lienzo{
-  padding:38px 22px 30px; display:flex; align-items:center; justify-content:center;
-  background:
-    radial-gradient(420px 200px at 50% 0%, rgba(139,92,246,.13), rgba(139,92,246,0) 70%),
-    var(--void);
-  border-bottom:1px solid var(--line);
-}
-.opcion .cuerpo{ padding:16px 18px 20px; display:flex; flex-direction:column; gap:11px; flex:1; }
-.opcion h3{ font-size:14.5px; font-weight:700; margin:0; letter-spacing:-.01em; }
-.opcion p{ margin:0; font-size:13px; color:var(--ink-2); line-height:1.55; }
-.opcion .veredicto{
-  margin-top:auto; padding-top:12px; border-top:1px solid var(--line-soft);
-  font-family:var(--mono); font-size:11px; color:var(--ink-3);
-}
-.opcion.elegida .veredicto{ color:var(--violet-2); }
-
-/* escalas de prueba: el mismo trazo a 16 px decide */
-.escala{
-  display:flex; align-items:flex-end; gap:18px;
-  padding:14px 18px; border-top:1px solid var(--line-soft);
-  background:var(--surface-2);
-}
-.escala figure{ margin:0; display:flex; flex-direction:column; align-items:center; gap:6px; }
-.escala figcaption{ font-family:var(--mono); font-size:10px; color:var(--ink-3); }
+/* ── isotipo: anatomia y descartes ────────── */
+.rot-sub{ margin:36px 0 10px; font-size:11px; letter-spacing:.11em; text-transform:uppercase;
+  font-weight:700; color:var(--ink-3); }
+.anatomia{ display:grid; grid-template-columns:minmax(200px,300px) 1fr; gap:16px; }
+.lienzo-iso{ display:flex; align-items:center; justify-content:center; padding:34px;
+  background:radial-gradient(420px 200px at 50% 0%, rgba(139,92,246,.14), rgba(139,92,246,0) 70%), var(--void); }
+.notas-iso{ padding:20px 22px; display:flex; flex-direction:column; gap:15px; justify-content:center; }
+.dato{ display:flex; flex-direction:column; gap:4px; }
+.dato .k{ font-family:var(--mono); font-size:11px; color:var(--violet-2); letter-spacing:.04em; }
+.dato .d{ font-size:13px; color:var(--ink-2); line-height:1.55; }
+.dato .d b{ color:var(--ink); font-weight:600; }
+.escala-iso{ display:flex; align-items:flex-end; gap:34px; flex-wrap:wrap; padding:28px 30px; background:var(--void); }
+.escala-iso figure{ margin:0; display:flex; flex-direction:column; align-items:center; gap:9px; }
+.escala-iso figcaption{ font-family:var(--mono); font-size:10.5px; color:var(--ink-3); }
+.descartes{ display:grid; grid-template-columns:repeat(auto-fit,minmax(292px,1fr)); gap:16px; }
+.desc{ display:flex; flex-direction:column; overflow:hidden; opacity:.82; }
+.desc .mini{ padding:26px; display:flex; align-items:center; justify-content:center;
+  background:var(--void); border-bottom:1px solid var(--line); }
+.desc .cu{ padding:16px 18px 20px; display:flex; flex-direction:column; gap:10px; flex:1; }
+.desc .cu h3{ margin:0; font-size:14.5px; font-weight:700; letter-spacing:-.01em; }
+.desc .cu p{ margin:0; font-size:13px; color:var(--ink-2); line-height:1.55; }
+.desc .cu .ver{ margin-top:auto; padding-top:12px; border-top:1px solid var(--line-soft);
+  font-family:var(--mono); font-size:11px; color:var(--ink-3); }
 
 /* ── lockup y aire ─────────────────────────────── */
 .lockups{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
@@ -422,7 +417,7 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
 @media (max-width:860px){
   .hoja{ padding:0 18px 80px; }
   .tapa{ grid-template-columns:1fr; gap:24px; padding-top:48px; }
-  .lockups, .reglas, .tipos, .cotejo{ grid-template-columns:1fr; }
+  .lockups, .reglas, .tipos, .cotejo, .anatomia{ grid-template-columns:1fr; }
   .cotejo .der{ border-left:none; border-top:1px solid var(--line); }
   .hoja::before{ display:none; }
 }
@@ -433,16 +428,13 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
   <!-- ══ TAPA ══ -->
   <header class="tapa">
     <div class="firma">
-      <svg width="72" height="72" viewBox="0 0 24 24" fill="none" role="img" aria-label="Isotipo ATLAS NEX">
-        <defs>
-          <linearGradient id="g-tapa" x1="2" y1="6" x2="22" y2="18" gradientUnits="userSpaceOnUse">
-            <stop stop-color="#7c3aed"></stop><stop offset="1" stop-color="#c084fc"></stop>
-          </linearGradient>
-        </defs>
-        <path d="M3 7.5H10C13.2 7.5 13.4 12 17 12" stroke="url(#g-tapa)" stroke-width="2" stroke-linecap="round"></path>
-        <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="url(#g-tapa)" stroke-width="2" stroke-linecap="round"></path>
-        <circle cx="19" cy="12" r="2.6" fill="#a78bfa"></circle>
-      </svg>
+      <svg width="72" height="72" viewBox="0 0 120 120" fill="none" aria-label="Isotipo ATLAS NEX">
+  <defs><linearGradient id="ng1" x1="20" y1="14" x2="100" y2="86" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"></stop><stop offset="1" stop-color="#c084fc"></stop></linearGradient></defs>
+  <path d="M54.14 21.85 L90.11 84.15 A8.5 8.5 0 0 0 104.83 75.65 L68.86 13.35 A8.5 8.5 0 0 0 54.14 21.85 Z" fill="#0b0a12" stroke="url(#ng1)" stroke-width="2.4"></path>
+  <path d="M95.97 74 L24.03 74 A8.5 8.5 0 0 0 24.03 91 L95.97 91 A8.5 8.5 0 0 0 95.97 74 Z" fill="#0b0a12" stroke="url(#ng1)" stroke-width="2.4"></path>
+  <path d="M29.89 84.15 L65.86 21.85 A8.5 8.5 0 0 0 51.14 13.35 L15.17 75.65 A8.5 8.5 0 0 0 29.89 84.15 Z" fill="#0b0a12" stroke="url(#ng1)" stroke-width="2.4"></path>
+  <circle cx="60" cy="15" r="7" fill="#f0eefb"></circle>
+</svg>
     </div>
     <div>
       <h1>Marca ATLAS NEX</h1>
@@ -458,6 +450,7 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
         <span>Track QVAC</span>
         <span>v0.1</span>
         <span>tokens = app/globals.css</span>
+        <span>instantánea · la hoja viva corre en /marca</span>
       </div>
     </div>
   </header>
@@ -571,155 +564,107 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
   <section>
     <div class="rotulo"><span class="cifra">02</span><h2>Isotipo</h2></div>
     <p class="entrada">
-      Tres direcciones, dibujadas sobre la misma grilla de 24 y con el mismo trazo de 2 px.
-      El criterio de corte es duro: <b>si no se lee a 16 px no sirve</b>, porque el primer
-      lugar donde aparece la marca es la pestaña del navegador de un contador que tiene
-      catorce abiertas. El segundo criterio lo puso el nombre:
-      <b>el isotipo tiene que dibujar un nexo</b>.
+      El isotipo es <b>el triángulo de ATLAS</b>: tres cápsulas de extremos redondeados
+      que se entrelazan en las esquinas. NEX le agrega una sola cosa — el
+      <b>nodo en el vértice de arriba</b>, el punto donde el cotejo cierra. Un elemento
+      de diferencia alcanza para que en una pestaña no se confunda con los otros
+      productos de la casa.
     </p>
 
-    <div class="opciones">
+    <div class="anatomia">
+      <div class="caja lienzo-iso"><svg width="128" height="128" viewBox="0 0 120 120" fill="none">
+  <defs><linearGradient id="gbig" x1="20" y1="14" x2="100" y2="86" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"></stop><stop offset="1" stop-color="#c084fc"></stop></linearGradient></defs>
+  <path d="M54.14 21.85 L90.11 84.15 A8.5 8.5 0 0 0 104.83 75.65 L68.86 13.35 A8.5 8.5 0 0 0 54.14 21.85 Z" fill="#0b0a12" stroke="url(#gbig)" stroke-width="2.4"></path>
+  <path d="M95.97 74 L24.03 74 A8.5 8.5 0 0 0 24.03 91 L95.97 91 A8.5 8.5 0 0 0 95.97 74 Z" fill="#0b0a12" stroke="url(#gbig)" stroke-width="2.4"></path>
+  <path d="M29.89 84.15 L65.86 21.85 A8.5 8.5 0 0 0 51.14 13.35 L15.17 75.65 A8.5 8.5 0 0 0 29.89 84.15 Z" fill="#0b0a12" stroke="url(#gbig)" stroke-width="2.4"></path>
+  <circle cx="60" cy="15" r="7" fill="#f0eefb"></circle>
+</svg></div>
+      <div class="caja notas-iso">
+        <div class="dato">
+          <span class="k">Geometría</span>
+          <span class="d">Triángulo equilátero apuntando arriba, circunradio 45 sobre lienzo
+          de 120. Tres cápsulas de semiancho 8,5, contorno 2,4.</span>
+        </div>
+        <div class="dato">
+          <span class="k">El entrelazado</span>
+          <span class="d">No está dibujado: sale del <b>orden de pintado</b>. Cada cápsula se
+          rellena con <span class="mono">--paper</span> y ocluye a la anterior. Reordenarlas
+          rompe el triángulo imposible.</span>
+        </div>
+        <div class="dato">
+          <span class="k">El nodo</span>
+          <span class="d">Va en <span class="mono">--ink</span>, no en el violeta: a 16 px tiene
+          que separarse de la barra que lo toca, y ahí la diferencia con
+          <span class="mono">--violet-2</span> no alcanza.</span>
+        </div>
+      </div>
+    </div>
 
-      <!-- A · Cotejo -->
-      <article class="caja opcion elegida">
-        <div class="lienzo">
-          <svg width="88" height="88" viewBox="0 0 24 24" fill="none" role="img" aria-label="Concepto Cotejo">
-            <defs>
-              <linearGradient id="gA" x1="2" y1="6" x2="22" y2="18" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#7c3aed"></stop><stop offset="1" stop-color="#c084fc"></stop>
-              </linearGradient>
-            </defs>
-            <path d="M3 7.5H10C13.2 7.5 13.4 12 17 12" stroke="url(#gA)" stroke-width="2" stroke-linecap="round"></path>
-            <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="url(#gA)" stroke-width="2" stroke-linecap="round"></path>
-            <circle cx="19" cy="12" r="2.6" fill="#a78bfa"></circle>
+    <div class="rot-sub">Dos cuerpos, no dos dibujos</div>
+    <p class="entrada">
+      El contorno fino se empasta abajo de <b>28 px</b>, así que ahí la marca pasa a
+      cápsulas macizas: misma geometría, mismas proporciones, sin contorno.
+      <b>El corte lo decide el componente</b>, no quien lo llama.
+    </p>
+
+    <div class="caja escala-iso">
+      <figure><svg width="44" height="44" viewBox="0 0 120 120" fill="none">
+  <defs><linearGradient id="ge44" x1="20" y1="14" x2="100" y2="86" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"></stop><stop offset="1" stop-color="#c084fc"></stop></linearGradient></defs>
+  <path d="M54.14 21.85 L90.11 84.15 A8.5 8.5 0 0 0 104.83 75.65 L68.86 13.35 A8.5 8.5 0 0 0 54.14 21.85 Z" fill="#0b0a12" stroke="url(#ge44)" stroke-width="2.4"></path>
+  <path d="M95.97 74 L24.03 74 A8.5 8.5 0 0 0 24.03 91 L95.97 91 A8.5 8.5 0 0 0 95.97 74 Z" fill="#0b0a12" stroke="url(#ge44)" stroke-width="2.4"></path>
+  <path d="M29.89 84.15 L65.86 21.85 A8.5 8.5 0 0 0 51.14 13.35 L15.17 75.65 A8.5 8.5 0 0 0 29.89 84.15 Z" fill="#0b0a12" stroke="url(#ge44)" stroke-width="2.4"></path>
+  <circle cx="60" cy="15" r="7" fill="#f0eefb"></circle>
+</svg><figcaption>44 · contorno</figcaption></figure>
+      <figure><svg width="24" height="24" viewBox="0 0 120 120" fill="none">
+  <path d="M54.57 21.6 L90.54 83.9 A8 8 0 0 0 104.4 75.9 L68.43 13.6 A8 8 0 0 0 54.57 21.6 Z" fill="#a78bfa"></path>
+  <path d="M95.97 74.5 L24.03 74.5 A8 8 0 0 0 24.03 90.5 L95.97 90.5 A8 8 0 0 0 95.97 74.5 Z" fill="#a78bfa"></path>
+  <path d="M29.46 83.9 L65.43 21.6 A8 8 0 0 0 51.57 13.6 L15.6 75.9 A8 8 0 0 0 29.46 83.9 Z" fill="#a78bfa"></path>
+  <circle cx="60" cy="15" r="8" fill="#f0eefb"></circle>
+</svg><figcaption>24 · maciza</figcaption></figure>
+      <figure><svg width="16" height="16" viewBox="0 0 120 120" fill="none">
+  <path d="M54.57 21.6 L90.54 83.9 A8 8 0 0 0 104.4 75.9 L68.43 13.6 A8 8 0 0 0 54.57 21.6 Z" fill="#a78bfa"></path>
+  <path d="M95.97 74.5 L24.03 74.5 A8 8 0 0 0 24.03 90.5 L95.97 90.5 A8 8 0 0 0 95.97 74.5 Z" fill="#a78bfa"></path>
+  <path d="M29.46 83.9 L65.43 21.6 A8 8 0 0 0 51.57 13.6 L15.6 75.9 A8 8 0 0 0 29.46 83.9 Z" fill="#a78bfa"></path>
+  <circle cx="60" cy="15" r="8" fill="#f0eefb"></circle>
+</svg><figcaption>16 · maciza</figcaption></figure>
+    </div>
+
+    <div class="rot-sub">Lo que se descartó</div>
+    <p class="entrada">Las dos alternativas que se probaron sobre la misma casa.</p>
+
+    <div class="descartes">
+      <article class="caja desc">
+        <div class="mini">
+          <svg width="76" height="76" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+            <path d="M54.14 21.85 L90.11 84.15 A8.5 8.5 0 0 0 104.83 75.65 L68.86 13.35 A8.5 8.5 0 0 0 54.14 21.85 Z" fill="#0b0a12" stroke="#a78bfa" stroke-width="2.4"></path>
+            <path d="M95.97 74 L24.03 74 A8.5 8.5 0 0 0 24.03 91 L95.97 91 A8.5 8.5 0 0 0 95.97 74 Z" fill="#0b0a12" stroke="#a78bfa" stroke-width="2.4"></path>
+            <path d="M29.89 84.15 L65.86 21.85 A8.5 8.5 0 0 0 51.14 13.35 L15.17 75.65 A8.5 8.5 0 0 0 29.89 84.15 Z" fill="#0b0a12" stroke="#a78bfa" stroke-width="2.4"></path>
           </svg>
         </div>
-        <div class="cuerpo">
-          <h3>A · Cotejo</h3>
-          <p>
-            Dos renglones entran —el comprobante y el extracto— y resuelven en un solo
-            nodo. Es el gesto exacto del producto y también el nombre dibujado: el punto
-            lleno <b>es</b> el nexo, el asiento conciliado. Cierra 1:1, N:1 y 1:N sin
-            cambiar de forma.
-          </p>
-          <p class="veredicto">Recomendado · el nombre hecho dibujo · limpio a 16 px</p>
-        </div>
-        <div class="escala">
-          <figure>
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M3 7.5H10C13.2 7.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"></path>
-              <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"></path>
-              <circle cx="19" cy="12" r="2.6" fill="#a78bfa"></circle>
-            </svg><figcaption>32</figcaption>
-          </figure>
-          <figure>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M3 7.5H10C13.2 7.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round"></path>
-              <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round"></path>
-              <circle cx="19" cy="12" r="2.7" fill="#a78bfa"></circle>
-            </svg><figcaption>20</figcaption>
-          </figure>
-          <figure>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M3 7.5H10C13.2 7.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2.4" stroke-linecap="round"></path>
-              <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2.4" stroke-linecap="round"></path>
-              <circle cx="19" cy="12" r="2.8" fill="#a78bfa"></circle>
-            </svg><figcaption>16</figcaption>
-          </figure>
+        <div class="cu">
+          <h3>Casa pura</h3>
+          <p>El iso de ATLAS sin tocar. Máxima unidad de familia, pero con seis proyectos
+          ATLAS el ícono deja de decir cuál estás mirando.</p>
+          <p class="ver">Descartada · no distingue el producto</p>
         </div>
       </article>
 
-      <!-- B · Folio sellado -->
-      <article class="caja opcion">
-        <div class="lienzo">
-          <svg width="88" height="88" viewBox="0 0 24 24" fill="none" role="img" aria-label="Concepto Folio sellado">
-            <defs>
-              <linearGradient id="gB" x1="4" y1="3" x2="20" y2="21" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#7c3aed"></stop><stop offset="1" stop-color="#c084fc"></stop>
-              </linearGradient>
-            </defs>
-            <path d="M5 4.6C5 3.7 5.7 3 6.6 3H14L20 9V19.4C20 20.3 19.3 21 18.4 21H6.6C5.7 21 5 20.3 5 19.4V4.6Z"
-                  stroke="url(#gB)" stroke-width="1.9" stroke-linejoin="round"></path>
-            <path d="M13.6 3.2V8.2C13.6 8.8 14 9.2 14.6 9.2H19.6" stroke="url(#gB)" stroke-width="1.6" stroke-linejoin="round"></path>
-            <path d="M8.6 14.6L11 17L16 11.6" stroke="#a78bfa" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path>
+      <article class="caja desc">
+        <div class="mini">
+          <svg width="76" height="76" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+            <path d="M54.14 21.85 L90.11 84.15 A8.5 8.5 0 0 0 104.83 75.65 L68.86 13.35 A8.5 8.5 0 0 0 54.14 21.85 Z" fill="#0b0a12" stroke="#a78bfa" stroke-width="2.4"></path>
+            <path d="M95.97 74 L24.03 74 A8.5 8.5 0 0 0 24.03 91 L95.97 91 A8.5 8.5 0 0 0 95.97 74 Z" fill="#0b0a12" stroke="#a78bfa" stroke-width="2.4"></path>
+            <path d="M29.89 84.15 L65.86 21.85 A8.5 8.5 0 0 0 51.14 13.35 L15.17 75.65 A8.5 8.5 0 0 0 29.89 84.15 Z" fill="#0b0a12" stroke="#a78bfa" stroke-width="2.4"></path>
+            <path d="M60 33 L83.4 73.5 L36.6 73.5 Z" fill="#a78bfa" stroke="#a78bfa" stroke-width="7" stroke-linejoin="round"></path>
           </svg>
         </div>
-        <div class="cuerpo">
-          <h3>B · Folio sellado</h3>
-          <p>
-            El comprobante con la marca del perito encima. Es literal y se entiende
-            sin explicación, que en un pitch de tres minutos vale. El costo: el
-            documento-con-tilde es la forma más usada del rubro y no distingue.
-          </p>
-          <p class="veredicto">Suplente · legible pero genérico · se satura a 16 px</p>
-        </div>
-        <div class="escala">
-          <figure>
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M5 4.6C5 3.7 5.7 3 6.6 3H14L20 9V19.4C20 20.3 19.3 21 18.4 21H6.6C5.7 21 5 20.3 5 19.4V4.6Z" stroke="#a78bfa" stroke-width="1.9" stroke-linejoin="round"></path>
-              <path d="M8.6 14.6L11 17L16 11.6" stroke="#a78bfa" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg><figcaption>32</figcaption>
-          </figure>
-          <figure>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M5 4.6C5 3.7 5.7 3 6.6 3H14L20 9V19.4C20 20.3 19.3 21 18.4 21H6.6C5.7 21 5 20.3 5 19.4V4.6Z" stroke="#a78bfa" stroke-width="2" stroke-linejoin="round"></path>
-              <path d="M8.6 14.6L11 17L16 11.6" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg><figcaption>20</figcaption>
-          </figure>
-          <figure>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M5 4.6C5 3.7 5.7 3 6.6 3H14L20 9V19.4C20 20.3 19.3 21 18.4 21H6.6C5.7 21 5 20.3 5 19.4V4.6Z" stroke="#a78bfa" stroke-width="2.1" stroke-linejoin="round"></path>
-              <path d="M8.6 14.6L11 17L16 11.6" stroke="#a78bfa" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg><figcaption>16</figcaption>
-          </figure>
+        <div class="cu">
+          <h3>Hueco lleno</h3>
+          <p>El contrapunzón macizo dice «cerrado» y es la más legible en chico, pero pierde
+          el aire de triángulo imposible, que es lo más distintivo de la casa.</p>
+          <p class="ver">Descartada · se aleja demasiado del original</p>
         </div>
       </article>
-
-      <!-- C · Apertura -->
-      <article class="caja opcion">
-        <div class="lienzo">
-          <svg width="88" height="88" viewBox="0 0 24 24" fill="none" role="img" aria-label="Concepto Monograma N">
-            <defs>
-              <linearGradient id="gC" x1="5" y1="4" x2="20" y2="20" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#7c3aed"></stop><stop offset="1" stop-color="#c084fc"></stop>
-              </linearGradient>
-            </defs>
-            <path d="M7 20V4L17 20V7.8"
-                  stroke="url(#gC)" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path>
-            <circle cx="17" cy="4.8" r="2.5" fill="#a78bfa"></circle>
-          </svg>
-        </div>
-        <div class="cuerpo">
-          <h3>C · Monograma N</h3>
-          <p>
-            La N de NEX rematada en el mismo nodo que el isotipo A: el asta sube y
-            termina en el ojo del examinador. Guiña a los logos-orbe de las
-            referencias fintech y es la que mejor funciona sola, sin palabra al lado.
-          </p>
-          <p class="veredicto">Suplente · fuerte como avatar · dice el nombre, no el oficio</p>
-        </div>
-        <div class="escala">
-          <figure>
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M7 20V4L17 20V7.8" stroke="#a78bfa" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"></path>
-              <circle cx="17" cy="4.8" r="2.5" fill="#a78bfa"></circle>
-            </svg><figcaption>32</figcaption>
-          </figure>
-          <figure>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M7 20V4L17 20V7.8" stroke="#a78bfa" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"></path>
-              <circle cx="17" cy="4.8" r="2.6" fill="#a78bfa"></circle>
-            </svg><figcaption>20</figcaption>
-          </figure>
-          <figure>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M7 20V4L17 20V7.8" stroke="#a78bfa" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-              <circle cx="17" cy="4.8" r="2.7" fill="#a78bfa"></circle>
-            </svg><figcaption>16</figcaption>
-          </figure>
-        </div>
-      </article>
-
     </div>
   </section>
 
@@ -743,11 +688,13 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
             <span class="cota arriba">1 N</span>
             <span class="cota izq">1 N</span>
             <div class="marca">
-              <svg width="30" height="30" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M3 7.5H10C13.2 7.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"></path>
-                <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"></path>
-                <circle cx="19" cy="12" r="2.6" fill="#a78bfa"></circle>
-              </svg>
+              <svg width="30" height="30" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+  <defs><linearGradient id="ng6" x1="20" y1="14" x2="100" y2="86" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"></stop><stop offset="1" stop-color="#c084fc"></stop></linearGradient></defs>
+  <path d="M54.14 21.85 L90.11 84.15 A8.5 8.5 0 0 0 104.83 75.65 L68.86 13.35 A8.5 8.5 0 0 0 54.14 21.85 Z" fill="#0b0a12" stroke="#a78bfa" stroke-width="2.4"></path>
+  <path d="M95.97 74 L24.03 74 A8.5 8.5 0 0 0 24.03 91 L95.97 91 A8.5 8.5 0 0 0 95.97 74 Z" fill="#0b0a12" stroke="#a78bfa" stroke-width="2.4"></path>
+  <path d="M29.89 84.15 L65.86 21.85 A8.5 8.5 0 0 0 51.14 13.35 L15.17 75.65 A8.5 8.5 0 0 0 29.89 84.15 Z" fill="#0b0a12" stroke="#a78bfa" stroke-width="2.4"></path>
+  <circle cx="60" cy="15" r="7" fill="#f0eefb"></circle>
+</svg>
               <span class="palabra"><em>ATLAS</em>NEX</span>
               <span class="version">v0.1</span>
             </div>
@@ -759,11 +706,13 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
         <div class="caja-h">Apilada <span class="hint">portadas, sello, avatar</span></div>
         <div class="lock">
           <div class="marca apilada">
-            <svg width="44" height="44" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M3 7.5H10C13.2 7.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"></path>
-              <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2" stroke-linecap="round"></path>
-              <circle cx="19" cy="12" r="2.6" fill="#a78bfa"></circle>
-            </svg>
+            <svg width="44" height="44" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+  <defs><linearGradient id="ng7" x1="20" y1="14" x2="100" y2="86" gradientUnits="userSpaceOnUse"><stop stop-color="#7c3aed"></stop><stop offset="1" stop-color="#c084fc"></stop></linearGradient></defs>
+  <path d="M54.14 21.85 L90.11 84.15 A8.5 8.5 0 0 0 104.83 75.65 L68.86 13.35 A8.5 8.5 0 0 0 54.14 21.85 Z" fill="#0b0a12" stroke="#a78bfa" stroke-width="2.4"></path>
+  <path d="M95.97 74 L24.03 74 A8.5 8.5 0 0 0 24.03 91 L95.97 91 A8.5 8.5 0 0 0 95.97 74 Z" fill="#0b0a12" stroke="#a78bfa" stroke-width="2.4"></path>
+  <path d="M29.89 84.15 L65.86 21.85 A8.5 8.5 0 0 0 51.14 13.35 L15.17 75.65 A8.5 8.5 0 0 0 29.89 84.15 Z" fill="#0b0a12" stroke="#a78bfa" stroke-width="2.4"></path>
+  <circle cx="60" cy="15" r="7" fill="#f0eefb"></circle>
+</svg>
             <span class="palabra"><em>ATLAS</em>NEX</span>
           </div>
         </div>
@@ -785,8 +734,8 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
         <ul>
           <li>No invertir los pesos: <b>NEX nunca pesa menos que ATLAS</b>.</li>
           <li>No partir el bloque: ATLAS y NEX no van en dos renglones ni separados por un ícono.</li>
-          <li>Nada de <b>sombra, contorno ni bisel</b> sobre el isotipo.</li>
-          <li>No reemplazar el punto por un tilde, un candado ni un ícono de banco.</li>
+          <li>Nada de <b>sombra, resplandor propio ni bisel</b> sobre el isotipo — el contorno de 2,4 es la marca, no un efecto agregado.</li>
+          <li>No reemplazar el nodo del vértice por un tilde, un candado ni un ícono de banco.</li>
           <li>No estirar el tracking de la palabra para llenar un ancho.</li>
           <li>No pintar la marca con un color de estado: <b>el verde es un resultado, no la identidad</b>.</li>
         </ul>
@@ -1010,15 +959,16 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
       <div class="caja">
         <div class="demo">
           <div class="pestana">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" style="flex:none">
-              <path d="M3 7.5H10C13.2 7.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2.4" stroke-linecap="round"></path>
-              <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2.4" stroke-linecap="round"></path>
-              <circle cx="19" cy="12" r="2.8" fill="#a78bfa"></circle>
-            </svg>
+            <svg width="16" height="16" viewBox="0 0 120 120" fill="none" aria-hidden="true" style="flex:none">
+  <path d="M54.57 21.6 L90.54 83.9 A8 8 0 0 0 104.4 75.9 L68.43 13.6 A8 8 0 0 0 54.57 21.6 Z" fill="#a78bfa"></path>
+  <path d="M95.97 74.5 L24.03 74.5 A8 8 0 0 0 24.03 90.5 L95.97 90.5 A8 8 0 0 0 95.97 74.5 Z" fill="#a78bfa"></path>
+  <path d="M29.46 83.9 L65.43 21.6 A8 8 0 0 0 51.57 13.6 L15.6 75.9 A8 8 0 0 0 29.46 83.9 Z" fill="#a78bfa"></path>
+  <circle cx="60" cy="15" r="8" fill="#f0eefb"></circle>
+</svg>
             <span class="palabra" style="font-size:12.5px"><em>ATLAS</em>NEX</span>
           </div>
         </div>
-        <div class="nota"><b>Favicon.</b> Isotipo solo, trazo engrosado a 2,4 y punto a 2,8: a 16 px el trazo fino desaparece.</div>
+        <div class="nota"><b>Favicon.</b> Isotipo solo, en su cuerpo macizo: a 16 px el contorno se empasta.</div>
       </div>
 
       <div class="caja">
@@ -1046,11 +996,12 @@ td .accion{ font-size:12px; color:var(--ink-3); margin-top:3px; }
         <div class="demo">
           <div class="portada">
             <div class="marca" style="gap:9px">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M3 7.5H10C13.2 7.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round"></path>
-                <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2.2" stroke-linecap="round"></path>
-                <circle cx="19" cy="12" r="2.7" fill="#a78bfa"></circle>
-              </svg>
+              <svg width="20" height="20" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+  <path d="M54.57 21.6 L90.54 83.9 A8 8 0 0 0 104.4 75.9 L68.43 13.6 A8 8 0 0 0 54.57 21.6 Z" fill="#a78bfa"></path>
+  <path d="M95.97 74.5 L24.03 74.5 A8 8 0 0 0 24.03 90.5 L95.97 90.5 A8 8 0 0 0 95.97 74.5 Z" fill="#a78bfa"></path>
+  <path d="M29.46 83.9 L65.43 21.6 A8 8 0 0 0 51.57 13.6 L15.6 75.9 A8 8 0 0 0 29.46 83.9 Z" fill="#a78bfa"></path>
+  <circle cx="60" cy="15" r="8" fill="#f0eefb"></circle>
+</svg>
               <span class="palabra" style="font-size:16px"><em>ATLAS</em>NEX</span>
             </div>
             <div class="alto">Cada número dice de dónde salió.</div>

@@ -41,3 +41,6 @@ UI UX/*.jpg
 UI UX/*.png
 
 eval/deteccion.json
+
+eval/corrida.json
+.tmp/

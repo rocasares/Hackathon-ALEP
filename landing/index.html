@@ -1,0 +1,543 @@
+<title>ATLAS NEX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap">
+
+<style>
+/*
+ * Un solo mundo visual, a propósito: la landing usa exactamente los mismos
+ * tokens que el producto. Si al abrir la aplicación se ve otra cosa, la landing
+ * mintió.
+ */
+:root{
+  --void:#08070d;
+  --paper:#0b0a12;
+  --surface:#131120;
+  --surface-2:#1a1729;
+  --line:#262138;
+  --line-soft:#1e1a2e;
+
+  --ink:#f0eefb;
+  --ink-2:#a49dc4;
+  --ink-3:#6e6790;
+
+  --violet:#8b5cf6;
+  --violet-2:#a78bfa;
+  --violet-deep:#6d28d9;
+  --violet-soft:#1e1836;
+  --violet-line:#3a2f63;
+  --grad:linear-gradient(135deg,#7c3aed 0%,#a855f7 48%,#c084fc 100%);
+  --glow:0 0 44px -8px rgba(139,92,246,.55);
+
+  --ok:#34d399;   --ok-bg:#0d2b22;   --ok-line:#1d4d3c;
+  --warn:#fbbf24; --warn-bg:#2e2410; --warn-line:#54401a;
+  --bad:#fb7185;  --bad-bg:#31141e;  --bad-line:#5c2233;
+
+  --r:10px; --r-sm:6px;
+  --sans:"Manrope",system-ui,-apple-system,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--sans); font-size:16px; line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+:focus-visible{ outline:2px solid var(--violet-2); outline-offset:3px; border-radius:4px; }
+@media (prefers-reduced-motion:reduce){ *{ transition:none !important; animation:none !important; } }
+
+.mono{ font-family:var(--mono); font-variant-numeric:tabular-nums; }
+.wrap{ max-width:1000px; margin:0 auto; padding:0 28px; }
+
+section{ padding:86px 0; border-top:1px solid var(--line-soft); }
+h2{ font-size:34px; font-weight:800; letter-spacing:-.035em; margin:0 0 10px; text-wrap:balance; }
+.sub{ color:var(--ink-2); font-size:17px; margin:0 0 40px; max-width:62ch; }
+
+.eyebrow{
+  display:inline-block; margin-bottom:14px;
+  font-size:11px; font-weight:800; letter-spacing:.15em; text-transform:uppercase;
+  color:var(--violet-2); background:var(--violet-soft);
+  border:1px solid var(--violet-line); border-radius:20px; padding:5px 13px;
+}
+
+/* ── hero ────────────────────────────────────────── */
+header{
+  position:relative; overflow:hidden;
+  padding:96px 0 76px; border-top:none;
+}
+header::before{
+  content:""; position:absolute; top:-420px; left:50%; transform:translateX(-50%);
+  width:1100px; height:760px; pointer-events:none;
+  background:radial-gradient(closest-side, rgba(139,92,246,.26), rgba(139,92,246,0) 70%);
+}
+header .wrap{ position:relative; }
+
+.marca{ display:flex; align-items:center; gap:11px; margin-bottom:44px; }
+.marca svg{ width:30px; height:30px; flex:none; }
+.marca b{ font-size:19px; font-weight:800; letter-spacing:.14em; }
+.marca b span{ font-weight:400; color:var(--ink-2); }
+
+h1{
+  font-size:clamp(38px,6.4vw,66px); line-height:1.02; letter-spacing:-.045em;
+  font-weight:800; margin:0 0 22px; max-width:17ch; text-wrap:balance;
+}
+h1 em{ font-style:normal; background:var(--grad); -webkit-background-clip:text;
+       background-clip:text; color:transparent; }
+.bajada{ font-size:19px; color:var(--ink-2); max-width:56ch; margin:0 0 34px; }
+.bajada b{ color:var(--ink); font-weight:600; }
+
+.acciones{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+.btn{
+  display:inline-flex; align-items:center; gap:9px; text-decoration:none;
+  padding:12px 22px; border-radius:var(--r-sm); font-weight:700; font-size:15px;
+}
+.btn.p{ background:var(--grad); color:#fff; box-shadow:var(--glow); }
+.btn.p:hover{ filter:brightness(1.1); }
+.btn.s{ border:1px solid var(--line); color:var(--ink); background:var(--surface); }
+.btn.s:hover{ border-color:var(--violet-line); color:var(--violet-2); }
+
+/* ── el momento: cortar la red ───────────────────── */
+.demo{
+  margin-top:56px; background:var(--surface); border:1px solid var(--line);
+  border-radius:var(--r); overflow:hidden; box-shadow:var(--shadow), 0 30px 80px -40px rgba(0,0,0,.9);
+}
+.demo-h{
+  display:flex; align-items:center; justify-content:space-between; gap:16px;
+  padding:13px 18px; border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg, rgba(139,92,246,.06), transparent);
+  flex-wrap:wrap;
+}
+.red{ display:flex; align-items:center; gap:9px; font-size:12.5px; font-weight:700; }
+.red .luz{ width:8px; height:8px; border-radius:50%; background:var(--ok); box-shadow:0 0 10px var(--ok); transition:.3s; }
+.red.off .luz{ background:var(--bad); box-shadow:0 0 10px var(--bad); }
+.red .txt{ color:var(--ok); transition:.3s; }
+.red.off .txt{ color:var(--bad); }
+
+.corte{
+  all:unset; cursor:pointer; font-family:var(--mono); font-size:12px; font-weight:500;
+  border:1px solid var(--violet-line); background:var(--violet-soft); color:var(--violet-2);
+  padding:6px 13px; border-radius:20px;
+}
+.corte:hover{ background:var(--violet-line); }
+
+.demo-cuerpo{ padding:18px; display:grid; gap:11px; }
+.linea{
+  display:grid; grid-template-columns:1fr auto auto; gap:14px; align-items:center;
+  font-family:var(--mono); font-size:12.5px; padding:9px 12px;
+  background:var(--surface-2); border-radius:var(--r-sm); border:1px solid var(--line-soft);
+}
+.linea .arch{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.linea .ms{ color:var(--ink-3); }
+.chip{
+  font-size:11px; font-weight:700; padding:2px 9px; border-radius:20px;
+  font-family:var(--sans); white-space:nowrap;
+}
+.c-ok{ background:var(--ok-bg); color:var(--ok); border:1px solid var(--ok-line); }
+.c-warn{ background:var(--warn-bg); color:var(--warn); border:1px solid var(--warn-line); }
+.c-bad{ background:var(--bad-bg); color:var(--bad); border:1px solid var(--bad-line); }
+.demo-pie{
+  padding:13px 18px; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink-3);
+}
+.demo-pie b{ color:var(--violet-2); }
+
+/* ── problema ────────────────────────────────────── */
+.dos{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:20px; }
+.caja{
+  background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:24px 26px;
+}
+.caja h3{ font-size:17px; font-weight:700; margin:0 0 12px; letter-spacing:-.015em; }
+.caja.si h3{ color:var(--ok); }
+.caja.no h3{ color:var(--bad); }
+.caja ul{ margin:0; padding-left:19px; color:var(--ink-2); font-size:15px; }
+.caja li{ margin-bottom:9px; }
+.caja li:last-child{ margin-bottom:0; }
+
+.tesis{
+  margin-top:26px; padding:24px 28px; border-radius:var(--r);
+  border:1px solid var(--violet-line);
+  background:linear-gradient(135deg, rgba(139,92,246,.13), rgba(139,92,246,.02));
+  font-size:19px; line-height:1.55; text-wrap:pretty;
+}
+.tesis b{ color:var(--violet-2); }
+
+/* ── cómo funciona ───────────────────────────────── */
+.pasos{ display:grid; gap:2px; background:var(--line); border:1px solid var(--line); border-radius:var(--r); overflow:hidden; }
+.paso{ background:var(--surface); padding:22px 26px; display:grid; grid-template-columns:38px 1fr; gap:18px; }
+.paso .n{ font-family:var(--mono); font-size:12px; color:var(--violet-2); font-weight:600; padding-top:3px; }
+.paso h4{ margin:0 0 6px; font-size:16.5px; font-weight:700; letter-spacing:-.015em; }
+.paso p{ margin:0; color:var(--ink-2); font-size:14.5px; max-width:64ch; }
+.paso p b{ color:var(--ink); font-weight:600; }
+
+/* ── evidencia ───────────────────────────────────── */
+.cifras{ display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:16px; margin-bottom:28px; }
+.cifra{
+  position:relative; overflow:hidden; padding:22px 24px;
+  background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+}
+.cifra::after{
+  content:""; position:absolute; inset:0 0 auto 0; height:1px;
+  background:linear-gradient(90deg,transparent,rgba(167,139,250,.6),transparent);
+}
+.cifra .v{ font-family:var(--mono); font-size:34px; font-weight:500; letter-spacing:-.04em; line-height:1; }
+.cifra .k{ font-size:12.5px; color:var(--ink-2); margin-top:9px; }
+.cifra .d{ font-size:11.5px; color:var(--ink-3); margin-top:3px; font-family:var(--mono); }
+.cifra.acc{ background:linear-gradient(160deg, rgba(139,92,246,.15), var(--surface) 62%); border-color:var(--violet-line); box-shadow:var(--glow); }
+.cifra.acc .v{ color:var(--violet-2); }
+
+table{ width:100%; border-collapse:collapse; font-size:14px; }
+th{ text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.11em;
+    color:var(--ink-3); font-weight:800; padding:0 16px 11px; border-bottom:1px solid var(--line); }
+th.r,td.r{ text-align:right; }
+td{ padding:13px 16px; border-bottom:1px solid var(--line-soft); vertical-align:top; color:var(--ink-2); }
+td b{ color:var(--ink); font-weight:600; }
+tbody tr:last-child td{ border-bottom:none; }
+
+.nota{
+  margin-top:26px; padding:17px 20px; border-radius:var(--r);
+  border:1px solid var(--line); background:var(--surface); font-size:14.5px; color:var(--ink-2);
+}
+.nota b{ color:var(--ink); }
+
+/* ── cierre ──────────────────────────────────────── */
+footer{ padding:70px 0 90px; border-top:1px solid var(--line-soft); }
+.enlaces{ display:flex; gap:11px; flex-wrap:wrap; margin-top:26px; }
+.enlace{
+  display:inline-flex; align-items:center; gap:9px; text-decoration:none;
+  font-family:var(--mono); font-size:13px; color:var(--ink-2);
+  border:1px solid var(--line); background:var(--surface);
+  padding:10px 15px; border-radius:var(--r-sm);
+}
+.enlace:hover{ border-color:var(--violet-line); color:var(--violet-2); }
+.pie{ margin-top:44px; padding-top:24px; border-top:1px solid var(--line-soft);
+      font-size:13px; color:var(--ink-3); display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+
+@media (max-width:640px){
+  section{ padding:60px 0; }
+  h2{ font-size:28px; }
+  .paso{ grid-template-columns:1fr; gap:6px; }
+}
+</style>
+
+<header>
+  <div class="wrap">
+    <div class="marca">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M3 7.5H10C13.2 7.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M3 16.5H10C13.2 16.5 13.4 12 17 12" stroke="#a78bfa" stroke-width="2.4" stroke-linecap="round"/>
+        <circle cx="19" cy="12" r="2.8" fill="#a78bfa"/>
+      </svg>
+      <b>ATLAS <span>NEX</span></b>
+    </div>
+
+    <h1>Conciliación bancaria que <em>no manda tus facturas a ningún lado</em>.</h1>
+
+    <p class="bajada">
+      Un estudio contable procesa cientos de comprobantes por mes, de decenas de clientes, y los
+      cruza a mano contra el extracto. ATLAS NEX lo hace en su propia máquina: <b>el modelo corre
+      adentro y ningún documento sale del equipo</b>.
+    </p>
+
+    <div class="acciones">
+      <a class="btn p" href="#evidencia">Ver la evidencia</a>
+      <a class="btn s" href="https://github.com/rocasares/Hackathon-ALEP">Código en GitHub</a>
+    </div>
+
+    <!-- El momento de la página: cortar la red y ver que sigue andando. -->
+    <div class="demo">
+      <div class="demo-h">
+        <div class="red" id="red">
+          <span class="luz"></span>
+          <span class="txt" id="redTxt">Conectado</span>
+        </div>
+        <button class="corte" id="corte">Cortar la red</button>
+      </div>
+      <div class="demo-cuerpo" id="cuerpo">
+        <div class="linea">
+          <span class="arch">A 0021-00000064.jpg</span>
+          <span class="ms">6,2 s</span>
+          <span class="chip c-ok">Conciliado</span>
+        </div>
+        <div class="linea">
+          <span class="arch">ticket_proveedor_034.jpg</span>
+          <span class="ms">7,1 s</span>
+          <span class="chip c-bad">Observado</span>
+        </div>
+        <div class="linea">
+          <span class="arch">B 0019-00035889.jpg</span>
+          <span class="ms">5,8 s</span>
+          <span class="chip c-warn">A revisar</span>
+        </div>
+      </div>
+      <div class="demo-pie" id="pie">
+        La inferencia corre en esta máquina. <b>Cortá la red y seguí mirando.</b>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <span class="eyebrow">El problema</span>
+    <h2>¿No está todo esto ya en ARCA?</h2>
+    <p class="sub">
+      Una parte sí, y por eso conviene decir con precisión qué queda afuera. Hacerle OCR a una
+      factura que ARCA ya tiene en limpio sería resolver un problema resuelto.
+    </p>
+
+    <div class="dos">
+      <div class="caja si">
+        <h3>Lo que ARCA ya resuelve</h3>
+        <ul>
+          <li>La factura electrónica es un dato estructurado</li>
+          <li>Se descarga desde «Mis Comprobantes»</li>
+          <li>Ya trae CUIT, importes, alícuota y CAE</li>
+        </ul>
+      </div>
+      <div class="caja no">
+        <h3>Lo que sigue siendo a mano</h3>
+        <ul>
+          <li><b>La conciliación bancaria.</b> ARCA no sabe qué movimiento corresponde a qué comprobante</li>
+          <li>Tickets, remitos informales, comprobantes de transferencia, recibos escritos a mano, caja chica</li>
+          <li>Entender el extracto: descripciones crípticas, cargos duplicados, gastos que se dispararon</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="tesis">
+      ATLAS NEX no es «leer facturas». Es <b>conciliar contra el banco la pila que ARCA no tiene</b>.
+      El OCR es un medio, no el producto.
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Cómo funciona</span>
+    <h2>El modelo propone. Un algoritmo dispone.</h2>
+    <p class="sub">
+      Un modelo chico lee mal, pero lo dice con total seguridad. Todo el diseño del sistema
+      sale de tomarse ese problema en serio.
+    </p>
+
+    <div class="pasos">
+      <div class="paso">
+        <span class="n">01</span>
+        <div>
+          <h4>Lee tres veces, con semillas distintas</h4>
+          <p>Si las tres corridas coinciden, el modelo está anclado en lo que ve. Si difieren,
+          está adivinando — y lo sabemos <b>antes que el humano</b>. Las semillas son fijas, así
+          que cualquiera reproduce los mismos números.</p>
+        </div>
+      </div>
+      <div class="paso">
+        <span class="n">02</span>
+        <div>
+          <h4>Diez reglas que no pueden alucinar</h4>
+          <p>Dígito verificador del CUIT por módulo 11, aritmética del IVA según el tipo de
+          comprobante, alícuotas legales, CAE, duplicados, saltos de numeración, notas de crédito
+          sin respaldo. <b>Sin IA: son cuentas, no opiniones.</b></p>
+        </div>
+      </div>
+      <div class="paso">
+        <span class="n">03</span>
+        <div>
+          <h4>Cuando una regla falla, el modelo tiene que releer</h4>
+          <p>El fallo vuelve como resultado de herramienta con el recuadro exacto, y el modelo
+          puede pedir ampliar esa región. <b>Medimos si usó lo que devolvió la herramienta o
+          contestó de memoria</b>, que es el modo de falla típico de un modelo chico.</p>
+        </div>
+      </div>
+      <div class="paso">
+        <span class="n">04</span>
+        <div>
+          <h4>Distingue leer mal de estar mal emitido</h4>
+          <p>Son dos acciones distintas para el contador: en un caso corrige la lectura, en el otro
+          llama al cliente. <b>Un OCR no puede diferenciarlas.</b></p>
+        </div>
+      </div>
+      <div class="paso">
+        <span class="n">05</span>
+        <div>
+          <h4>En el análisis del mes, el modelo nunca calcula</h4>
+          <p>Todos los montos y variaciones los produce el código; el modelo únicamente los
+          redacta. <b>Por construcción no puede inventar una cifra: no tiene ninguna que
+          inventar.</b></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="evidencia">
+  <div class="wrap">
+    <span class="eyebrow">Evidencia</span>
+    <h2>Números, no impresiones</h2>
+    <p class="sub">
+      Todo lo que sigue lo produce un script del repositorio. Nada está escrito a mano, y cada
+      medición se puede volver a correr.
+    </p>
+
+    <div class="cifras">
+      <div class="cifra">
+        <div class="v">94,7 %</div>
+        <div class="k">Detección de errores</div>
+        <div class="d">760 casos etiquetados</div>
+      </div>
+      <div class="cifra">
+        <div class="v">6,3 %</div>
+        <div class="k">Falso positivo</div>
+        <div class="d">80 controles sanos</div>
+      </div>
+      <div class="cifra acc">
+        <div class="v">90,3 %</div>
+        <div class="k">Precisión del matcher</div>
+        <div class="d">recall 72,8 %</div>
+      </div>
+      <div class="cifra">
+        <div class="v">99 ms</div>
+        <div class="k">La capa determinística</div>
+        <div class="d">sin tocar el modelo</div>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Qué se midió</th><th>Resultado</th><th class="r">Sobre</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Detección por tipo de error</b><br>17 tipos inyectados y etiquetados</td>
+          <td>16 de 17 al <b>100 %</b></td>
+          <td class="r mono">680 casos</td>
+        </tr>
+        <tr>
+          <td><b>Conciliación 1:1</b></td>
+          <td><b>95,7 %</b> de acierto</td>
+          <td class="r mono">308 cobranzas</td>
+        </tr>
+        <tr>
+          <td><b>Ventas en cuotas y pagos mixtos</b><br>una factura cobrada en varios movimientos</td>
+          <td>de <b>0 % a 76,4 %</b> al leer el marcador de cuota</td>
+          <td class="r mono">168 casos</td>
+        </tr>
+        <tr>
+          <td><b>Exposición financiera</b><br>lo que quedó sin explicar</td>
+          <td><b>$119,2 M</b> conciliados de $165,1 M</td>
+          <td class="r mono">un año</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="nota">
+      <b>Dos números, nunca uno.</b> Una tasa de detección sin tasa de falso positivo no
+      significa nada: un validador que rechaza todo detecta el 100 % y es inútil. Por eso el
+      banco de pruebas trae 80 documentos sanos y los dos números se publican juntos.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="eyebrow">Honestidad</span>
+    <h2>Lo que todavía no anda</h2>
+    <p class="sub">
+      Publicado a propósito, incluido lo que no pudimos arreglar. Un sistema que muestra dónde
+      se rompe vale más que uno que aparenta no romperse.
+    </p>
+
+    <table>
+      <thead>
+        <tr><th>Falla</th><th>Estado</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><b>Pagos partidos en tres medios</b><br>21 de 57 resueltos</td>
+          <td>Cuando una venta se parte en un plan de cuotas <em>más</em> dos medios, el espacio
+          de combinaciones vuelve a crecer</td>
+        </tr>
+        <tr>
+          <td><b>Notas de crédito por monto mayor</b><br>10 % de detección</td>
+          <td>Defecto de orden de evaluación: la rama de «sin factura en este período» devuelve
+          antes de comparar montos</td>
+        </tr>
+        <tr>
+          <td><b>Una factura B que discrimina IVA</b></td>
+          <td><b>No es un bug.</b> Es un documento real del set: el validador tiene razón y el
+          «control sano» no era sano</td>
+        </tr>
+        <tr>
+          <td><b>Cobertura N:1</b><br>3 de 9</td>
+          <td>Recall bajo, 100 % de precisión en lo que encuentra. Preferimos ese lado del
+          intercambio</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="eyebrow">Aleph Hackathon 2026</span>
+    <h2 style="margin-bottom:16px">Construido sobre QVAC by Tether</h2>
+    <p class="sub" style="margin-bottom:0">
+      OCR con recuadros y confianza, generación con esquema forzado y semilla fija, y llamado a
+      herramientas — todo con el SDK nativo, todo local, sin una sola llamada de red.
+    </p>
+
+    <div class="enlaces">
+      <a class="enlace" href="https://github.com/rocasares/Hackathon-ALEP">Repositorio</a>
+      <a class="enlace" href="https://github.com/rocasares/Hackathon-ALEP#qvac-integration--this-is-what-you-are-looking-for">Permalinks a la integración</a>
+      <a class="enlace" href="https://github.com/rocasares/Hackathon-ALEP#friction-log-building-on-qvac">Friction log del SDK</a>
+    </div>
+
+    <div class="pie">
+      <span>🔷 QVAC Track · 🌞 General Track</span>
+      <span class="mono">Toda la inferencia, local</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var boton = document.getElementById('corte');
+  var red   = document.getElementById('red');
+  var txt   = document.getElementById('redTxt');
+  var pie   = document.getElementById('pie');
+  var cuerpo= document.getElementById('cuerpo');
+  var cortada = false;
+  var seq = 4;
+
+  var MUESTRAS = [
+    ['X 9999-00035415.jpg',   '4,9 s', 'c-warn', 'No sé'],
+    ['NC A 0034-00000003.jpg','6,7 s', 'c-ok',   'Conciliado'],
+    ['B 0028-00015065.jpg',   '6,1 s', 'c-ok',   'Conciliado'],
+    ['remito_manuscrito.jpg', '5,2 s', 'c-warn', 'No sé']
+  ];
+
+  // Sigue procesando esté la red como esté: ese es el argumento entero.
+  setInterval(function(){
+    var m = MUESTRAS[(seq++) % MUESTRAS.length];
+    var el = document.createElement('div');
+    el.className = 'linea';
+    el.innerHTML = '<span class="arch"></span><span class="ms"></span><span class="chip"></span>';
+    el.children[0].textContent = m[0];
+    el.children[1].textContent = m[1];
+    el.children[2].className = 'chip ' + m[2];
+    el.children[2].textContent = m[3];
+    cuerpo.appendChild(el);
+    while (cuerpo.children.length > 3) cuerpo.removeChild(cuerpo.firstChild);
+  }, 2600);
+
+  boton.addEventListener('click', function(){
+    cortada = !cortada;
+    red.classList.toggle('off', cortada);
+    txt.textContent = cortada ? 'Sin conexión' : 'Conectado';
+    boton.textContent = cortada ? 'Reconectar' : 'Cortar la red';
+    pie.innerHTML = cortada
+      ? 'La red está cortada y <b>sigue procesando</b>. No hay API key, no hay endpoint remoto, no hay llamada saliente.'
+      : 'La inferencia corre en esta máquina. <b>Cortá la red y seguí mirando.</b>';
+  });
+})();
+</script>
