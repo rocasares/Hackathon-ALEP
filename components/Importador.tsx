@@ -61,22 +61,29 @@ export default function Importador({ periodo }: Props) {
 
   const [estado, setEstado] = useState<Estado>('listo');
   const [umbral, setUmbral] = useState(0.95);
-  const [nFacturas, setNFacturas] = useState(0);
-  const [nombreExtracto, setNombreExtracto] = useState<string | null>(null);
+  const [facturas, setFacturas] = useState<File[]>([]);
+  const [extracto, setExtracto] = useState<File | null>(null);
   const [nMovimientos, setNMovimientos] = useState<number | null>(null);
   const [mensaje, setMensaje] = useState<string | null>(null);
   const [reporte, setReporte] = useState<Reporte | null>(null);
   const [descargando, setDescargando] = useState(false);
 
+  function agregarFacturas(nuevos: FileList | null) {
+    if (!nuevos || nuevos.length === 0) return;
+    setFacturas((prev) => {
+      const vistos = new Set(prev.map((f) => `${f.name}_${f.size}`));
+      const agregados = Array.from(nuevos).filter((f) => !vistos.has(`${f.name}_${f.size}`));
+      return [...prev, ...agregados];
+    });
+  }
+
   function armarFormData(): FormData | null {
-    const facturas = facturasRef.current?.files;
-    const extracto = extractoRef.current?.files?.[0];
-    if (!facturas || facturas.length === 0 || !extracto) {
+    if (facturas.length === 0 || !extracto) {
       setMensaje('Falta adjuntar las facturas y el extracto bancario o la planilla de pagos.');
       return null;
     }
     const fd = new FormData();
-    for (const f of Array.from(facturas)) fd.append('invoices', f);
+    for (const f of facturas) fd.append('invoices', f);
     fd.append('bank_statement', extracto);
     return fd;
   }
@@ -154,9 +161,9 @@ export default function Importador({ periodo }: Props) {
               style={{ width: '100%', cursor: 'pointer', background: 'none', font: 'inherit', color: 'inherit' }}
             >
               <strong>Hacé click para elegir los comprobantes</strong>
-              <span className="mono">PDF, cualquier formato</span>
+              <span className="mono">PDF, cualquier formato — podés hacer click varias veces para sumar más</span>
               <div className="cargados">
-                <b className="mono">{nFacturas}</b> documentos seleccionados
+                <b className="mono">{facturas.length}</b> documentos seleccionados
               </div>
             </button>
             <input
@@ -164,12 +171,21 @@ export default function Importador({ periodo }: Props) {
               type="file"
               multiple
               style={{ display: 'none' }}
-              onChange={(e) => setNFacturas(e.target.files?.length ?? 0)}
+              onChange={(e) => {
+                agregarFacturas(e.target.files);
+                e.target.value = '';
+              }}
             />
+            {facturas.length > 0 && (
+              <p className="ayuda" style={{ marginTop: 6 }}>
+                {facturas.map((f) => f.name).join(', ')}{' '}
+                <a href="#" onClick={(e) => { e.preventDefault(); setFacturas([]); }}>vaciar</a>
+              </p>
+            )}
 
             <label className="fila" style={{ cursor: 'pointer' }}>
               <span className="et">Extracto bancario / planilla de pagos</span>
-              <span className="mono">{nombreExtracto ?? 'sin extracto cargado'}</span>
+              <span className="mono">{extracto?.name ?? 'sin extracto cargado'}</span>
               <span className="dato mono">
                 {nMovimientos == null ? '—' : `${nMovimientos} filas`}
               </span>
@@ -179,7 +195,7 @@ export default function Importador({ periodo }: Props) {
                 style={{ display: 'none' }}
                 onChange={async (e) => {
                   const f = e.target.files?.[0] ?? null;
-                  setNombreExtracto(f?.name ?? null);
+                  setExtracto(f);
                   if (f && f.name.toLowerCase().endsWith('.csv')) {
                     const text = await f.text();
                     const filas = text.split(/\r?\n/).filter((l) => l.trim().length > 0).length - 1;
@@ -187,6 +203,7 @@ export default function Importador({ periodo }: Props) {
                   } else {
                     setNMovimientos(null);
                   }
+                  e.target.value = '';
                 }}
               />
             </label>
@@ -212,7 +229,7 @@ export default function Importador({ periodo }: Props) {
             >
               {estado === 'corriendo' ? 'Procesando…'
                 : estado === 'terminado' ? 'Volver a procesar'
-                : `Procesar ${nFacturas} documentos`}
+                : `Procesar ${facturas.length} documentos`}
             </button>
             {reporte && (
               <button
