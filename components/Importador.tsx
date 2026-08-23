@@ -153,7 +153,7 @@ export default function Importador({ documentos, movimientos, periodo }: Props) 
               style={{ width: '100%', cursor: 'pointer', background: 'none', font: 'inherit', color: 'inherit' }}
             >
               <strong>Hacé click para elegir los comprobantes</strong>
-              <span className="mono">PDF</span>
+              <span className="mono">PDF, cualquier formato</span>
               <div className="cargados">
                 <b className="mono">{nFacturas || documentos}</b> documentos {nFacturas ? 'seleccionados' : 'cargados'}
               </div>
@@ -161,7 +161,6 @@ export default function Importador({ documentos, movimientos, periodo }: Props) 
             <input
               ref={facturasRef}
               type="file"
-              accept="application/pdf"
               multiple
               style={{ display: 'none' }}
               onChange={(e) => setNFacturas(e.target.files?.length ?? 0)}
@@ -169,12 +168,11 @@ export default function Importador({ documentos, movimientos, periodo }: Props) 
 
             <label className="fila" style={{ cursor: 'pointer' }}>
               <span className="et">Extracto bancario / planilla de pagos</span>
-              <span className="mono">{nombreExtracto ?? 'extracto.csv o .xls'}</span>
+              <span className="mono">{nombreExtracto ?? 'cualquier formato'}</span>
               <span className="dato mono">{movimientos} movimientos</span>
               <input
                 ref={extractoRef}
                 type="file"
-                accept=".csv,.xls"
                 style={{ display: 'none' }}
                 onChange={(e) => setNombreExtracto(e.target.files?.[0]?.name ?? null)}
               />
