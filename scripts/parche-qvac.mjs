@@ -11,7 +11,7 @@
  * hardware, y el error no dice que sea cuestión de tiempo — dice que el proceso
  * "may have failed to start", que manda a buscar por el lado equivocado.
  *
- * Perdimos 45 minutos en esto. El parche sube el timeout a 5 minutos.
+ * Perdimos 45 minutos en esto. El parche sube el timeout a 15 minutos: en frio, esta maquina tarda mas de 5.
  *
  * Corre solo después de `npm install` (postinstall). Es idempotente.
  *
@@ -22,7 +22,7 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 
 const OBJETIVO = 'node_modules/@qvac/sdk/dist/client/rpc/node-rpc-client.js';
 const DE = 'const RPC_INIT_TIMEOUT_MS = 30_000;';
-const A  = 'const RPC_INIT_TIMEOUT_MS = 300_000;';
+const A  = 'const RPC_INIT_TIMEOUT_MS = 900_000;';
 
 if (!existsSync(OBJETIVO)) {
   console.log('· @qvac/sdk no está instalado todavía, no hay nada que parchear.');
@@ -36,6 +36,13 @@ if (src.includes(A)) {
   process.exit(0);
 }
 
+const YA = /const RPC_INIT_TIMEOUT_MS = \d[\d_]*;/.exec(src);
+if (YA && YA[0] !== DE && YA[0] !== A) {
+  writeFileSync(OBJETIVO, src.replace(YA[0], A));
+  console.log(`✓ timeout de arranque del worker de QVAC: ${YA[0].split('= ')[1]} → 900_000`);
+  process.exit(0);
+}
+
 if (!src.includes(DE)) {
   console.warn(
     '⚠ no se encontró RPC_INIT_TIMEOUT_MS = 30_000 en el SDK.\n' +
@@ -46,4 +53,4 @@ if (!src.includes(DE)) {
 }
 
 writeFileSync(OBJETIVO, src.replace(DE, A));
-console.log('✓ timeout de arranque del worker de QVAC: 30 s → 300 s');
+console.log('✓ timeout de arranque del worker de QVAC: 30 s → 900 s');

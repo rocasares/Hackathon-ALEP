@@ -101,6 +101,10 @@ tbody tr:last-child td{border-bottom:none}
 td .si{color:var(--ok);font-weight:700}
 td .no{color:var(--bad);font-weight:700}
 
+.fallo{margin:16px 0 0;padding:14px 16px;border:1px solid var(--violet-line);
+  border-radius:var(--r);background:linear-gradient(135deg,rgba(139,92,246,.12),rgba(139,92,246,.02));
+  font-size:13.5px;color:var(--ink-2);line-height:1.6;max-width:62ch}
+.fallo b{color:var(--violet-2);font-weight:700}
 footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--line);
   font-family:var(--mono);font-size:11.5px;color:var(--ink-3)}
 
@@ -122,13 +126,17 @@ footer{margin-top:60px;padding-top:24px;border-top:1px solid var(--line);
 <div class="hoja">
 
 <header>
-  <span class="eyebrow">Decisión de isotipo</span>
+  <span class="eyebrow">Decisión de isotipo · resuelta</span>
   <h1>El triángulo de la casa, ahora para NEX</h1>
   <p>
     Tres maneras de que ATLAS NEX use el iso de ATLAS. Cambia una sola cosa entre
     ellas: cuánto se diferencia el producto de la casa. Todo lo demás — geometría,
     grosor, color, radios — es idéntico.
   </p>
+  <p class="fallo"><b>Quedó N3 · Vértice sellado.</b> Ya está cableada en
+  <span class="mono">components/Marca.tsx</span> y <span class="mono">app/icon.svg</span>.
+  Esta hoja queda como registro de por qué — las otras dos siguen acá con su motivo
+  de descarte, que es lo único que hace revisable una decisión de marca.</p>
 </header>
 
 <section>

@@ -359,75 +359,101 @@ export default function Kit() {
       <section>
         <Rotulo cifra="02" titulo="Isotipo" />
         <p className="entrada">
-          Tres direcciones, dibujadas sobre la misma grilla de 24 y con el mismo trazo
-          de 2 px. El criterio de corte es duro: <b>si no se lee a 16 px no sirve</b>,
-          porque el primer lugar donde aparece la marca es la pestaña del navegador de
-          un contador que tiene catorce abiertas. El segundo criterio lo puso el
-          nombre: <b>el isotipo tiene que dibujar un nexo</b>.
+          El isotipo es <b>el triángulo de ATLAS</b>: tres cápsulas de extremos
+          redondeados que se entrelazan en las esquinas. NEX le agrega una sola cosa
+          — el <b>nodo en el vértice de arriba</b>, el punto donde el cotejo cierra.
+          Un elemento de diferencia alcanza para que en una pestaña no se confunda con
+          los otros productos de la casa.
         </p>
 
-        <div className="opciones">
-          {/* A — el que se usa: viene del componente, no de una copia */}
-          <article className="card opcion elegida">
-            <div className="lienzo grande">
-              <Isotipo tamano="grande" degrade />
+        <div className="anatomia">
+          <div className="card lienzo grande">
+            <Isotipo tamano="grande" degrade />
+          </div>
+          <div className="card notas">
+            <div className="dato">
+              <span className="k">Geometría</span>
+              <span className="d">
+                Triángulo equilátero apuntando arriba, circunradio 45 sobre lienzo de
+                120. Tres cápsulas de semiancho 8,5, contorno 2,4.
+              </span>
             </div>
-            <div className="cuerpo">
-              <h3>A · Cotejo</h3>
+            <div className="dato">
+              <span className="k">El entrelazado</span>
+              <span className="d">
+                No está dibujado: sale del <b>orden de pintado</b>. Cada cápsula se
+                rellena con <span className="mono">--paper</span> y ocluye a la anterior.
+                Reordenarlas rompe el triángulo imposible.
+              </span>
+            </div>
+            <div className="dato">
+              <span className="k">El nodo</span>
+              <span className="d">
+                Va en <span className="mono">--ink</span>, no en el violeta: a 16 px
+                tiene que separarse de la barra que lo toca, y ahí la diferencia con
+                <span className="mono"> --violet-2</span> no alcanza.
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="rot-sub">Dos cuerpos, no dos dibujos</div>
+        <p className="entrada">
+          El contorno fino se empasta abajo de <b>28 px</b>, así que ahí la marca pasa a
+          cápsulas macizas: misma geometría, mismas proporciones, sin contorno.
+          <b> El corte lo decide el componente</b>, no quien lo llama — pedir
+          <span className="mono"> tamano=&quot;chico&quot;</span> ya devuelve la maciza.
+        </p>
+
+        <div className="card escala">
+          <figure><Isotipo tamano="grande" degrade /><figcaption>44 · contorno</figcaption></figure>
+          <figure><Isotipo tamano="medio" /><figcaption>24 · maciza</figcaption></figure>
+          <figure><Isotipo tamano="chico" /><figcaption>16 · maciza</figcaption></figure>
+        </div>
+
+        <div className="rot-sub">Lo que se descartó</div>
+        <p className="entrada">
+          Las dos alternativas que se probaron sobre la misma casa, y por qué no
+          quedaron.
+        </p>
+
+        <div className="descartes">
+          <article className="card desc">
+            <div className="mini">
+              <svg viewBox="0 0 120 120" fill="none" role="img" aria-label="Variante casa pura">
+                <path d="M54.14 21.85 L90.11 84.15 A8.5 8.5 0 0 0 104.83 75.65 L68.86 13.35 A8.5 8.5 0 0 0 54.14 21.85 Z" fill="var(--paper)" stroke="var(--violet-2)" strokeWidth="2.4" />
+                <path d="M95.97 74 L24.03 74 A8.5 8.5 0 0 0 24.03 91 L95.97 91 A8.5 8.5 0 0 0 95.97 74 Z" fill="var(--paper)" stroke="var(--violet-2)" strokeWidth="2.4" />
+                <path d="M29.89 84.15 L65.86 21.85 A8.5 8.5 0 0 0 51.14 13.35 L15.17 75.65 A8.5 8.5 0 0 0 29.89 84.15 Z" fill="var(--paper)" stroke="var(--violet-2)" strokeWidth="2.4" />
+              </svg>
+            </div>
+            <div className="cu">
+              <h3>Casa pura</h3>
               <p>
-                Dos renglones entran —el comprobante y el extracto— y resuelven en un
-                solo nodo. Es el gesto exacto del producto y también el nombre dibujado:
-                el punto lleno <b>es</b> el nexo, el asiento conciliado. Cierra 1:1, N:1
-                y 1:N sin cambiar de forma.
+                El iso de ATLAS sin tocar. Máxima unidad de familia, pero con seis
+                proyectos ATLAS el ícono deja de decir cuál estás mirando: en la barra
+                de tareas y en los favoritos son todos el mismo.
               </p>
-              <p className="veredicto">En uso · lo que se ve acá es components/Marca.tsx</p>
-            </div>
-            <div className="escala">
-              <figure><Isotipo tamano="grande" /><figcaption>44</figcaption></figure>
-              <figure><Isotipo tamano="medio" /><figcaption>24</figcaption></figure>
-              <figure><Isotipo tamano="chico" /><figcaption>16</figcaption></figure>
+              <p className="ver">Descartada · no distingue el producto</p>
             </div>
           </article>
 
-          {/* B — descartado */}
-          <article className="card opcion">
-            <div className="lienzo grande">
-              <svg viewBox="0 0 24 24" fill="none" role="img" aria-label="Concepto Folio sellado">
-                <path
-                  d="M5 4.6C5 3.7 5.7 3 6.6 3H14L20 9V19.4C20 20.3 19.3 21 18.4 21H6.6C5.7 21 5 20.3 5 19.4V4.6Z"
-                  stroke="var(--violet-2)" strokeWidth="1.9" strokeLinejoin="round"
-                />
-                <path d="M13.6 3.2V8.2C13.6 8.8 14 9.2 14.6 9.2H19.6" stroke="var(--violet-2)" strokeWidth="1.6" strokeLinejoin="round" />
-                <path d="M8.6 14.6L11 17L16 11.6" stroke="var(--violet-2)" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
+          <article className="card desc">
+            <div className="mini">
+              <svg viewBox="0 0 120 120" fill="none" role="img" aria-label="Variante hueco lleno">
+                <path d="M54.14 21.85 L90.11 84.15 A8.5 8.5 0 0 0 104.83 75.65 L68.86 13.35 A8.5 8.5 0 0 0 54.14 21.85 Z" fill="var(--paper)" stroke="var(--violet-2)" strokeWidth="2.4" />
+                <path d="M95.97 74 L24.03 74 A8.5 8.5 0 0 0 24.03 91 L95.97 91 A8.5 8.5 0 0 0 95.97 74 Z" fill="var(--paper)" stroke="var(--violet-2)" strokeWidth="2.4" />
+                <path d="M29.89 84.15 L65.86 21.85 A8.5 8.5 0 0 0 51.14 13.35 L15.17 75.65 A8.5 8.5 0 0 0 29.89 84.15 Z" fill="var(--paper)" stroke="var(--violet-2)" strokeWidth="2.4" />
+                <path d="M60 33 L83.4 73.5 L36.6 73.5 Z" fill="var(--violet-2)" stroke="var(--violet-2)" strokeWidth="7" strokeLinejoin="round" />
               </svg>
             </div>
-            <div className="cuerpo">
-              <h3>B · Folio sellado</h3>
+            <div className="cu">
+              <h3>Hueco lleno</h3>
               <p>
-                El comprobante con la marca del perito encima. Es literal y se entiende
-                sin explicación, que en un pitch de tres minutos vale. El costo: el
-                documento-con-tilde es la forma más usada del rubro y no distingue.
+                El contrapunzón macizo dice «cerrado», que es lo que hace el producto, y
+                es la más legible en chico. El costo es alto: pierde el aire de
+                triángulo imposible, que es lo más distintivo de la casa.
               </p>
-              <p className="veredicto">Suplente · legible pero genérico · se satura a 16 px</p>
-            </div>
-          </article>
-
-          {/* C — descartado */}
-          <article className="card opcion">
-            <div className="lienzo grande">
-              <svg viewBox="0 0 24 24" fill="none" role="img" aria-label="Concepto Monograma N">
-                <path d="M7 20V4L17 20V7.8" stroke="var(--violet-2)" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round" />
-                <circle cx="17" cy="4.8" r="2.5" fill="var(--violet-2)" />
-              </svg>
-            </div>
-            <div className="cuerpo">
-              <h3>C · Monograma N</h3>
-              <p>
-                La N de NEX rematada en el mismo nodo que el isotipo A: el asta sube y
-                termina en el ojo del examinador. Guiña a los logos-orbe de las
-                referencias fintech y es la que mejor funciona sola, sin palabra al lado.
-              </p>
-              <p className="veredicto">Suplente · fuerte como avatar · dice el nombre, no el oficio</p>
+              <p className="ver">Descartada · se aleja demasiado del original</p>
             </div>
           </article>
         </div>
@@ -490,8 +516,8 @@ export default function Kit() {
             <ul>
               <li>No invertir los pesos: <b>NEX nunca pesa menos que ATLAS</b>.</li>
               <li>No partir el bloque: ATLAS y NEX no van en dos renglones ni separados por un ícono.</li>
-              <li>Nada de <b>sombra, contorno ni bisel</b> sobre el isotipo.</li>
-              <li>No reemplazar el punto por un tilde, un candado ni un ícono de banco.</li>
+              <li>Nada de <b>sombra, resplandor propio ni bisel</b> sobre el isotipo — el contorno de 2,4 es la marca, no un efecto que se le agrega.</li>
+              <li>No reemplazar el nodo del vértice por un tilde, un candado ni un ícono de banco.</li>
               <li>No pintar la marca con un color de estado: <b>el verde es un resultado, no la identidad</b>.</li>
             </ul>
           </div>
@@ -691,8 +717,9 @@ export default function Kit() {
               </div>
             </div>
             <div className="nota">
-              <b>Favicon.</b> Isotipo solo, trazo engrosado a 2,4 y punto a 2,8: a 16 px
-              el trazo fino desaparece. Vive en <span className="mono">app/icon.svg</span>.
+              <b>Favicon.</b> Isotipo solo, en su cuerpo macizo — a 16 px el contorno
+              se empasta. Vive en <span className="mono">app/icon.svg</span>, con los
+              hex escritos porque un archivo suelto no ve las variables.
             </div>
           </div>
 
@@ -866,33 +893,50 @@ export default function Kit() {
         }
 
         /* ── 02 isotipo ── */
-        .opciones { display: grid; grid-template-columns: repeat(auto-fit, minmax(292px, 1fr)); gap: 16px; }
-        .opcion { display: flex; flex-direction: column; }
-        .opcion.elegida { border-color: var(--violet-line); box-shadow: var(--glow); }
+        .rot-sub {
+          margin: 36px 0 10px; font-size: 11px; letter-spacing: .11em;
+          text-transform: uppercase; font-weight: 700; color: var(--ink-3);
+        }
+
+        .anatomia { display: grid; grid-template-columns: minmax(200px, 300px) 1fr; gap: 16px; }
         .lienzo {
-          padding: 36px 22px 30px; display: flex; align-items: center; justify-content: center;
+          display: flex; align-items: center; justify-content: center; padding: 34px;
           background:
-            radial-gradient(420px 200px at 50% 0%, rgba(139, 92, 246, .13), rgba(139, 92, 246, 0) 70%),
+            radial-gradient(420px 200px at 50% 0%, rgba(139, 92, 246, .14), rgba(139, 92, 246, 0) 70%),
             var(--void);
-          border-bottom: 1px solid var(--line);
         }
-        .lienzo.grande :global(svg) { width: 84px; height: 84px; }
-        .cuerpo { padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 11px; flex: 1; }
-        .cuerpo h3 { font-size: 14.5px; font-weight: 700; margin: 0; letter-spacing: -.01em; }
-        .cuerpo p { margin: 0; font-size: 13px; color: var(--ink-2); line-height: 1.55; }
-        .veredicto {
-          margin-top: auto !important; padding-top: 12px;
-          border-top: 1px solid var(--line-soft);
-          font-family: var(--mono); font-size: 11px; color: var(--ink-3) !important;
+        .lienzo.grande :global(svg) { width: 128px; height: 128px; }
+
+        .notas { padding: 20px 22px; display: flex; flex-direction: column; gap: 15px; justify-content: center; }
+        .dato { display: flex; flex-direction: column; gap: 4px; }
+        .dato .k {
+          font-family: var(--mono); font-size: 11px; color: var(--violet-2);
+          letter-spacing: .04em;
         }
-        .opcion.elegida .veredicto { color: var(--violet-2) !important; }
+        .dato .d { font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+        .dato .d b { color: var(--ink); font-weight: 600; }
+
         .escala {
-          display: flex; align-items: flex-end; gap: 18px;
-          padding: 14px 18px; border-top: 1px solid var(--line-soft);
-          background: var(--surface-2);
+          display: flex; align-items: flex-end; gap: 34px; flex-wrap: wrap;
+          padding: 28px 30px; background: var(--void);
         }
-        .escala figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; }
-        .escala figcaption { font-family: var(--mono); font-size: 10px; color: var(--ink-3); }
+        .escala figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 9px; }
+        .escala figcaption { font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); }
+
+        .descartes { display: grid; grid-template-columns: repeat(auto-fit, minmax(292px, 1fr)); gap: 16px; }
+        .desc { display: flex; flex-direction: column; opacity: .82; }
+        .mini {
+          padding: 26px; display: flex; align-items: center; justify-content: center;
+          background: var(--void); border-bottom: 1px solid var(--line);
+        }
+        .mini :global(svg) { width: 76px; height: 76px; }
+        .cu { padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+        .cu h3 { margin: 0; font-size: 14.5px; font-weight: 700; letter-spacing: -.01em; }
+        .cu p { margin: 0; font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+        .cu .ver {
+          margin-top: auto; padding-top: 12px; border-top: 1px solid var(--line-soft);
+          font-family: var(--mono); font-size: 11px; color: var(--ink-3);
+        }
 
         /* ── 03 lockup ── */
         .lockups { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -1008,7 +1052,7 @@ export default function Kit() {
 
         @media (max-width: 900px) {
           .tapa { grid-template-columns: 1fr; gap: 20px; }
-          .origen, .lockups, .reglas, .tipos, .cotejo { grid-template-columns: 1fr; }
+          .origen, .lockups, .reglas, .tipos, .cotejo, .anatomia { grid-template-columns: 1fr; }
           .der { border-left: none; border-top: 1px solid var(--line); }
         }
       `}</style>
