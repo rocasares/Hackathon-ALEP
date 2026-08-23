@@ -13,7 +13,12 @@ from app.scoring_llm import judge_candidate
 from app.signals import compute_signals
 
 JUDGE_MODEL_SRC = QWEN3_4B_INST_Q4_K_M
-JUDGE_MODEL_CONFIG = {"ctx_size": 4096, "reasoning_budget": 200}
+# reasoning_budget was set to give the judge room to "think" before
+# committing to a decision, but confirmed (isolated single-call test) that it
+# makes grammar-constrained JSON decoding fail 100% of the time on this
+# SDK/model combo ("error initializing grammar sampler for grammar") -- the
+# same schema without reasoning_budget works every time. Dropped.
+JUDGE_MODEL_CONFIG = {"ctx_size": 4096}
 
 # Below this, a candidate is so weak on the cheap deterministic signals that
 # it isn't worth spending an LLM call on -- it can't plausibly reach the

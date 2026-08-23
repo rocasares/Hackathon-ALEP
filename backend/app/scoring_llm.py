@@ -106,11 +106,21 @@ async def judge_candidate(
         )
 
     prompt = _build_prompt(invoices, movements, signals, dedu)
-    result = await model.json_completion(prompt, JUDGE_SCHEMA, "reconciliation_decision")
-
-    raw_decision = str(result["decision"])
-    explanation = str(result["explanation"])
-    score = DECISION_SCORE.get(raw_decision, DECISION_SCORE["no_match"])
+    try:
+        result = await model.json_completion(prompt, JUDGE_SCHEMA, "reconciliation_decision")
+        raw_decision = str(result["decision"])
+        explanation = str(result["explanation"])
+        score = DECISION_SCORE.get(raw_decision, DECISION_SCORE["no_match"])
+    except Exception as exc:  # noqa: BLE001 -- one candidate's LLM call failing
+        # shouldn't crash the whole reconciliation run (observed: a persistent
+        # grammar-sampler init failure on this SDK/hardware combo that a
+        # reload doesn't clear). Fall back to the six signals averaged
+        # deterministically, and say so plainly rather than hide the gap.
+        score = (signals.entidad + signals.importe + signals.fecha + signals.contexto) / 4
+        explanation = (
+            f"El modelo de IA no pudo evaluar este caso ({exc!r}); score de respaldo "
+            f"calculado a partir de las señales sin criterio del modelo. Requiere revisión."
+        )
 
     if not signals.entidad_applicable:
         score = min(score, ENTIDAD_NOT_APPLICABLE_CEILING)

@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import asyncio
 import json
 from contextlib import asynccontextmanager
 from typing import Any
@@ -60,20 +59,17 @@ class LoadedModel:
                     raise
                 await self._reload()
                 continue
-            except RPCError as exc:
+            except RPCError:
                 # Observed as a generic 'std::exception' from the native
-                # worker, seemingly during/just after a model load (grammar
-                # sampler init failing on the first constrained-decoding call)
-                # -- transient, not a real incompatibility: a reload usually
-                # clears it. Without this, one flaky call kills an entire
-                # reconciliation run after the (expensive) extraction stage
-                # already finished.
-                last_error = exc
-                if self._model_src is None:
-                    raise
-                await self._reload()
-                await asyncio.sleep(2)
-                continue
+                # worker -- "error initializing grammar sampler for grammar".
+                # Confirmed empirically NOT transient: reloading the model
+                # and retrying the identical call reproduces the exact same
+                # failure every time (tested 3x in a row, twice). So there's
+                # no point burning a reload+retry cycle (each ~1-2 min) here;
+                # raise immediately and let the caller (judge_candidate)
+                # fall back to a deterministic score instead of hanging the
+                # whole reconciliation run on a per-candidate model bug.
+                raise
             try:
                 return json.loads(text)
             except json.JSONDecodeError as exc:
