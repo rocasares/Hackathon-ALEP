@@ -107,6 +107,13 @@ async def reconcile_start(
     invoices: list[UploadFile] = File(...),
     bank_statements: list[UploadFile] = File(...),
 ):
+    # This machine has one CPU and ~6GB of RAM for QVAC -- two OCR jobs at
+    # once don't run in parallel, they just both crawl. A reload or a second
+    # click while a job is still "running" used to spawn an orphaned second
+    # job that nothing ever cancelled; reuse the in-flight one instead.
+    running = [jid for jid, j in JOBS.items() if j["status"] == "running"]
+    if running:
+        return {"job_id": running[0], "reused": True}
     job_id = await _start_job(invoices, bank_statements)
     return {"job_id": job_id}
 
