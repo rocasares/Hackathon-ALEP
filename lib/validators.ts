@@ -434,8 +434,9 @@ export function validarNotaCredito(
     return ok(cod, 'Nota de crédito sin identificador de cliente: no se puede verificar el respaldo.');
   }
 
+  const cuitNc = nc.cuit_cliente;
   const candidatas = facturas.filter((f) =>
-    f.cuit_cliente && soloDigitos(f.cuit_cliente) === soloDigitos(nc.cuit_cliente));
+    f.cuit_cliente && soloDigitos(f.cuit_cliente) === soloDigitos(cuitNc));
 
   if (!candidatas.length) {
     // Si el período de referencia no tiene ninguna factura de ESE cliente, puede

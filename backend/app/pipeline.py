@@ -13,6 +13,7 @@ from app.scoring_llm import judge_candidate
 from app.signals import compute_signals
 
 JUDGE_MODEL_SRC = QWEN3_4B_INST_Q4_K_M
+JUDGE_MODEL_CONFIG = {"ctx_size": 4096, "reasoning_budget": 200}
 
 # Below this, a candidate is so weak on the cheap deterministic signals that
 # it isn't worth spending an LLM call on -- it can't plausibly reach the
@@ -67,7 +68,7 @@ async def reconcile(invoices: list[Invoice], movements: list[Movement]) -> Recon
 
     print(f"[pipeline] {len(groups)} grupos candidatos generados", flush=True)
 
-    async with qvac_model(JUDGE_MODEL_SRC) as judge_model:
+    async with qvac_model(JUDGE_MODEL_SRC, JUDGE_MODEL_CONFIG) as judge_model:
         scored: list[Candidate] = []
         for gi, (inv_list, mov_list) in enumerate(groups):
             key = _client_key(inv_list[0].cliente)

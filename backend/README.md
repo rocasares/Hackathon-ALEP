@@ -12,7 +12,10 @@ Tres puntos de integración, los tres corriendo modelos locales vía QVAC:
    facturas; cada página se renderiza a imagen y se le pide al modelo que
    extraiga los campos estructurados (emisor, cliente, fecha, total, tipo,
    número) con `response_format: json_schema`.
-   Modelo: `SMOLVLM2_500M_MULTIMODAL_Q8_0` + `MMPROJ_SMOLVLM2_500M_MULTIMODAL_Q8_0`.
+   Modelo: `QWEN3_5_4B_MULTIMODAL_Q4_K_M` + `MMPROJ_QWEN3_5_4B_MULTIMODAL_Q8_0`
+   (se probó primero `SMOLVLM2_500M_MULTIMODAL_Q8_0` por ser más liviano, pero
+   leía mal facturas reales — nombres deformados, montos con un dígito de más;
+   ver "Limitaciones" abajo).
    Código: [`app/extraction.py`](app/extraction.py) (función `_extract_vision`,
    llamada a `completion()` con `attachments`).
 
@@ -107,8 +110,7 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000
 - Hardware: ASUS Vivobook, Intel Core i5-1235U (12 hilos), 8GB RAM, sin GPU
   utilizable (Vulkan bloqueado en Windows nativo, ver arriba). Todo corre
   por CPU dentro de WSL2 Ubuntu.
-- Extracción: `SMOLVLM2_500M_MULTIMODAL_Q8_0` (Q8_0) — ~1-2s por imagen para
-  el encoding, más generación de texto.
+- Extracción: `QWEN3_5_4B_MULTIMODAL_Q4_K_M` (Q4_K_M).
 - Conciliación/red flags: `QWEN3_4B_INST_Q4_K_M` (Q4_K_M) — inferencia CPU
   en un modelo de 4B es notablemente más lenta que con un 1B; en esta
   máquina cada llamada de juicio toma varios segundos a minutos según
@@ -134,15 +136,33 @@ comprobante (impuestos/comisiones). Compara el resultado contra
   ejemplo ancla) sin resolverlo — el fix real fue subir a un modelo de 4B.
   Se deja documentado como hallazgo, no se oculta.
 - La descarga de modelos desde el registro P2P de QVAC fue intermitente
-  durante el desarrollo (timeouts, reintentos necesarios). El código no
-  depende de esto en runtime una vez que el modelo está cacheado
-  localmente (`~/.qvac`).
-- El modelo de visión (multimodal) puede fallar a cargar de forma
-  intermitente; `app/extraction.py` tiene un fallback a extracción por
-  texto plano del PDF (sin OCR) usando el modelo de texto, para no romper
-  el pipeline completo ante ese caso — aunque la calidad de ese fallback es
-  notablemente peor en facturas AFIP reales (multi-columna), así que es un
-  respaldo de emergencia, no el camino recomendado.
+  durante el desarrollo (timeouts, reintentos necesarios, velocidad muy
+  variable). El código no depende de esto en runtime una vez que el modelo
+  está cacheado localmente (`~/.qvac`).
+- **Un modelo de visión chico (500M) lee mal facturas reales.** Con
+  `SMOLVLM2_500M_MULTIMODAL_Q8_0` los campos extraídos de facturas AFIP
+  reales salían con nombres deformados y montos con un dígito de más o de
+  menos (ej. leyó $1.000.000 donde decía $100.000). Se subió a un modelo de
+  4B (`QWEN3_5_4B_MULTIMODAL_Q4_K_M`), mismo patrón que el fix del juez de
+  conciliación: un modelo chico alcanza para una tarea acotada, pero no para
+  leer con precisión un documento real con letra chica.
+  `app/extraction.py` tiene un fallback a extracción por texto plano del PDF
+  (sin visión) si el modelo de visión no carga — aunque la calidad de ese
+  fallback es notablemente peor en facturas AFIP reales (multi-columna,
+  texto sin orden de lectura claro), así que es un respaldo de emergencia,
+  no el camino recomendado.
 - Reconciliación por CPU con un modelo de 4B es lenta (varios minutos para
   ~20 candidatos). Para producción real convendría un modelo más chico
   fine-tuneado para esta tarea específica, o aceleración GPU real.
+- **El SDK de JS (`@qvac/sdk` 0.17.1, usado por el frontend Next.js del
+  equipo) tiene una fuga de memoria real en su worker (`bare`) en este
+  entorno (WSL2/Linux)**: revienta por OOM en segundos/minutos sin importar
+  cuánta RAM se le dé (probado hasta con 7GB asignados a WSL2, el proceso
+  sigue creciendo sin techo aparente). Pasa incluso antes de que el script
+  imprima cualquier salida, o sea, ocurre en el arranque del worker, no por
+  el volumen de trabajo. La versión `1.1.0` publicada en npm está rota
+  (dependencia `@qvac/util-transcription` inexistente en el registro). El
+  SDK de Python (`tetherto-qvac-sdk`, usado en este backend) no tuvo este
+  problema en ningún momento de la sesión. Si el equipo depende del SDK JS
+  para el frontend, esto es un bloqueo real a reportar a QVAC (Discord/
+  mentores del hackathon), no algo que se resuelva con más configuración.

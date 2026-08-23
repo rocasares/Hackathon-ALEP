@@ -3,6 +3,7 @@ node_modules/
 .tmp/
 out/
 *.db
+.venv/
 
 # ── DATOS PERSONALES REALES — NO SUBIR ──────────────────────
 # Las 70 facturas contienen nombre, CUIT, domicilio y telefono de 54 personas

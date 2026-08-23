@@ -225,6 +225,29 @@ tbody tr:hover{ background:var(--surface-2); }
   .rail .sep, .rail .foot{ display:none; }
 }
 
+/* ── importar (pantalla 01) ──────────────────────── */
+.importar-body{ padding:18px; display:flex; flex-direction:column; gap:16px; }
+.field{ display:flex; flex-direction:column; gap:7px; font-size:13px; color:var(--ink-2); }
+.field input[type="file"]{
+  font-family:var(--sans); font-size:12.5px; color:var(--ink);
+  background:var(--surface-2); border:1px solid var(--line); border-radius:var(--r-sm);
+  padding:9px 10px;
+}
+.acciones{ display:flex; gap:10px; flex-wrap:wrap; }
+.btn{
+  font-family:var(--sans); font-size:13px; font-weight:600; cursor:pointer;
+  border-radius:var(--r-sm); padding:10px 16px; border:1px solid var(--line);
+  background:var(--surface-2); color:var(--ink);
+}
+.btn:hover:not(:disabled){ background:var(--line); }
+.btn:disabled{ opacity:.5; cursor:not-allowed; }
+.btn-primary{
+  background:var(--grad); color:#fff; border-color:transparent; box-shadow:var(--glow);
+}
+.btn-primary:hover:not(:disabled){ filter:brightness(1.08); }
+.estado-msg{ margin:0; font-size:12.5px; color:var(--ink-2); }
+.estado-msg.err{ color:var(--bad); }
+
 /* ── análisis del mes ────────────────────────────── */
 .grid2{ display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:18px; }
 

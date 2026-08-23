@@ -7,7 +7,7 @@ qvac-venv/
 data/real_invoices/
 
 # Generated page-image intermediates and run outputs (reproducible via
-# scripts/generate_sample_data.py and scripts/eval.py, not source).
-data/_pages/
-data/_pages_real/
+# scripts/generate_sample_data.py and scripts/eval.py, not source). Some of
+# these render real_invoices/ pages, so they can carry the same real PII.
+data/_pages*/
 data/last_run_report*.json

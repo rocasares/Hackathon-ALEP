@@ -34,34 +34,64 @@
     <button type="submit">Conciliar</button>
   </form>
   <div id="status"></div>
+  <button id="downloadBtn" style="display:none">Descargar Excel</button>
   <div id="result"></div>
 
 <script>
 const form = document.getElementById('f');
 const statusEl = document.getElementById('status');
 const resultEl = document.getElementById('result');
+const downloadBtn = document.getElementById('downloadBtn');
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
+function buildFormData() {
   const fd = new FormData();
   const invoiceFiles = form.querySelector('input[name=invoices]').files;
   for (const f of invoiceFiles) fd.append('invoices', f);
   fd.append('bank_statement', form.querySelector('input[name=bank_statement]').files[0]);
+  return fd;
+}
 
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
   statusEl.textContent = 'Procesando (extracción + conciliación local, puede tardar)...';
   resultEl.innerHTML = '';
+  downloadBtn.style.display = 'none';
   form.querySelector('button').disabled = true;
 
   try {
-    const res = await fetch('/reconcile', { method: 'POST', body: fd });
+    const res = await fetch('/reconcile', { method: 'POST', body: buildFormData() });
     if (!res.ok) throw new Error(await res.text());
     const data = await res.json();
     statusEl.textContent = 'Listo.';
     render(data);
+    downloadBtn.style.display = '';
   } catch (err) {
     statusEl.textContent = 'Error: ' + err.message;
   } finally {
     form.querySelector('button').disabled = false;
+  }
+});
+
+downloadBtn.addEventListener('click', async () => {
+  downloadBtn.disabled = true;
+  downloadBtn.textContent = 'Generando Excel...';
+  try {
+    const res = await fetch('/reconcile/excel', { method: 'POST', body: buildFormData() });
+    if (!res.ok) throw new Error(await res.text());
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'conciliacion.xlsx';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  } catch (err) {
+    statusEl.textContent = 'Error generando Excel: ' + err.message;
+  } finally {
+    downloadBtn.disabled = false;
+    downloadBtn.textContent = 'Descargar Excel';
   }
 });
 

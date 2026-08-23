@@ -7,14 +7,15 @@ from app.qvac_client import LoadedModel
 ENTIDAD_NOT_APPLICABLE_CEILING = 0.88
 GROUPED_PENALTY = 0.03
 
-# A 1B model reliably picks the right *category* (conciliar / revisar / no
-# matchea) and writes a good explanation, but is unreliable at combining six
-# weighted signals into a precise 0-1 float in the same turn -- it would
-# often write a correct deduction-aware explanation and then still emit 0.
-# So QVAC decides the category (that's the real judgment call replacing the
-# old fixed-weight formula); these are just representative scores per
-# category so the rest of the pipeline (thresholds, sorting, the entidad-cap
-# and grouped-candidate rules) keeps working unchanged.
+# Even the judge model reliably picks the right *category* (conciliar /
+# revisar / no matchea) and writes a good explanation, but small models are
+# unreliable at combining six weighted signals into a precise 0-1 float in
+# the same turn -- a 1B model would often write a correct deduction-aware
+# explanation and then still emit 0 (fixed by moving to QWEN3_4B_INST_Q4_K_M
+# as the judge). So QVAC decides the category (that's the real judgment call
+# replacing the old fixed-weight formula); these are just representative
+# scores per category so the rest of the pipeline (thresholds, sorting, the
+# entidad-cap and grouped-candidate rules) keeps working unchanged.
 DECISION_SCORE = {
     "conciliado": 0.90,
     "revision": 0.65,
