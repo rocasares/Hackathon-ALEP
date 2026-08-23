@@ -55,7 +55,7 @@ const ETIQUETA_DECISION: Record<string, string> = {
   no_match: 's-observado',
 };
 
-export default function Importador({ documentos, movimientos, periodo }: Props) {
+export default function Importador({ periodo }: Props) {
   const facturasRef = useRef<HTMLInputElement>(null);
   const extractoRef = useRef<HTMLInputElement>(null);
 
@@ -63,6 +63,7 @@ export default function Importador({ documentos, movimientos, periodo }: Props) 
   const [umbral, setUmbral] = useState(0.95);
   const [nFacturas, setNFacturas] = useState(0);
   const [nombreExtracto, setNombreExtracto] = useState<string | null>(null);
+  const [nMovimientos, setNMovimientos] = useState<number | null>(null);
   const [mensaje, setMensaje] = useState<string | null>(null);
   const [reporte, setReporte] = useState<Reporte | null>(null);
   const [descargando, setDescargando] = useState(false);
@@ -155,7 +156,7 @@ export default function Importador({ documentos, movimientos, periodo }: Props) 
               <strong>Hacé click para elegir los comprobantes</strong>
               <span className="mono">PDF, cualquier formato</span>
               <div className="cargados">
-                <b className="mono">{nFacturas || documentos}</b> documentos {nFacturas ? 'seleccionados' : 'cargados'}
+                <b className="mono">{nFacturas}</b> documentos seleccionados
               </div>
             </button>
             <input
@@ -168,13 +169,25 @@ export default function Importador({ documentos, movimientos, periodo }: Props) 
 
             <label className="fila" style={{ cursor: 'pointer' }}>
               <span className="et">Extracto bancario / planilla de pagos</span>
-              <span className="mono">{nombreExtracto ?? 'cualquier formato'}</span>
-              <span className="dato mono">{movimientos} movimientos</span>
+              <span className="mono">{nombreExtracto ?? 'sin extracto cargado'}</span>
+              <span className="dato mono">
+                {nMovimientos == null ? '—' : `${nMovimientos} filas`}
+              </span>
               <input
                 ref={extractoRef}
                 type="file"
                 style={{ display: 'none' }}
-                onChange={(e) => setNombreExtracto(e.target.files?.[0]?.name ?? null)}
+                onChange={async (e) => {
+                  const f = e.target.files?.[0] ?? null;
+                  setNombreExtracto(f?.name ?? null);
+                  if (f && f.name.toLowerCase().endsWith('.csv')) {
+                    const text = await f.text();
+                    const filas = text.split(/\r?\n/).filter((l) => l.trim().length > 0).length - 1;
+                    setNMovimientos(Math.max(0, filas));
+                  } else {
+                    setNMovimientos(null);
+                  }
+                }}
               />
             </label>
 
@@ -199,7 +212,7 @@ export default function Importador({ documentos, movimientos, periodo }: Props) 
             >
               {estado === 'corriendo' ? 'Procesando…'
                 : estado === 'terminado' ? 'Volver a procesar'
-                : `Procesar ${nFacturas || documentos} documentos`}
+                : `Procesar ${nFacturas} documentos`}
             </button>
             {reporte && (
               <button
