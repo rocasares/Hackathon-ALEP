@@ -18,7 +18,9 @@
     "start": "next start",
     "test:uso": "npx esbuild lib/qvac/repair.ts --bundle --format=esm --platform=node --outfile=.tmp/repair.mjs --external:@qvac/sdk --external:sharp --log-level=error && node test/uso-resultado.mjs",
     "harness": "npx esbuild lib/validators.ts --bundle --format=esm --platform=node --outfile=.tmp/validators.mjs --log-level=error && node eval/harness.mjs",
-    "matcher:anio": "npx esbuild lib/matcher.ts --bundle --format=esm --platform=node --outfile=.tmp/matcher.mjs --log-level=error && node scripts/probar-matcher-anio.mjs"
+    "matcher:anio": "npx esbuild lib/matcher.ts --bundle --format=esm --platform=node --outfile=.tmp/matcher.mjs --log-level=error && node scripts/probar-matcher-anio.mjs",
+    "pipeline:build": "npx esbuild lib/qvac/ocr.ts lib/qvac/extract.ts lib/qvac/repair.ts lib/qvac/client.ts lib/validators.ts --outdir=.tmp/pipeline --format=esm --platform=node --bundle --splitting --out-extension:.js=.mjs --external:@qvac/sdk --external:sharp --log-level=error",
+    "procesar": "npm run pipeline:build && node scripts/procesar.mjs"
   },
   "dependencies": {
     "@napi-rs/canvas": "^1.0.7",
