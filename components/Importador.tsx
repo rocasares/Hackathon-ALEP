@@ -55,36 +55,61 @@ const ETIQUETA_DECISION: Record<string, string> = {
   no_match: 's-observado',
 };
 
+const ES_FACTURA = (nombre: string) => nombre.toLowerCase().endsWith('.pdf');
+const ES_EXTRACTO = (nombre: string) => {
+  const n = nombre.toLowerCase();
+  return n.endsWith('.csv') || n.endsWith('.xls') || n.endsWith('.xlsx');
+};
+
 export default function Importador({ periodo }: Props) {
-  const facturasRef = useRef<HTMLInputElement>(null);
-  const extractoRef = useRef<HTMLInputElement>(null);
+  const todoRef = useRef<HTMLInputElement>(null);
 
   const [estado, setEstado] = useState<Estado>('listo');
   const [umbral, setUmbral] = useState(0.95);
   const [facturas, setFacturas] = useState<File[]>([]);
-  const [extracto, setExtracto] = useState<File | null>(null);
+  const [extractos, setExtractos] = useState<File[]>([]);
+  const [ignorados, setIgnorados] = useState<string[]>([]);
   const [nMovimientos, setNMovimientos] = useState<number | null>(null);
   const [mensaje, setMensaje] = useState<string | null>(null);
   const [reporte, setReporte] = useState<Reporte | null>(null);
   const [descargando, setDescargando] = useState(false);
+  const [jobId, setJobId] = useState<string | null>(null);
 
-  function agregarFacturas(nuevos: FileList | null) {
+  async function agregarTodo(nuevos: FileList | null) {
     if (!nuevos || nuevos.length === 0) return;
-    setFacturas((prev) => {
-      const vistos = new Set(prev.map((f) => `${f.name}_${f.size}`));
-      const agregados = Array.from(nuevos).filter((f) => !vistos.has(`${f.name}_${f.size}`));
-      return [...prev, ...agregados];
-    });
+    const nuevasFacturas: File[] = [];
+    const nuevosExtractos: File[] = [];
+    const nuevosIgnorados: string[] = [];
+    let filasCsv = 0;
+
+    for (const f of Array.from(nuevos)) {
+      if (ES_FACTURA(f.name)) {
+        nuevasFacturas.push(f);
+      } else if (ES_EXTRACTO(f.name)) {
+        nuevosExtractos.push(f);
+        if (f.name.toLowerCase().endsWith('.csv')) {
+          const text = await f.text();
+          filasCsv += Math.max(0, text.split(/\r?\n/).filter((l) => l.trim().length > 0).length - 1);
+        }
+      } else {
+        nuevosIgnorados.push(f.name);
+      }
+    }
+
+    if (nuevasFacturas.length) setFacturas((prev) => [...prev, ...nuevasFacturas]);
+    if (nuevosExtractos.length) setExtractos((prev) => [...prev, ...nuevosExtractos]);
+    if (filasCsv) setNMovimientos((prev) => (prev ?? 0) + filasCsv);
+    if (nuevosIgnorados.length) setIgnorados((prev) => [...prev, ...nuevosIgnorados]);
   }
 
   function armarFormData(): FormData | null {
-    if (facturas.length === 0 || !extracto) {
+    if (facturas.length === 0 || extractos.length === 0) {
       setMensaje('Falta adjuntar las facturas y el extracto bancario o la planilla de pagos.');
       return null;
     }
     const fd = new FormData();
     for (const f of facturas) fd.append('invoices', f);
-    fd.append('bank_statement', extracto);
+    for (const f of extractos) fd.append('bank_statements', f);
     return fd;
   }
 
@@ -93,16 +118,35 @@ export default function Importador({ periodo }: Props) {
     if (!fd) { setEstado('error'); return; }
 
     setEstado('corriendo');
-    setMensaje('Leyendo comprobantes con QVAC y conciliando contra los movimientos. Corre en esta máquina: puede tardar varios minutos por documento.');
+    setMensaje('Leyendo comprobantes con QVAC y conciliando contra los movimientos. Corre en esta máquina: puede tardar varios minutos por documento. No cierres esta pestaña.');
     setReporte(null);
+    setJobId(null);
 
     try {
-      const res = await fetch(`${BACKEND_URL}/reconcile`, { method: 'POST', body: fd });
-      if (!res.ok) throw new Error(await res.text());
-      const data: Reporte = await res.json();
-      setReporte(data);
-      setEstado('terminado');
-      setMensaje(null);
+      const startRes = await fetch(`${BACKEND_URL}/reconcile/start`, { method: 'POST', body: fd });
+      if (!startRes.ok) throw new Error(await startRes.text());
+      const { job_id } = await startRes.json();
+      setJobId(job_id);
+
+      // Corta la conexion larga en pedazos cortos: preguntamos cada 5s en vez
+      // de mantener un solo fetch abierto por minutos (eso se cortaba con el
+      // reenvio de puertos de WSL).
+      // eslint-disable-next-line no-constant-condition
+      while (true) {
+        await new Promise((r) => setTimeout(r, 5000));
+        const statusRes = await fetch(`${BACKEND_URL}/reconcile/status/${job_id}`);
+        if (!statusRes.ok) throw new Error(await statusRes.text());
+        const data = await statusRes.json();
+        if (data.status === 'done') {
+          setReporte(data.report as Reporte);
+          setEstado('terminado');
+          setMensaje(null);
+          break;
+        }
+        if (data.status === 'error') {
+          throw new Error(data.error);
+        }
+      }
     } catch (e) {
       setEstado('error');
       setMensaje(`Error al procesar: ${(e as Error).message}`);
@@ -110,11 +154,10 @@ export default function Importador({ periodo }: Props) {
   }
 
   async function descargarExcel() {
-    const fd = armarFormData();
-    if (!fd) return;
+    if (!jobId) return;
     setDescargando(true);
     try {
-      const res = await fetch(`${BACKEND_URL}/reconcile/excel`, { method: 'POST', body: fd });
+      const res = await fetch(`${BACKEND_URL}/reconcile/excel/${jobId}`);
       if (!res.ok) throw new Error(await res.text());
       const blob = await res.blob();
       const url = URL.createObjectURL(blob);
@@ -157,56 +200,38 @@ export default function Importador({ periodo }: Props) {
             <button
               type="button"
               className="drop"
-              onClick={() => facturasRef.current?.click()}
+              onClick={() => todoRef.current?.click()}
               style={{ width: '100%', cursor: 'pointer', background: 'none', font: 'inherit', color: 'inherit' }}
             >
-              <strong>Hacé click para elegir los comprobantes</strong>
-              <span className="mono">PDF, cualquier formato — podés hacer click varias veces para sumar más</span>
+              <strong>Hacé click para cargar todo (facturas + extracto)</strong>
+              <span className="mono">PDF para facturas, CSV/XLS para el extracto — mezclá todo, se clasifica solo. Click varias veces para sumar más.</span>
               <div className="cargados">
-                <b className="mono">{facturas.length}</b> documentos seleccionados
+                <b className="mono">{facturas.length}</b> facturas · <b className="mono">{extractos.length}</b> extracto(s)
+                {nMovimientos != null && <> · <b className="mono">{nMovimientos}</b> filas (CSV)</>}
               </div>
             </button>
             <input
-              ref={facturasRef}
+              ref={todoRef}
               type="file"
               multiple
               style={{ display: 'none' }}
               onChange={(e) => {
-                agregarFacturas(e.target.files);
+                agregarTodo(e.target.files);
                 e.target.value = '';
               }}
             />
-            {facturas.length > 0 && (
+            {(facturas.length > 0 || extractos.length > 0) && (
               <p className="ayuda" style={{ marginTop: 6 }}>
-                {facturas.map((f) => f.name).join(', ')}{' '}
-                <a href="#" onClick={(e) => { e.preventDefault(); setFacturas([]); }}>vaciar</a>
+                Facturas: {facturas.map((f) => f.name).join(', ') || '—'}<br />
+                Extracto: {extractos.map((f) => f.name).join(', ') || '—'}{' '}
+                <a href="#" onClick={(e) => { e.preventDefault(); setFacturas([]); setExtractos([]); setNMovimientos(null); setIgnorados([]); }}>vaciar todo</a>
               </p>
             )}
-
-            <label className="fila" style={{ cursor: 'pointer' }}>
-              <span className="et">Extracto bancario / planilla de pagos</span>
-              <span className="mono">{extracto?.name ?? 'sin extracto cargado'}</span>
-              <span className="dato mono">
-                {nMovimientos == null ? '—' : `${nMovimientos} filas`}
-              </span>
-              <input
-                ref={extractoRef}
-                type="file"
-                style={{ display: 'none' }}
-                onChange={async (e) => {
-                  const f = e.target.files?.[0] ?? null;
-                  setExtracto(f);
-                  if (f && f.name.toLowerCase().endsWith('.csv')) {
-                    const text = await f.text();
-                    const filas = text.split(/\r?\n/).filter((l) => l.trim().length > 0).length - 1;
-                    setNMovimientos(Math.max(0, filas));
-                  } else {
-                    setNMovimientos(null);
-                  }
-                  e.target.value = '';
-                }}
-              />
-            </label>
+            {ignorados.length > 0 && (
+              <p className="ayuda" style={{ color: 'var(--bad)' }}>
+                Ignorados (ni .pdf ni .csv/.xls): {ignorados.join(', ')}
+              </p>
+            )}
 
             <div className="fila umbral">
               <span className="et">Umbral de aprobación automática</span>
